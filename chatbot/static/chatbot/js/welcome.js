@@ -38,7 +38,7 @@ $(function () {
 
   $('button#continueButton').click(function () {
       // window.location.href = server_url + "/chatbot/";
-      window.location.href = server_url + "/instructions/";
+      window.location.href = server_url + "/questionnaire1/";
   });
 
   $('.carousel').carousel({
