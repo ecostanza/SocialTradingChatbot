@@ -180,6 +180,8 @@ body {
 .credclose {
   color: #aaaaaa;
   align-self: flex-end;
+  text-align: right;
+  padding: 5px, 5px;
   font-size: 28px;
   font-weight: bold;
 }
@@ -198,7 +200,10 @@ body {
     cursor: pointer;
     text-decoration: underline;
     font-size: 13.5px;
-	color: #000000;
+    font-style: italic;
+	color: #7393B3;
+  padding-left: 180px;
+  padding-top: 15px;
 }
 
 .cred-button:hover,
