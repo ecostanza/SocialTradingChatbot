@@ -410,11 +410,14 @@ def questionnaire_view(request):
     {'label': '<hr><h5>Please answer the following questions <u>based on your overall experience</u> completing the study</h5><hr>'},
     {'question': '1. From 1 to 5 (where 1 is the least and 5 is the most), how much did you trust the <strong>Assistant</strong> by the end of the study?', choices: ['1', '2', '3', '4', '5']},
     {'question': '2. From 1 to 5 (where 1 is the least and 5 is the most), how much did you trust the <strong>Newsfeed</strong> by the end of the study?', choices: ['1', '2', '3', '4', '5']},
-    {'question': '3. From 1 to 5 (where 1 is the least and 5 is the most), how often did the <strong>Assistant</strong> understand what you said?', choices: ['1', '2', '3', '4', '5']},
-    {'question': '4. From 1 to 5 (where 1 is the least and 5 is the most), how "human" did the <strong>Assistant</strong> feel?', choices: ['1', '2', '3', '4', '5']},
-    {'question': '5. What would have made you trust the <strong>Assistant</strong> more?'},
-    {'question': '6. Please leave your comments about your experience interacting with the <strong>Assistant</strong>.'},
-    {'question': '<hr>Please leave your comments about the overall experience about this study, or your suggestions for improvement.'}
+    {'question': '3. From 1 to 5 (where 1 is not at all and 5 is all of the time), how often did the <strong>Assistant</strong> understand what you said?', choices: ['1', '2', '3', '4', '5']},
+    {'question': '4. From 1 to 5 (where 1 is strongly disagree and 5 is strongly agree), I perceived the <strong>Assistant</strong> to be credible.', choices: ['1', '2', '3', '4', '5']},
+    {'question': '5. From 1 to 5 (where 1 is strongly disagree and 5 is strongly agree), I perceived the <strong>Newsfeed</strong> to be credible.', choices: ['1', '2', '3', '4', '5']},
+    {'question': '6. From 1 to 5 (where 1 is strongly disagree and 5 is strongly agree), I perceived recommendations to be more credible when more sources aligned with it.', choices: ['1', '2', '3', '4', '5']},
+    {'question': '7. What would have made you trust the <strong>Assistant</strong> more?'},
+    {'question': '8. Please leave your comments about your experience interacting with the <strong>Assistant</strong>.'},
+    {'question': '<hr>Please leave your comments about the overall experience about this study, or your suggestions for improvement.'},
+    {'question': '<hr>Were there any errors or issues interacting with the chatbot assistant? If so, please identify any errors you faced. If not, please state: <strong>not available</strong>'},
         ]
         '''
         context = {
@@ -440,6 +443,49 @@ def questionnaire_view(request):
         # TODO: Fix this url
         result = {
             'completion_url': 'https://app.prolific.co/submissions/complete?cc=5E140EBC'
+        }# https://app.prolific.ac/submissions/complete?cc=' + study_id
+        result_data = json.dumps(result)
+        return HttpResponse(result_data, content_type='application/json')
+
+        #return redirect(completion_url)
+        # return HttpResponse('the end')
+
+# Below lists the pre-study questionnaire, which should lead to the instruction page of the study. 
+@csrf_exempt
+@require_http_methods(['GET', 'POST'])
+@login_required
+def questionnaire1_view(request):
+    if request.method == 'GET':
+        questionnaire1 = '''[
+    {'label': '<hr><h5>Before you proceed to the study, please answer the following questions <u>based on your attitudes</u> towards artificial intelligence (AI) </h5><hr>'},
+    {'question': 'P1. From 1 to 5 (where 1 is strongly disagree and 5 is strongly agree), My typical approach is to trust new technologies until they prove me I shouldnt', choices: ['1', '2', '3', '4', '5']},
+    {'question': 'P2. From 1 to 5 (where 1 is strongly disagree and 5 is strongly agree), I generally give a technology the benefit of the doubt when I first use it', choices: ['1', '2', '3', '4', '5']},
+    {'question': 'P3. From 1 to 5 (where 1 is strongly disagree and 5 is strongly agree), I usually trust a technology until it gives me a reason not to trust it', choices: ['1', '2', '3', '4', '5']},
+        ]
+        '''
+        context = {
+            'questionnaire1': questionnaire1,
+        }
+        template_path = 'questionnaire1.html'
+        return render(request, template_path, context=context)
+    elif request.method == 'POST':
+        # TODO: store the result(s) and render/redirect to the next page
+        post_data = json.loads(request.body.decode('utf-8'))
+        questionnaire_response = QuestionnaireResponse(
+            user = request.user,
+            answer = post_data['groups'],
+            completion_time = post_data['task_completion_time'],
+            subtask_time = post_data['log']
+        )
+        questionnaire_response.save()
+
+        # TODO: redirect to some end page
+        # https://app.prolific.ac/submissions/complete?cc=J8OWBL27
+        #study_settings = StudySettings.load()
+        #study_id = study_settings.prolific_study_id
+        # TODO: Fix this url
+        result = {
+            #'completion_url': 'https://app.prolific.co/submissions/complete?cc=5E140EBC'
         }# https://app.prolific.ac/submissions/complete?cc=' + study_id
         result_data = json.dumps(result)
         return HttpResponse(result_data, content_type='application/json')
