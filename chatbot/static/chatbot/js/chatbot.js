@@ -1,11 +1,49 @@
 var conditionActive;
 var month = 1;
 
-$(document).ready(function () {
-  window.variants = [
-    0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0,
-    1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5,
-  ];
+window.shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+window.getIdxForName = (fullName) => {
+  return window.peopleVariants.get(fullName.split(" ")[0].toLowerCase());
+}
+
+let idxVars = window.shuffleArray([ 0, 1, 2, 3, 4, 5 ]);
+
+window.people = [
+  "masami",
+  "florianne",
+  "benjamin",
+  "alois",
+  "aricka",
+  "kanya",
+  "ralph",
+  "paulinho",
+  "william",
+  "andrzej",
+];
+
+window.peopleVariants = new Map(window.people.map((person, idx) => [person, idxVars[idx % 6]]));
+
+
+
+$(document).ready(function () {  
+
+/*
+        for key in window.peopleVariants.keys()
+          if key in message
+            strreplace(button_key_text, window.peopleVariants.get(key))
+*/
+
+/*
+  <button onClick=ShowMOdal(button_key_text)></button>
+
+*/
 
   var contentHeight = $(".content-container").height();
   var portfoliosHeight = $("#portfolios").height();
@@ -286,6 +324,10 @@ $(document).ready(function () {
 
                     if (response["has_increased"]) {
                       month++;
+
+                      const newIdxVars = window.shuffleArray([ 0, 1, 2, 3, 4, 5 ]);
+                      window.peopleVariants = new Map(window.people.map((person, idx) => [person, newIdxVars[idx % 6]]));
+
                       $("#month-number").html(month);
                       $("#result_div").append(
                         '<row><p id="month-chat">Month: ' +
@@ -334,43 +376,14 @@ $(document).ready(function () {
   window.setInterval(update_timer, 1000);
   update_timer();
 
-  function shuffle(array) {
-    var currentIndex = array.length,
-      temporaryValue,
-      randomIndex;
-
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-
-    return array;
-  }
-
   $(".scrollable-newsposts").append(
     '<img id="loading-gif" src="' + staticUrl + 'chatbot/images/loading.gif">',
   );
 
   // newsposts = shuffle(JSON.parse(newsposts_list.replace(/&quot;/g, '"')));
-  profiles = shuffle(JSON.parse(profiles_list.replace(/&quot;/g, '"')));
+  profiles = window.shuffleArray(JSON.parse(profiles_list.replace(/&quot;/g, '"')));
 
   newspostCounter = 0;
-
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-  }
-
-  shuffleArray(window.variants);
 
   window.showModal = (item, clickType) => {
     //$.ajax({
@@ -457,12 +470,8 @@ $(document).ready(function () {
           } else {
             text = name + "'s portfolio to stay the same.";
           }
-
-          const currVariant = window.variants.pop();
-
-          const btn = `<button class= cred-button onClick="showModal(${currVariant}, 'news')">recommendation is verified</button>`;
-
-          window.variants.splice(0, 0, currVariant);
+          
+          const btn = `<button class= cred-button onClick="showModal(${window.getIdxForName(name)}, 'news')">verified<i class='fa-regular fa-question-circle' style='font-size:13px;color:#7393b3;padding:4px'></i></button>`;
 
           var div =
             '<div class="wrapper-newspost"> \
