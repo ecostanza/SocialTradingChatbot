@@ -7,6 +7,7 @@ from .views import (
     welcome_page,
     information_page,
     consent_page,
+    questionnaire1_view,
     instructions_page,
     chatbot_page,
     get_condition_active,
@@ -22,12 +23,14 @@ from .views import (
     questionnaire_view,
     getNewsfeedButtonClick,
     getBotButtonClick,
+    cred_level,
     )
 
 urlpatterns = [
     path('', welcome_page, name='welcome'),
     path('information/', information_page, name='information'),
     path('consent/', consent_page, name='consent'),
+    path('questionnaire1/', questionnaire1_view, name='questionnaire1_view'),
     path('instructions/', instructions_page, name='instructions'),
     path('investment/', chatbot_page, name='chatbot'),
     path('imagetagging/', include('imagetagging.urls'), name='imagetagging'),
@@ -46,5 +49,6 @@ urlpatterns = [
     #path('post/', views.postButtonClick),
     path('newsfeedbuttonclick/', getNewsfeedButtonClick, name='newsfeed_button_click'),
     path('botbuttonclick/', getBotButtonClick, name='bot_button_click'),
+    path('credlevel/', cred_level, name='cred_level'),
 
 ]

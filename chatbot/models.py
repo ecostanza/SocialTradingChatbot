@@ -112,6 +112,7 @@ class UserAction(models.Model):
     available = models.DecimalField(max_digits=6, decimal_places=2, null=False)
     invested = models.DecimalField(max_digits=6, decimal_places=2, null=False)
     portfolio = models.CharField(max_length=128, null=False)
+    # cred_lvl = models.IntegerField(default= -1 )
     chatbot_change = models.DecimalField(max_digits=6, decimal_places=2, null=True)
     newspost_change = models.DecimalField(max_digits=6, decimal_places=2, null=True)
     action = models.CharField(max_length=128, null=False)
@@ -160,6 +161,14 @@ class QuestionnaireResponse(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+class CredibilityCounter(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # month = models.IntegerField(default=1, null=False)
+    portfolio_cred = models.TextField()
+    
+    def __str__(self):
+        return self.user.username
+
 
 class FallbackCount(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -176,9 +185,15 @@ class NewsfeedButtonClick(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     click_count = models.IntegerField(default=0, null=False)
 
+    def __str__(self):
+        return self.user.username
+
 class BotButtonClick(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     click_count = models.IntegerField(default=0, null=False)
+
+    def __str__(self):
+        return self.user.username
     
 #clicktype = models.CharField(max_length=128, null=False)
 

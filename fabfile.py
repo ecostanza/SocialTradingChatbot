@@ -278,4 +278,3 @@ def setup(c):
     setup_nginx(c)
     setup_gunicorn(c)
     setup_logfile(c)
-

@@ -13,6 +13,7 @@ from .models import (
     # DismissNotificationCount,
     Result,
     QuestionnaireResponse,
+    CredibilityCounter,
     FallbackCount,
     NewsfeedButtonClick,
     BotButtonClick,
@@ -98,6 +99,35 @@ class UserActionAdmin(ExportActionModelAdmin):
     resource_class = UserActionResource
 
 
+class BotButtonClickResource(resources.ModelResource):
+     class Meta:
+         model = BotButtonClick
+         fields = ['user', 'click_count']
+
+class BotButtonClickAdmin(ExportActionModelAdmin):
+    list_display = ['__str__', 'user']
+    resource_class = BotButtonClickResource
+
+class NewsfeedButtonClickResource(resources.ModelResource):
+     class Meta:
+         model = NewsfeedButtonClick
+         fields = ['user', 'click_count']
+
+class NewsfeedButtonClickAdmin(ExportActionModelAdmin):
+    list_display = ['__str__', 'user']
+    resource_class = NewsfeedButtonClickResource
+
+class CredibilityCounterResource(resources.ModelResource):
+     class Meta:
+         model = CredibilityCounter
+         fields = ['user', 'portfolio_cred']
+
+class CredibilityCounterAdmin(ExportActionModelAdmin):
+    list_display = ['__str__', 'user']
+    resource_class = CredibilityCounterResource
+
+
+
 
 
 # class DismissNotificationCountResource(resources.ModelResource):
@@ -121,5 +151,6 @@ admin.site.register(Profile)
 admin.site.register(Portfolio)
 admin.site.register(Participant)
 admin.site.register(Condition)
-admin.site.register(NewsfeedButtonClick)
-admin.site.register(BotButtonClick)
+admin.site.register(NewsfeedButtonClick, NewsfeedButtonClickAdmin)
+admin.site.register(BotButtonClick, BotButtonClickAdmin)
+admin.site.register(CredibilityCounter, CredibilityCounterAdmin)
