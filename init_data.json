@@ -1,1 +1,89 @@
-[{"model": "chatbot.condition", "pk": 1, "fields": {"active": true}}, {"model": "chatbot.profile", "pk": 1, "fields": {"name": "Masami Nishimura", "gender": "Male"}}, {"model": "chatbot.profile", "pk": 2, "fields": {"name": "Florianne Paget", "gender": "Female"}}, {"model": "chatbot.profile", "pk": 3, "fields": {"name": "Benjamin Parker", "gender": "Male"}}, {"model": "chatbot.profile", "pk": 4, "fields": {"name": "Alois Reiter", "gender": "Male"}}, {"model": "chatbot.profile", "pk": 5, "fields": {"name": "Aricka Lewis", "gender": "Female"}}, {"model": "chatbot.profile", "pk": 6, "fields": {"name": "Kanya Bunnag", "gender": "Female"}}, {"model": "chatbot.profile", "pk": 7, "fields": {"name": "Ralph Axelsen", "gender": "Male"}}, {"model": "chatbot.profile", "pk": 8, "fields": {"name": "Paulinho Simoes", "gender": "Male"}}, {"model": "chatbot.profile", "pk": 9, "fields": {"name": "William Shore", "gender": "Male"}}, {"model": "chatbot.profile", "pk": 10, "fields": {"name": "Andrzej Kraviec", "gender": "Male"}}]
+[
+    {
+        "model": "chatbot.condition",
+        "pk": 1,
+        "fields": {
+            "active": true
+        }
+    },
+    {
+        "model": "chatbot.profile",
+        "pk": 1,
+        "fields": {
+            "name": "Masami Nishimura",
+            "gender": "Male"
+        }
+    },
+    {
+        "model": "chatbot.profile",
+        "pk": 2,
+        "fields": {
+            "name": "Florianne Paget",
+            "gender": "Female"
+        }
+    },
+    {
+        "model": "chatbot.profile",
+        "pk": 3,
+        "fields": {
+            "name": "Benjamin Parker",
+            "gender": "Male"
+        }
+    },
+    {
+        "model": "chatbot.profile",
+        "pk": 4,
+        "fields": {
+            "name": "Alois Reiter",
+            "gender": "Male"
+        }
+    },
+    {
+        "model": "chatbot.profile",
+        "pk": 5,
+        "fields": {
+            "name": "Aricka Lewis",
+            "gender": "Female"
+        }
+    },
+    {
+        "model": "chatbot.profile",
+        "pk": 6,
+        "fields": {
+            "name": "Kanya Bunnag",
+            "gender": "Female"
+        }
+    },
+    {
+        "model": "chatbot.profile",
+        "pk": 7,
+        "fields": {
+            "name": "Ralph Axelsen",
+            "gender": "Male"
+        }
+    },
+    {
+        "model": "chatbot.profile",
+        "pk": 8,
+        "fields": {
+            "name": "Paulinho Simoes",
+            "gender": "Male"
+        }
+    },
+    {
+        "model": "chatbot.profile",
+        "pk": 9,
+        "fields": {
+            "name": "William Shore",
+            "gender": "Male"
+        }
+    },
+    {
+        "model": "chatbot.profile",
+        "pk": 10,
+        "fields": {
+            "name": "Andrzej Kraviec",
+            "gender": "Male"
+        }
+    }
+]

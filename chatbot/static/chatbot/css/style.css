@@ -108,7 +108,7 @@ body {
   position: absolute;
   top: 80px;
   right: 0;
-  width: 33%%;
+  width: 33%;
   margin-left: 10px;
   margin-right: 10px;
 }
@@ -464,7 +464,7 @@ h5 {
 }
 
 .img-fluid {
-  padding-top
+  /* padding-top */
   width: 100%;
 }
 
@@ -508,7 +508,7 @@ h5 {
   height: auto;
   clear: both;
   padding: 20px;
-  float: left;
+  /* float: left; */
   padding-top: 10px;
   padding-bottom: 10px;
 }
@@ -593,7 +593,7 @@ h5 {
   margin-bottom: 10px;
   background: #343A40;
   color: #fff;
-  float: left;
+  /* float: left; */
   text-align: left;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -622,7 +622,7 @@ h5 {
   padding: 20px;
   border-radius: 30px;
   margin-bottom: 10px;
-  float: right;
+  /* float: right; */
   background: #dedfe1;
   text-align: left;
   padding-top: 10px;

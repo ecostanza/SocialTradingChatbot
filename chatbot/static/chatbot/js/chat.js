@@ -41,8 +41,6 @@ $(document).ready(function () {
       "++ADVICE++",
       `<button class= cred-button onClick="showModal(${currVariant}, 'bot')">verified<i class='fa-regular fa-question-circle' style='font-size:13px;color:#7393b3;padding:4px'></i></button>`,
     );
-
-    console.log(`${currVariant}`)
     console.log(message);
     // remove bottom, just for testing. 
     //message =
