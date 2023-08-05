@@ -3,7 +3,16 @@
         "model": "chatbot.condition",
         "pk": 1,
         "fields": {
-            "active": true
+            "active": true,
+            "name": "baseline"
+        }
+    },
+    {
+        "model": "chatbot.condition",
+        "pk": 2,
+        "fields": {
+            "active": true,
+            "name": "credibility"
         }
     },
     {

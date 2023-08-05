@@ -10,6 +10,9 @@
     <script src="{% static 'imagetagging/js/imagetagging.js' %}"></script>
     <!-- <script src="{% static 'chatbot/js/bundle.js' %}" type="text/javascript" charset="utf-8"></script> -->
     <script src="{% static 'chatbot/js/chat.js' %}"></script>
+    <script>
+        const username = "{{ request.user.username }}";
+    </script>
 {% endblock %}
 
 {% block content %}

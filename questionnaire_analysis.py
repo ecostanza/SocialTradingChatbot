@@ -36,7 +36,7 @@ df.to_csv('tmp.csv')
 # you can check the django admin to see the ID of different tasks 
 # and the better way to do this would be to use groupby
 #groups = df.groupby('task')
-groups = df.groupby('user__participant__condition_active')
+groups = df.groupby('user__participant__condition__name')
 
 all_dataframes = []
 
@@ -44,7 +44,7 @@ all_dataframes = []
 for index, row in df.iterrows():
     print('-----')
     #print("%s (N=%d tasks)" % (task_label, len(task_data)))
-    task_label = row['user__participant__condition_active']
+    task_label = row['user__participant__condition__name']
     # print(task_data['participant__task_list__name'])
     # print(task_data)
     # print(task_label)
@@ -67,7 +67,7 @@ for index, row in df.iterrows():
     current['questions'] = questions
     current['answers'] = answers
     #current['task'] = task_label
-    current['user__participant__condition_active'] = row['user__participant__condition_active']
+    current['user__participant__condition__name'] = row['user__participant__condition__name']
     current['participant'] = row['user']
     current['created_at'] = row['created_at']
 

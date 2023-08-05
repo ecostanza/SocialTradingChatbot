@@ -198,21 +198,29 @@ def detect_unsupported_browsers(meta):
 
 
 def populate_context(request):
+    # try:
+    #     experimental_group = not Group.objects.get(name='control') in request.user.groups.all()
+    # except:
+    #     experimental_group = False
+    # try:
+    #     unsupported_browser = detect_unsupported_browsers(request.META)
+    # except KeyError:
+    #     unsupported_browser = False
     try:
-        experimental_group = not Group.objects.get(name='control') in request.user.groups.all()
+        from .models import Participant
+        p = Participant.objects.get(user=request.user)
+        # condition_name = p.condition.name
+        condition = p.condition
     except:
-        experimental_group = False
-    try:
-        unsupported_browser = detect_unsupported_browsers(request.META)
-    except KeyError:
-        unsupported_browser = False
+        condition_name = None
     context = {
                'ROOT_URL': settings.ROOT_URL,
                'MEDIA_URL': settings.MEDIA_URL,
                'deployment': settings.HOSTING in ('deployment', 'localdeployment'),
                'deployment_local': settings.HOSTING == 'localdeployment',
-               'experimental_group': experimental_group,
-               'unsupported_browser': unsupported_browser,
+               'condition': condition,
+            #    'experimental_group': experimental_group,
+            #    'unsupported_browser': unsupported_browser,
                'site': get_current_site(request)
                }
     return context

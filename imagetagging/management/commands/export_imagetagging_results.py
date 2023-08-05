@@ -47,7 +47,7 @@ class Command(BaseCommand):
 
             try:
                 row = (current_user.pk, 
-                        current_user.participant.condition_active,
+                        current_user.participant.condition.name,
                         no_total_tags, 
                         no_correct_tags, 
                         no_successful_images, 

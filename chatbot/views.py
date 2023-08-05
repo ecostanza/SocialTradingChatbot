@@ -99,6 +99,7 @@ def participants_view(request):
     if username == "TEST":
         username = "TEST_USER__{}".format(datetime.strftime(datetime.now(), '%Y_%m_%d__%H_%M_%S'))
         is_test_user = True
+    
     try:
         user = User.objects.create_user(username=username)
         month = Month(user=user, number=1)
@@ -144,18 +145,36 @@ def participants_view(request):
         data = json.dumps(error)
         return HttpResponseBadRequest(data, content_type='application/json')
 
-    condition = Condition.objects.first()
-    condition_active = condition.active
+    participant = Participant()
+    participant.user = user
+    # participant.created_for_testing = is_test_user
 
-    participant = Participant(user=user, condition_active=condition_active)
+    # assign condition
+    # sort by number of runs/participants
+    # filter out TEST participants from this count
+    from django.db.models import Count, Q
+    all_conditions = Condition.objects.filter(active=True
+        ).annotate(n_participants=Count('participant',
+            exclude=Q(participant__user__username__startswith='TEST_USER__'))
+        ).order_by('n_participants')
+    
+    # take the min value
+    min_participants = all_conditions[0].n_participants
+    # get all TaskList objects which have the min value of completed tasks..
+    min_conditions = all_conditions.filter(n_participants=min_participants)
+    no_conditions = min_conditions.count()
+    # ..and randomly pick one of them
+    from random import randint
+    index = randint(0, no_conditions-1)
+    participant.condition = min_conditions[index]
+    # all_conditions = Condition.objects.filter(active=True
+    #     ).annotate(n_participants=Count('participant')
+    #     ).order_by('n_participants')
+    # participant.condition = all_conditions[0]
+
     participant.save()
+    login(request, user)
 
-    if condition_active:
-        condition.active = False
-    else:
-        condition.active = True
-
-    condition.save()
 
     # # TODO: create participant
     # participant = Participant()
@@ -178,7 +197,7 @@ def participants_view(request):
 def get_condition_active(request):
     user = request.user
 
-    condition_active = Participant.objects.get(user=user).condition_active
+    condition_active = Participant.objects.get(user=user).condition.name
 
     response = {'condition_active': condition_active}
 

@@ -4,8 +4,6 @@
 
 <!-- Optional JavaScript -->
 
-<script>var staticUrl = '{% static "" %}';</script>
-
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -13,17 +11,20 @@
 <script src="https://kit.fontawesome.com/44a5e49739.js" crossorigin="anonymous"></script>
 
 <script>
-    var staticUrl = '{% static "" %}';
+    //const staticUrl = '{% static "" %}';
+    const staticUrl = '{% static "" %}';
     window.IMG_URL = "{% static 'imagetagging/images/' %}";
-    var host = '{{ request.get_host }}';
-    var server_url;
-    if (host.includes('iot')) {
-        server_url = "https://iot.cs.ucl.ac.uk/n_bot";
-    } else {
-        server_url = 'http://{{ request.get_host }}';
-    }
+    const host = '{{ request.get_host }}';
+    //let server_url;
+    //if (host.includes('iot')) {
+    //    server_url = "https://iot.cs.ucl.ac.uk/n_bot";
+    //} else {
+    //    server_url = 'http://{{ request.get_host }}';
+    //}
+    const server_url = '{{ ROOT_URL }}';
     console.log('server_url:', server_url);
-    var username = "{{ request.user.username }}"
+    const condition = '{{ condition.name }}';
+    const show_credibility = {% if condition.credibility is True %}true{% else %}false{% endif %};
 </script>
 
 

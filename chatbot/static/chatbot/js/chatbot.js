@@ -444,8 +444,8 @@ $(document).ready(function () {
       $("#loading-gif").remove();
 
       // newspost = newsposts[newspostCounter];
-      profile = profiles[newspostCounter];
-      name = profile.fields.name;
+      const profile = profiles[newspostCounter];
+      const name = profile.fields.name;
 
       $.ajax({
         type: "GET",
@@ -470,8 +470,12 @@ $(document).ready(function () {
           } else {
             text = name + "'s portfolio to stay the same.";
           }
+
+          let btn = '';
           
-          const btn = `<button class= cred-button onClick="showModal(${window.getIdxForName(name)}, 'news')">verified<i class='fa-regular fa-question-circle' style='font-size:13px;color:#7393b3;padding:4px'></i></button>`;
+          if (show_credibility) {
+            btn = `<button class= cred-button onClick="showModal(${window.getIdxForName(name)}, 'news')">verified<i class='fa-regular fa-question-circle' style='font-size:13px;color:#7393b3;padding:4px'></i></button>`;
+          }
 
           var div =
             '<div class="wrapper-newspost"> \
