@@ -197,7 +197,11 @@ def participants_view(request):
 def get_condition_active(request):
     user = request.user
 
-    condition_active = Participant.objects.get(user=user).condition.name
+    condition_active = None
+    try:
+        condition_active = Participant.objects.get(user=user).condition.name
+    except:
+        pass
 
     response = {'condition_active': condition_active}
 
