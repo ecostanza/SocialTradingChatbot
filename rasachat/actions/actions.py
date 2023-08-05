@@ -1338,20 +1338,12 @@ class ShouldIUnfollowAdvice(Action):
 
             messages.append(random.choice(answers) + random.choice(verbs) + profile_name.title() + '\'s portfolio will ' + increase_or_decrease + ' next month')
 
-<<<<<<< HEAD
-        selected_message = random.choice(messages)
-        selected_message += '++ADVICE++'
-        print(selected_message)
-        dispatcher.utter_button_message(selected_message, buttons) 
-
-=======
         # dispatcher.utter_button_message(random.choice(messages), buttons)
         selected_message = random.choice(messages)
         if profile_name is not None:
             selected_message += '++ADVICE++'
         # print(selected_message)
         dispatcher.utter_button_message(selected_message, buttons) 
->>>>>>> 10fad0409daf16e62421c409bd7269b00f772d62
         return[]
 
     def appendButtons(self, user, positive, gender, amount_query, buttons):
@@ -1411,9 +1403,6 @@ class FallbackAction(Action):
 
         messages = []
 
-<<<<<<< HEAD
-        messages.append("I'm not sure I understand. Can you rephrase that please?")
-=======
         messages.append("Sorry, I don't understand. Can you rephrase that please?")
         if response_variation:
             messages.append("Sorry, I didn't quite catch that")
@@ -1425,7 +1414,6 @@ class FallbackAction(Action):
             messages.append("Sorry, can you rephrase that please?")
             messages.append("Hmm, not sure about that. Could you rephrase?")
             messages.append("Please rephrase that. I'm not sure I understand")
->>>>>>> 10fad0409daf16e62421c409bd7269b00f772d62
 
         dispatcher.utter_message(random.choice(messages))
 
