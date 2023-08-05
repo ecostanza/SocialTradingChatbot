@@ -437,8 +437,8 @@ def questionnaire_view(request):
     {'question': '4. From 1 to 5 (where 1 is strongly disagree and 5 is strongly agree), I perceived the <strong>Assistant</strong> to be credible.', choices: ['1', '2', '3', '4', '5']},
     {'question': '5. From 1 to 5 (where 1 is strongly disagree and 5 is strongly agree), I perceived the <strong>Newsfeed</strong> to be credible.', choices: ['1', '2', '3', '4', '5']},
     {'question': '6. From 1 to 5 (where 1 is strongly disagree and 5 is strongly agree), I perceived recommendations to be more credible when more sources aligned with it.', choices: ['1', '2', '3', '4', '5']},
-    {'question': '7. What would have made you trust the <strong>Assistant</strong> more?'},
-    {'question': '8. Please leave your comments about your experience interacting with the <strong>Assistant</strong>.'},
+    {'question': 'A. What would have made you trust the <strong>Assistant</strong> more?'},
+    {'question': 'B. Please leave your comments about your experience interacting with the <strong>Assistant</strong>.'},
     {'question': '<hr>Please leave your comments about the overall experience about this study, or your suggestions for improvement.'},
     {'question': '<hr>Were there any errors or issues interacting with the chatbot assistant? If so, please identify any errors you faced. If not, please state: <strong>not available</strong>'},
         ]
