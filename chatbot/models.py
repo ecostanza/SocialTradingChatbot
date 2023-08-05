@@ -12,6 +12,20 @@ class Condition(models.Model):
     def __str__(self):
         return self.name
 
+    def n_participants(self):
+        n_participants = Participant.objects.filter(
+            condition=self
+        ).exclude(
+            user__username__startswith='TEST_USER__').count()
+        return n_participants
+
+    def n_test_participants(self):
+        n_participants = Participant.objects.filter(
+            condition=self
+        ).filter(
+            user__username__startswith='TEST_USER__').count()
+        return n_participants
+
 
 class Participant(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)

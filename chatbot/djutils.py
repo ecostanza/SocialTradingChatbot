@@ -212,7 +212,7 @@ def populate_context(request):
         # condition_name = p.condition.name
         condition = p.condition
     except:
-        condition_name = None
+        condition = None
     context = {
                'ROOT_URL': settings.ROOT_URL,
                'MEDIA_URL': settings.MEDIA_URL,

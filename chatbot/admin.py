@@ -99,7 +99,7 @@ class UserActionAdmin(ExportActionModelAdmin):
     resource_class = UserActionResource
 
 class ConditionAdmin(admin.ModelAdmin):
-    list_display = ['name', 'active', 'credibility']
+    list_display = ['id', 'name', 'active', 'credibility', 'n_participants', 'n_test_participants']
     list_editable = ['active']
 
 class BotButtonClickResource(resources.ModelResource):
