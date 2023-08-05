@@ -23,6 +23,7 @@ from .views import (
     questionnaire_view,
     getNewsfeedButtonClick,
     getBotButtonClick,
+    cred_level,
     )
 
 urlpatterns = [
@@ -48,5 +49,6 @@ urlpatterns = [
     #path('post/', views.postButtonClick),
     path('newsfeedbuttonclick/', getNewsfeedButtonClick, name='newsfeed_button_click'),
     path('botbuttonclick/', getBotButtonClick, name='bot_button_click'),
+    path('credlevel/', cred_level, name='cred_level'),
 
 ]

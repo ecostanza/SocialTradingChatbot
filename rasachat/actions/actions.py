@@ -93,17 +93,7 @@ class GiveGeneralAdvice(Action):
         buttons = []
 
         if highest_changing_portfolio_name is None and lowest_changing_portfolio_name is None:
-            messages.append("I don't think you should follow or unfollow anyone else at the moment")
-            if response_variation:
-                messages.append("You're doing great! I don't think you should follow or unfollow anyone else this month")
-                messages.append("I don't think there is anyone you should follow or unfollow currently")
-                messages.append("You're doing great! I don't think there is anyone else you should follow or unfollow at the moment")
-                messages.append("That's it! I don't think there is any other portfolio you should follow or unfollow this month")
-                messages.append("That's it, you're doing great! I don't think there is anyone else you should follow or unfollow")
-                messages.append("I can't think of anyone else you should follow or unfollow at the moment. You're doing great!")
-                messages.append("I don't think there is anyone else you should start or stop following at the moment")
-                messages.append("You're doing great! I can't think of anyone else to follow or unfollow")
-                messages.append("I don't think you should follow or unfollow anyone else this month")
+            messages.append("I don't think there is anyone else you should start or stop following at the moment")
 
             buttons.append({"title": "Give me some advice", "payload": "Give me some advice"})
             if Portfolio.objects.filter(user=user, followed=False):
@@ -112,33 +102,13 @@ class GiveGeneralAdvice(Action):
                 buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
         elif lowest_changing_portfolio_name is None or higher_is_greater:
             messages.append("You should follow " + highest_changing_portfolio_name + ". I predict a positive change of " + str(round(highest_change)) + "% in " + highest_pronoun + " portfolio next month")
-            if response_variation:
-                messages.append("I think you should start following " + highest_changing_portfolio_name + ". I believe " + highest_pronoun + " porfolio will increase by " + str(round(highest_change)) + "% next month")
-                messages.append("You should follow " + highest_changing_portfolio_name + ". I think " + highest_pronoun + " porfolio will increase by " + str(round(highest_change)) + "%")
-                messages.append("I think  " + highest_changing_portfolio_name + "'s portfolio will increase by " + str(round(highest_change)) + "% next month, so you should follow " + highest_him_her)
-                messages.append("I believe " + highest_changing_portfolio_name + "'s portfolio will increase by " + str(round(highest_change)) + "%. I think you should start following " + highest_him_her)
-                messages.append("I predict a positive change of " + str(round(highest_change)) + "% in " + highest_changing_portfolio_name + "'s portfolio next month. I think you should follow " + highest_him_her)
-                messages.append("I'd start following " + highest_changing_portfolio_name + " if I were you. I think " + highest_pronoun + " portfolio will increase by " + str(round(highest_change)) + "%")
-                messages.append("I would start following " + highest_changing_portfolio_name + ". I believe " + highest_pronoun + " portfolio will grow by " + str(round(highest_change)) + "% next month")
-                messages.append("You should follow " + highest_changing_portfolio_name + "\'s portfolio. I think it will increase by " + str(round(highest_change)) + "% next month")
-                messages.append("I predict a positive change of " + str(round(highest_change)) + "% in " + highest_changing_portfolio_name + "\'s portfolio. I think you should start following " + highest_him_her)
 
             profile_name = highest_changing_portfolio_name
             portfolio_query = "not_followed"
             buttons.append({"title": "Do it", "payload": "Do it"})
             buttons.append({"title": "Never mind", "payload": "Never mind"})
         else:
-            messages.append("You should stop following " + lowest_changing_portfolio_name + ". I believe " + lowest_pronoun + " portfolio will decrease by " + str(round(abs(lowest_change))) + "%")
-            if response_variation:
-                messages.append("I think you should stop following " + lowest_changing_portfolio_name + ". I believe " + lowest_pronoun + " porfolio will decrease by " + str(round(abs(lowest_change))) + "% next month")
-                messages.append("I think " + lowest_changing_portfolio_name + "'s portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month. You should stop following " + lowest_him_her)
-                messages.append("You should unfollow " + lowest_changing_portfolio_name + ". I predict " + lowest_pronoun + " porfolio will decrease by " + str(round(abs(lowest_change))) + "%")
-                messages.append("I predict a negative change of " + str(round(abs(lowest_change)))  + " in " + lowest_changing_portfolio_name + "'s portfolio next month. I think you should stop following " + lowest_him_her)
-                messages.append("If I were you, I would stop following " + lowest_changing_portfolio_name + ". I think " + lowest_pronoun + " porfolio will decrease by " + str(round(abs(lowest_change))) + "% next month")
-                messages.append("I think " + lowest_changing_portfolio_name + "\'s portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month. You should unfollow " + lowest_him_her)
-                messages.append("My predictions tell me " + lowest_changing_portfolio_name + "\'s portfolio will decrease by " + str(round(abs(lowest_change))) + "%. You should consider unfollowing " + lowest_him_her)
-                messages.append("I predict the value of " + lowest_changing_portfolio_name + "\'s portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month. I would unfollow " + lowest_him_her + " if I were you")
-                messages.append("You should unfollow " + lowest_changing_portfolio_name + ". I think " + lowest_pronoun + " portfolio will decrease by " + str(round(abs(lowest_change))) + "%")
+            messages.append("You should unfollow " + lowest_changing_portfolio_name + ". I predict " + lowest_pronoun + " porfolio will decrease by " + str(round(abs(lowest_change))) + "%")
 
             profile_name = lowest_changing_portfolio_name
             portfolio_query = "followed"
@@ -1073,16 +1043,7 @@ class ShouldIFollowAdvice(Action):
             profile_name = tracker.latest_message['entities'][0]['value']
 
         if profile_name is None:
-            messages.append("Sorry, I can't find that portfolio. Have you spelt the name correctly?")
-            messages.append("Sorry, have you spelt the name correctly? I can't find that portfolio")
-            messages.append("I'm sorry, I can't find that portfolio. Have you spelt the name right?")
-            messages.append("I can't seem to find that portfolio. Have you spelt it correctly?")
-            messages.append("Sorry, have you spelt the name right? I can't seem to find that portfolio")
-            messages.append("Sorry, I can't find that one. Have you spelt the name right?")
-            messages.append("Have you spelt the name right? I can't find that portfolio!")
-            messages.append("My bad. I can't find that portfolio, have you spelt it right?")
-            messages.append("Hmm, I can't find that portfolio. Have you spelt the name correctly?")
-            messages.append("Have you spelt the name correctly? I can't seem to find that portfolio")
+            messages.append("Sorry, I'm having trouble finding that portfolio. Have you spelt the name correctly?")
 
             buttons.append({"title": "Give me some advice", "payload": "Give me some advice"})
             if Portfolio.objects.filter(user=user, followed=False):
@@ -1184,9 +1145,9 @@ class ShouldIFollowAdvice(Action):
                 self.appendButtons(False, user, portfolio.followed, profile_object.gender, amount_query, buttons)
 
             verbs = []
-            verbs.append('I believe ')
+            verbs.append('I predict ')
             if response_variation:
-                verbs.append('I predict ')
+                verbs.append('I believe ')
                 verbs.append('I think ')
                 verbs.append('I expect that ')
 
@@ -1373,19 +1334,24 @@ class ShouldIUnfollowAdvice(Action):
                 self.appendButtons(True, user, profile_object.gender, amount_query, buttons)
 
             verbs = []
-            verbs.append('I believe ')
             verbs.append('I predict ')
-            verbs.append('I think ')
-            verbs.append('I expect that ')
 
             messages.append(random.choice(answers) + random.choice(verbs) + profile_name.title() + '\'s portfolio will ' + increase_or_decrease + ' next month')
 
+<<<<<<< HEAD
+        selected_message = random.choice(messages)
+        selected_message += '++ADVICE++'
+        print(selected_message)
+        dispatcher.utter_button_message(selected_message, buttons) 
+
+=======
         # dispatcher.utter_button_message(random.choice(messages), buttons)
         selected_message = random.choice(messages)
         if profile_name is not None:
             selected_message += '++ADVICE++'
         # print(selected_message)
         dispatcher.utter_button_message(selected_message, buttons) 
+>>>>>>> 10fad0409daf16e62421c409bd7269b00f772d62
         return[]
 
     def appendButtons(self, user, positive, gender, amount_query, buttons):
@@ -1445,6 +1411,9 @@ class FallbackAction(Action):
 
         messages = []
 
+<<<<<<< HEAD
+        messages.append("I'm not sure I understand. Can you rephrase that please?")
+=======
         messages.append("Sorry, I don't understand. Can you rephrase that please?")
         if response_variation:
             messages.append("Sorry, I didn't quite catch that")
@@ -1456,6 +1425,7 @@ class FallbackAction(Action):
             messages.append("Sorry, can you rephrase that please?")
             messages.append("Hmm, not sure about that. Could you rephrase?")
             messages.append("Please rephrase that. I'm not sure I understand")
+>>>>>>> 10fad0409daf16e62421c409bd7269b00f772d62
 
         dispatcher.utter_message(random.choice(messages))
 

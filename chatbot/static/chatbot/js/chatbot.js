@@ -30,6 +30,29 @@ window.people = [
 
 window.peopleVariants = new Map(window.people.map((person, idx) => [person, idxVars[idx % 6]]));
 
+// posts the credibility list of window.people, for first month. Subsequent months are followed in the update month
+
+
+//const initialCredJSON = Object.fromEntries(window.peopleVariants);
+var post_url = server_url + "/credlevel/";
+var post_data = {
+  month: month,
+  initialCredJSON: Object.fromEntries(window.peopleVariants), 
+}
+fetch(post_url, {
+  method: 'POST',
+  body: JSON.stringify(post_data), 
+  credentials: 'include',
+  headers: {'Content-Type': 'application/json'}
+}).then(res => res.json()).then(response => {
+  console.log('POST response:', response);
+  console.log('POST response.headers:', response.headers);
+}).catch(err => {
+  console.log('POST error:', err);
+});
+
+
+console.log(post_data);
 
 
 $(document).ready(function () {  
@@ -327,6 +350,28 @@ $(document).ready(function () {
 
                       const newIdxVars = window.shuffleArray([ 0, 1, 2, 3, 4, 5 ]);
                       window.peopleVariants = new Map(window.people.map((person, idx) => [person, newIdxVars[idx % 6]]));
+
+                        const monthlyCredJSON = Object.fromEntries(window.peopleVariants);
+                        console.log(monthlyCredJSON);
+
+                        var post_url = server_url + "/credlevel/";
+                        var post_data1 = {
+                          month: month,
+                          monthlyCredJSON: Object.fromEntries(window.peopleVariants), 
+                        }
+                        fetch(post_url, {
+                          method: 'POST',
+                          body: JSON.stringify(post_data1), 
+                          credentials: 'include',
+                          headers: {'Content-Type': 'application/json'}
+                        }).then(res => res.json()).then(response => {
+                          console.log('POST response:', response);
+                          console.log('POST response.headers:', response.headers);
+                      }).catch(err => {
+                          console.log('POST error:', err);
+                      });
+                      
+
 
                       $("#month-number").html(month);
                       $("#result_div").append(

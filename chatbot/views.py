@@ -26,7 +26,7 @@ from django.db import IntegrityError
 from .djutils import to_dict
 
 from .models import Profile, Portfolio, Balance, Month, Message, Participant, \
-    Condition, Result, QuestionnaireResponse, FallbackCount, NewsfeedButtonClick, BotButtonClick
+    Condition, Result, QuestionnaireResponse, FallbackCount, NewsfeedButtonClick, BotButtonClick, CredibilityCounter
 
     
 
@@ -468,6 +468,18 @@ def questionnaire_view(request):
 
         #return redirect(completion_url)
         # return HttpResponse('the end')
+
+#below lists the credibility level across months for each participant
+@csrf_exempt
+@require_http_methods(['POST'])
+@login_required
+def cred_level(request):
+    credmonthly = CredibilityCounter(
+        user = request.user, 
+        portfolio_cred =  json.loads(request.body.decode('utf-8'))
+    )
+    credmonthly.save()
+    return HttpResponse("")
 
 # Below lists the pre-study questionnaire, which should lead to the instruction page of the study. 
 @csrf_exempt
