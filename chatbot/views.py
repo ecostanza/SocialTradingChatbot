@@ -429,14 +429,21 @@ def generate_next_portfolio_changes(request):
 @login_required
 def questionnaire_view(request):
     if request.method == 'GET':
+        participant = Participant.objects.get(user=request.user)
+        credibility = participant.condition.credibility
+
         questionnaire = '''[
     {'label': '<hr><h5>Please answer the following questions <u>based on your overall experience</u> completing the study</h5><hr>'},
     {'question': '1. From 1 to 5 (where 1 is the least and 5 is the most), how much did you trust the <strong>Assistant</strong> by the end of the study?', choices: ['1', '2', '3', '4', '5']},
     {'question': '2. From 1 to 5 (where 1 is the least and 5 is the most), how much did you trust the <strong>Newsfeed</strong> by the end of the study?', choices: ['1', '2', '3', '4', '5']},
     {'question': '3. From 1 to 5 (where 1 is not at all and 5 is all of the time), how often did the <strong>Assistant</strong> understand what you said?', choices: ['1', '2', '3', '4', '5']},
     {'question': '4. From 1 to 5 (where 1 is strongly disagree and 5 is strongly agree), I perceived the <strong>Assistant</strong> to be credible.', choices: ['1', '2', '3', '4', '5']},
-    {'question': '5. From 1 to 5 (where 1 is strongly disagree and 5 is strongly agree), I perceived the <strong>Newsfeed</strong> to be credible.', choices: ['1', '2', '3', '4', '5']},
+    {'question': '5. From 1 to 5 (where 1 is strongly disagree and 5 is strongly agree), I perceived the <strong>Newsfeed</strong> to be credible.', choices: ['1', '2', '3', '4', '5']},'''
+        if credibility:
+            questionnaire += '''
     {'question': '6. From 1 to 5 (where 1 is strongly disagree and 5 is strongly agree), I perceived recommendations to be more credible when more sources aligned with it.', choices: ['1', '2', '3', '4', '5']},
+            '''
+        questionnaire += '''
     {'question': 'A. What would have made you trust the <strong>Assistant</strong> more?'},
     {'question': 'B. Please leave your comments about your experience interacting with the <strong>Assistant</strong>.'},
     {'question': '<hr>Please leave your comments about the overall experience about this study, or your suggestions for improvement.'},
