@@ -6,4 +6,4 @@ db.sqlite3
 rasa_core.log
 investment_bot/privatesettings.py
 usage.log
-
+.DS_Store
