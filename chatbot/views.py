@@ -444,6 +444,7 @@ def questionnaire_view(request):
     {'question': '6. From 1 to 5 (where 1 is strongly disagree and 5 is strongly agree), I perceived recommendations to be more credible when more sources aligned with it.', choices: ['1', '2', '3', '4', '5']},
             '''
         questionnaire += '''
+    {'question': 'P. This is an attention check, please select option 2.', choices: ['1', '2', '3', '4', '5']},
     {'question': 'A. What would have made you trust the <strong>Assistant</strong> more?'},
     {'question': 'B. Please leave your comments about your experience interacting with the <strong>Assistant</strong>.'},
     {'question': '<hr>Please leave your comments about the overall experience about this study, or your suggestions for improvement.'},
@@ -503,6 +504,7 @@ def questionnaire1_view(request):
     {'question': 'P1. From 1 to 5 (where 1 is strongly disagree and 5 is strongly agree), My typical approach is to trust new technologies until they prove me I shouldnt', choices: ['1', '2', '3', '4', '5']},
     {'question': 'P2. From 1 to 5 (where 1 is strongly disagree and 5 is strongly agree), I generally give a technology the benefit of the doubt when I first use it', choices: ['1', '2', '3', '4', '5']},
     {'question': 'P3. From 1 to 5 (where 1 is strongly disagree and 5 is strongly agree), I usually trust a technology until it gives me a reason not to trust it', choices: ['1', '2', '3', '4', '5']},
+    {'question': 'P. This is an attention check, please select option 2.', choices: ['1', '2', '3', '4', '5']},
         ]
         '''
         context = {
