@@ -43,7 +43,6 @@ intents:
   - follow_everyone
 
 actions:
-  - utter_what_i_can_do
   - utter_greet
   - utter_cheer_up
   - utter_happy
@@ -58,7 +57,7 @@ actions:
   - utter_no_problem
   - utter_cool
   - utter_im_doing_my_best
-  - utter_newsfeed
+  - action_newsfeed
   - action_what_I_can_do
   - action_give_general_advice
   - action_give_following_advice
@@ -77,48 +76,6 @@ actions:
   - action_fallback
 
 responses:
-  utter_what_i_can_do:
-  - text: "Good question! You can tell me to follow or unfollow portfolios, add or withdraw amounts and ask me things like:  \"Who should I follow?\", \"Who should I unfollow?\", \"Invest another 100 on Aricka\" or \"withdraw from alois\""
-    buttons:
-      - title: "Give me some advice"
-        payload: "Give me some advice"
-      - title: "Who should I follow?"
-        payload: "Who should I follow?"
-      - title: "Who should I stop following?"
-        payload: "Who should I stop following?"
-  - text: "Ask me things like \"Who should I follow?\" or \"Will masami's portfolio decrease?\" to get advice, or tell me things like \"invest 200 in alois\" or \"withdraw from benjamin\""
-    buttons:
-      - title: "Give me some advice"
-        payload: "Give me some advice"
-      - title: "Who should I follow?"
-        payload: "Who should I follow?"
-      - title: "Who should I stop following?"
-        payload: "Who should I stop following?"
-  - text: "Good question! I can give you advice if you ask me things like \"Should I withdraw from florianne?\" or \"Who should I start following?\" and you can tell me things like \"invest 100 in ralph\" or \"invest more in andrzej\""
-    buttons:
-      - title: "Give me some advice"
-        payload: "Give me some advice"
-      - title: "Who should I follow?"
-        payload: "Who should I follow?"
-      - title: "Who should I stop following?"
-        payload: "Who should I stop following?"
-  - text: "You can ask me questions such as \"Who should I start following?\" or \"Should I invest more on paulinho?\" or tell me things like \"Put 300 on kanya\" or \"Unfollow everyone\""
-    buttons:
-      - title: "Give me some advice"
-        payload: "Give me some advice"
-      - title: "Who should I follow?"
-        payload: "Who should I follow?"
-      - title: "Who should I stop following?"
-        payload: "Who should I stop following?"
-  - text: "Good question! I can advise you on what to do if you ask me questions like \"Who should I start following?\" or \"Will aricka increase?\". You can also tell me things like \"Invest more on andrzej\" or \"Stop following ralph\""
-    buttons:
-      - title: "Give me some advice"
-        payload: "Give me some advice"
-      - title: "Who should I follow?"
-        payload: "Who should I follow?"
-      - title: "Who should I stop following?"
-        payload: "Who should I stop following?"
-
   utter_greet:
   - text: "Hey! How are you?"
     buttons:
@@ -1224,87 +1181,87 @@ responses:
       - title: "Who should I stop following?"
         payload: "Who should I stop following?"
 
-  utter_newsfeed:
-  - text: "The newsfeed shows news coming from external sources I'm not aware of"
-    buttons:
-      - title: "Give me some advice"
-        payload: "Give me some advice"
-      - title: "Who should I follow?"
-        payload: "Who should I follow?"
-      - title: "Who should I stop following?"
-        payload: "Who should I stop following?"
-  - text: "The newsfeed gets predictions from sources I don't know"
-    buttons:
-      - title: "Give me some advice"
-        payload: "Give me some advice"
-      - title: "Who should I follow?"
-        payload: "Who should I follow?"
-      - title: "Who should I stop following?"
-        payload: "Who should I stop following?"
-  - text: "The predictions of the newsfeed come from sources I don't know"
-    buttons:
-      - title: "Give me some advice"
-        payload: "Give me some advice"
-      - title: "Who should I follow?"
-        payload: "Who should I follow?"
-      - title: "Who should I stop following?"
-        payload: "Who should I stop following?"
-  - text: "I don't know where the newsfeed gets the predictions from"
-    buttons:
-      - title: "Give me some advice"
-        payload: "Give me some advice"
-      - title: "Who should I follow?"
-        payload: "Who should I follow?"
-      - title: "Who should I stop following?"
-        payload: "Who should I stop following?"
-  - text: "I don't know the source of the predictions in the newsfeed"
-    buttons:
-      - title: "Give me some advice"
-        payload: "Give me some advice"
-      - title: "Who should I follow?"
-        payload: "Who should I follow?"
-      - title: "Who should I stop following?"
-        payload: "Who should I stop following?"
-  - text: "Hmm, I'm not sure where the newsfeed generates predictions"
-    buttons:
-      - title: "Give me some advice"
-        payload: "Give me some advice"
-      - title: "Who should I follow?"
-        payload: "Who should I follow?"
-      - title: "Who should I stop following?"
-        payload: "Who should I stop following?"
-  - text: "I'm not sure where the newsfeed gets predictions from"
-    buttons:
-      - title: "Give me some advice"
-        payload: "Give me some advice"
-      - title: "Who should I follow?"
-        payload: "Who should I follow?"
-      - title: "Who should I stop following?"
-        payload: "Who should I stop following?"
-  - text: "I'm afraid I don't know where the newsfeed gets information from"
-    buttons:
-      - title: "Give me some advice"
-        payload: "Give me some advice"
-      - title: "Who should I follow?"
-        payload: "Who should I follow?"
-      - title: "Who should I stop following?"
-        payload: "Who should I stop following?"
-  - text: "I'm afraid I don't know much about the newsfeed"
-    buttons:
-      - title: "Give me some advice"
-        payload: "Give me some advice"
-      - title: "Who should I follow?"
-        payload: "Who should I follow?"
-      - title: "Who should I stop following?"
-        payload: "Who should I stop following?"
-  - text: "I'm afraid I don't know how the newsfeed works"
-    buttons:
-      - title: "Give me some advice"
-        payload: "Give me some advice"
-      - title: "Who should I follow?"
-        payload: "Who should I follow?"
-      - title: "Who should I stop following?"
-        payload: "Who should I stop following?"
+  # utter_newsfeed:
+  # - text: "The newsfeed shows news coming from external sources I'm not aware of"
+  #   buttons:
+  #     - title: "Give me some advice"
+  #       payload: "Give me some advice"
+  #     - title: "Who should I follow?"
+  #       payload: "Who should I follow?"
+  #     - title: "Who should I stop following?"
+  #       payload: "Who should I stop following?"
+  # - text: "The newsfeed gets predictions from sources I don't know"
+  #   buttons:
+  #     - title: "Give me some advice"
+  #       payload: "Give me some advice"
+  #     - title: "Who should I follow?"
+  #       payload: "Who should I follow?"
+  #     - title: "Who should I stop following?"
+  #       payload: "Who should I stop following?"
+  # - text: "The predictions of the newsfeed come from sources I don't know"
+  #   buttons:
+  #     - title: "Give me some advice"
+  #       payload: "Give me some advice"
+  #     - title: "Who should I follow?"
+  #       payload: "Who should I follow?"
+  #     - title: "Who should I stop following?"
+  #       payload: "Who should I stop following?"
+  # - text: "I don't know where the newsfeed gets the predictions from"
+  #   buttons:
+  #     - title: "Give me some advice"
+  #       payload: "Give me some advice"
+  #     - title: "Who should I follow?"
+  #       payload: "Who should I follow?"
+  #     - title: "Who should I stop following?"
+  #       payload: "Who should I stop following?"
+  # - text: "I don't know the source of the predictions in the newsfeed"
+  #   buttons:
+  #     - title: "Give me some advice"
+  #       payload: "Give me some advice"
+  #     - title: "Who should I follow?"
+  #       payload: "Who should I follow?"
+  #     - title: "Who should I stop following?"
+  #       payload: "Who should I stop following?"
+  # - text: "Hmm, I'm not sure where the newsfeed generates predictions"
+  #   buttons:
+  #     - title: "Give me some advice"
+  #       payload: "Give me some advice"
+  #     - title: "Who should I follow?"
+  #       payload: "Who should I follow?"
+  #     - title: "Who should I stop following?"
+  #       payload: "Who should I stop following?"
+  # - text: "I'm not sure where the newsfeed gets predictions from"
+  #   buttons:
+  #     - title: "Give me some advice"
+  #       payload: "Give me some advice"
+  #     - title: "Who should I follow?"
+  #       payload: "Who should I follow?"
+  #     - title: "Who should I stop following?"
+  #       payload: "Who should I stop following?"
+  # - text: "I'm afraid I don't know where the newsfeed gets information from"
+  #   buttons:
+  #     - title: "Give me some advice"
+  #       payload: "Give me some advice"
+  #     - title: "Who should I follow?"
+  #       payload: "Who should I follow?"
+  #     - title: "Who should I stop following?"
+  #       payload: "Who should I stop following?"
+  # - text: "I'm afraid I don't know much about the newsfeed"
+  #   buttons:
+  #     - title: "Give me some advice"
+  #       payload: "Give me some advice"
+  #     - title: "Who should I follow?"
+  #       payload: "Who should I follow?"
+  #     - title: "Who should I stop following?"
+  #       payload: "Who should I stop following?"
+  # - text: "I'm afraid I don't know how the newsfeed works"
+  #   buttons:
+  #     - title: "Give me some advice"
+  #       payload: "Give me some advice"
+  #     - title: "Who should I follow?"
+  #       payload: "Who should I follow?"
+  #     - title: "Who should I stop following?"
+  #       payload: "Who should I stop following?"
 
 slots:
   portfolio_query:

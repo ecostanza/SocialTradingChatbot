@@ -11,7 +11,7 @@ rules:
 - rule: show newsfeed anytime user asks about newsfeed
   steps:
   - intent: newsfeed
-  - action: utter_newsfeed
+  - action: action_newsfeed
 
 
 - rule: confirm about unfollow everyone action anytime asked unfollow

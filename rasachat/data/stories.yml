@@ -4,7 +4,7 @@ stories:
 - story: what_can_you_do
   steps:
   - intent: what_can_you_do
-  - action: utter_what_i_can_do
+  - action: action_what_I_can_do
 
 - story: doing my best
   steps:
@@ -14,7 +14,7 @@ stories:
 - story: news
   steps:
   - intent: newsfeed
-  - action: utter_newsfeed
+  - action: action_newsfeed
 
 - story: happy path
   steps:

@@ -26,7 +26,7 @@ import random
 
 condition = '2nd'
 
-def custom_utter_button_message(message, condition, buttons, dispatcher):
+def custom_utter_message(message, condition, dispatcher, buttons=None):
     if condition == '1st':
         new_message = message
     elif condition == '2nd':
@@ -34,7 +34,12 @@ def custom_utter_button_message(message, condition, buttons, dispatcher):
     else:
         new_message = 'psv: ' + message
     
-    dispatcher.utter_button_message(new_message, buttons)
+    if buttons is None:
+        print('about to utter_message')
+        dispatcher.utter_message(new_message)
+        print('after utter_message')
+    else:
+        dispatcher.utter_button_message(new_message, buttons)
 
 class WhatICanDo(Action):
     def name(self) -> Text:
@@ -42,7 +47,23 @@ class WhatICanDo(Action):
 
     def run(self, dispatcher, tracker, domain):
 
-        dispatcher.utter_template("utter_what_i_can_do", tracker)
+        custom_utter_message(
+            "Good question! You can tell me to follow or unfollow portfolios, add or withdraw amounts and ask me things like:  \"Who should I follow?\", \"Who should I unfollow?\", \"Invest another 100 on Aricka\" or \"withdraw from alois\"",
+            condition,
+            dispatcher)
+
+        return []
+
+class Newsfeed(Action):
+    def name(self) -> Text:
+        return "action_newsfeed"
+
+    def run(self, dispatcher, tracker, domain):
+
+        custom_utter_message(
+            "I'm afraid I don't know much about the newsfeed",
+            condition,
+            dispatcher)
 
         return []
 
@@ -153,7 +174,7 @@ class GiveGeneralAdvice(Action):
             buttons.append({"title": "Never mind", "payload": "Never mind"})
 
         #dispatcher.utter_button_message(random.choice(messages), buttons)
-        custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        custom_utter_message(random.choice(messages), condition, dispatcher, None, buttons)
 
         return [SlotSet("name", profile_name), SlotSet("portfolio_query", portfolio_query)]
 
@@ -240,7 +261,7 @@ class GiveFollowingAdvice(Action):
                     buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
         # dispatcher.utter_button_message(random.choice(messages), buttons)
-        custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        custom_utter_message(random.choice(messages), condition, dispatcher, None, buttons)
 
         return [SlotSet("name", highest_changing_portfolio_name)]
 
@@ -332,7 +353,8 @@ class GiveUnfollowingAdvice(Action):
                     buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
         # dispatcher.utter_button_message(random.choice(messages), buttons)
-        custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        # custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        custom_utter_message(random.choice(messages), condition, dispatcher, None, buttons)
 
         return [SlotSet("name", lowest_changing_portfolio_name)]
 
@@ -437,7 +459,8 @@ class AskAddAmount(Action):
             buttons.append({"title": "£" + str(fourtyPercent), "payload": "£" + str(fourtyPercent)})
 
         # dispatcher.utter_button_message(random.choice(messages), buttons)
-        custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        # custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        custom_utter_message(random.choice(messages), condition, dispatcher, None, buttons)
 
         return [SlotSet("name", profile_name)]
 
@@ -482,7 +505,8 @@ class AskWithdrawAmount(Action):
         messages.append("Got it. How much to invest?")
 
         # dispatcher.utter_button_message(random.choice(messages), buttons)
-        custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        # custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        custom_utter_message(random.choice(messages), condition, dispatcher, None, buttons)
 
         return [SlotSet("name", profile_name)]
 
@@ -602,7 +626,8 @@ class Follow(Action):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
         # dispatcher.utter_button_message(random.choice(messages), buttons)
-        custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        # custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        custom_utter_message(random.choice(messages), condition, dispatcher, None, buttons)
 
         return[]
 
@@ -678,7 +703,8 @@ class Unfollow(Action):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
         # dispatcher.utter_button_message(random.choice(messages), buttons)
-        custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        # custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        custom_utter_message(random.choice(messages), condition, dispatcher, None, buttons)
 
         return[]
 
@@ -809,7 +835,8 @@ class AddAmount(Action):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
         # dispatcher.utter_button_message(random.choice(messages), buttons)
-        custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        # custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        custom_utter_message(random.choice(messages), condition, dispatcher, None, buttons)
 
         return []
 
@@ -943,7 +970,8 @@ class WithdrawAmount(Action):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
         # dispatcher.utter_button_message(random.choice(messages), buttons)
-        custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        # custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        custom_utter_message(random.choice(messages), condition, dispatcher, None, buttons)
 
         return []
 
@@ -1022,7 +1050,8 @@ class UnfollowEveryone(Action):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
         # dispatcher.utter_button_message(random.choice(messages), buttons)
-        custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        # custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        custom_utter_message(random.choice(messages), condition, dispatcher, None, buttons)
 
         return []
 
@@ -1161,7 +1190,8 @@ class ShouldIFollowAdvice(Action):
             messages.append(random.choice(answers) + random.choice(verbs) + profile_name.title() + '\'s portfolio will ' + increase_or_decrease + ' next month')
 
         # dispatcher.utter_button_message(random.choice(messages), buttons)
-        custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        # custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        custom_utter_message(random.choice(messages), condition, dispatcher, None, buttons)
 
         return[]
 
@@ -1338,7 +1368,8 @@ class ShouldIUnfollowAdvice(Action):
             messages.append(random.choice(answers) + random.choice(verbs) + profile_name.title() + '\'s portfolio will ' + increase_or_decrease + ' next month')
 
         # dispatcher.utter_button_message(random.choice(messages), buttons)
-        custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        # custom_utter_button_message(random.choice(messages), condition, buttons, dispatcher)
+        custom_utter_message(random.choice(messages), condition, dispatcher, None, buttons)
 
         return[]
 
