@@ -189,7 +189,7 @@ if LIVE:
 else:
     STATIC_URL = '/static/'
     STATICFILES_DIRS = [
-        BASE_DIR + '/media/'
+        # BASE_DIR + '/media/'
     ]
 
 if HOSTING == 'development':
