@@ -6,7 +6,7 @@ rules:
 - rule: say thank you any time user says thank you
   steps:
   - intent: thank_you
-  - action: utter_no_problem
+  - action: action_no_problem
 
 - rule: show newsfeed anytime user asks about newsfeed
   steps:
@@ -17,14 +17,14 @@ rules:
 - rule: confirm about unfollow everyone action anytime asked unfollow
   steps:
   - intent: unfollow_everyone
-  - action: utter_are_you_sure_unfollow_everyone
+  - action: action_are_you_sure_unfollow_everyone
 
 - rule: deny following everyone anytime asked to follow everyone
   steps:
   - intent: follow_everyone
-  - action: utter_please_follow_one_portfolio_at_a_time
+  - action: action_please_follow_one_portfolio_at_a_time
 
 # - rule: inform user of bots' capacity anytime user asks
 #   steps: 
 #   - intent: what_can_you_do
-#   - action: utter_what_i_can_do
+#   - action: action_what_i_can_do

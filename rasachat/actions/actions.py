@@ -41,6 +41,106 @@ def custom_utter_message(message, condition, dispatcher, buttons=None):
     else:
         dispatcher.utter_button_message(new_message, buttons)
 
+"""
+Short responses
+"""
+
+class Greet(Action):
+    def name(self) -> Text:
+        return "action_greet"
+
+    def run(self, dispatcher, tracker, domain):
+
+        custom_utter_message(
+            "Hey! How are you?",
+            condition,
+            dispatcher)
+
+        return []
+
+class CheerUp(Action):
+    def name(self) -> Text:
+        return "action_cheer_up"
+
+    def run(self, dispatcher, tracker, domain):
+
+        custom_utter_message(
+            "I'm sorry to hear that. I hope you'll get better!",
+            condition,
+            dispatcher)
+
+        return []
+
+class Happy(Action):
+    def name(self) -> Text:
+        return "action_happy"
+
+    def run(self, dispatcher, tracker, domain):
+
+        custom_utter_message(
+            "Great!",
+            condition,
+            dispatcher)
+
+        return []
+
+class Goodbye(Action):
+    def name(self) -> Text:
+        return "action_goodbye"
+
+    def run(self, dispatcher, tracker, domain):
+
+        custom_utter_message(
+            "Bye!",
+            condition,
+            dispatcher)
+
+        return []
+
+class Okay(Action):
+    def name(self) -> Text:
+        return "action_okay"
+
+    def run(self, dispatcher, tracker, domain):
+
+        custom_utter_message(
+            "Ok",
+            condition,
+            dispatcher)
+
+        return []
+
+class NoProblem(Action):
+    def name(self) -> Text:
+        return "action_no_problem"
+
+    def run(self, dispatcher, tracker, domain):
+
+        custom_utter_message(
+            "No problem!",
+            condition,
+            dispatcher)
+
+        return []
+
+class Cool(Action):
+    def name(self) -> Text:
+        return "action_cool"
+
+    def run(self, dispatcher, tracker, domain):
+
+        custom_utter_message(
+            "Cool",
+            condition,
+            dispatcher)
+
+        return []
+
+
+"""
+Long responses
+"""
+
 class WhatICanDo(Action):
     def name(self) -> Text:
         return "action_what_I_can_do"
@@ -67,6 +167,118 @@ class Newsfeed(Action):
 
         return []
 
+class ImDoingMyBest(Action):
+    def name(self) -> Text:
+        return "action_im_doing_my_best"
+
+    def run(self, dispatcher, tracker, domain):
+        
+        custom_utter_message(
+            "I'm doing my best!",
+            condition,
+            dispatcher
+        )
+
+        return []
+
+
+class FollowOnePortfolioAtATime(Action):
+    def name(self) -> Text:
+        return "action_please_follow_one_portfolio_at_a_time"
+
+    def run(self, dispatcher, tracker, domain):
+        
+        custom_utter_message(
+            "Please tell me one portfolio to follow at a time so we can decide the amount to invest",
+            condition,
+            dispatcher
+        )
+
+        return []
+
+class UnfollowEveryone(Action):
+    def name(self) -> Text:
+        return "action_are_you_sure_unfollow_everyone"
+
+    def run(self, dispatcher, tracker, domain):
+        
+        custom_utter_message(
+            "Are you sure you want to unfollow everyone?",
+            condition,
+            dispatcher
+        )
+
+        return []
+
+class InvalidAmount(Action):
+    def name(self) -> Text:
+        return "action_invalid_amount"
+
+    def run(self, dispatcher, tracker, domain):
+        
+        custom_utter_message(
+            "That's not a valid amount!",
+            condition,
+            dispatcher
+        )
+
+        return []
+
+class InvalidPortfolio(Action):
+    def name(self) -> Text:
+        return "action_invalid_portfolio"
+
+    def run(self, dispatcher, tracker, domain):
+        
+        custom_utter_message(
+            "I can't find that portfolio. Have you spelt it right?",
+            condition,
+            dispatcher
+        )
+
+        return []
+
+class AlreadyNotFollowedPortfolio(Action):
+    def name(self) -> Text:
+        return "action_already_not_followed_portfolio"
+    
+    def run(self, dispatcher, tracker, domain):
+        
+        custom_utter_message(
+            "You're not following that portfolio",
+            condition,
+            dispatcher
+        )
+
+        return []
+
+class AlreadyFollowedPortfolio(Action):
+    def name(self) -> Text:
+        return "action_already_followed_portfolio"
+
+    def run(self, dispatcher, tracker, domain):
+        
+        custom_utter_message(
+            "You are already following that portfolio",
+            condition,
+            dispatcher
+        )
+
+        return []
+
+class AlreadyFollowedPortfolio(Action):
+    def name(self) -> Text:
+        return "action_already_followed_portfolio"
+
+    def run(self, dispatcher, tracker, domain):
+        
+        custom_utter_message(
+            "You are already following that portfolio",
+            condition,
+            dispatcher
+        )
+
+        return []
 
 class GiveGeneralAdvice(Action):
     def name(self) -> Text:

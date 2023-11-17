@@ -9,7 +9,7 @@ stories:
 - story: doing my best
   steps:
   - intent: why_did_you
-  - action: utter_im_doing_my_best
+  - action: action_im_doing_my_best
 
 - story: news
   steps:
@@ -19,38 +19,38 @@ stories:
 - story: happy path
   steps:
   - intent: greet
-  - action: utter_greet
+  - action: action_greet
   - intent: mood_great
-  - action: utter_happy
+  - action: action_happy
 
 - story: sad path 1
   steps:
   - intent: greet
-  - action: utter_greet
+  - action: action_greet
   - intent: mood_unhappy
-  - action: utter_cheer_up
+  - action: action_cheer_up
 
 - story: sad path 2
   steps:
   - intent: greet
-  - action: utter_greet
+  - action: action_greet
   - intent: mood_unhappy
-  - action: utter_cheer_up
+  - action: action_cheer_up
 
 - story: say goodbye
   steps:
   - intent: goodbye
-  - action: utter_goodbye
+  - action: action_goodbye
 
 - story: thanks
   steps:
   - intent: thank_you
-  - action: utter_no_problem
+  - action: action_no_problem
 
 - story: ok
   steps:
   - intent: ok
-  - action: utter_cool
+  - action: action_cool
 
 - story: nevermind
   steps:
@@ -61,7 +61,7 @@ stories:
   #   - name: null
   #   - amount_query: null
   #   - amount: null
-  - action: utter_cool
+  - action: action_cool
 
 - story: give_general_advice
   steps:
@@ -271,7 +271,7 @@ stories:
   - slot_was_set:
     - portfolio_query: "invalid"
     #- name: "Jeremy"
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: follow_null
   steps:
@@ -281,7 +281,7 @@ stories:
   - slot_was_set:
     - portfolio_query: null
     - name: null
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: follow_already_followed
   steps:
@@ -291,7 +291,7 @@ stories:
   - slot_was_set:
     - portfolio_query: "followed"
     # - name: "Alois Reiter"
-  - action: utter_already_followed_portfolio
+  - action: action_already_followed_portfolio
 
 - story: unfollow_successful
   steps:
@@ -311,7 +311,7 @@ stories:
   - slot_was_set:
     - portfolio_query: "not_followed"
     #- name: "Paulinho Simoes"
-  - action: utter_already_not_followed_portfolio
+  - action: action_already_not_followed_portfolio
 
 - story: unfollow_invalid_name
   steps:
@@ -321,7 +321,7 @@ stories:
   - slot_was_set:
     - portfolio_query: "invalid"
     #- name: "John"
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: unfollow_null
   steps:
@@ -331,7 +331,7 @@ stories:
   - slot_was_set:
     - portfolio_query: null
     #- name: null
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 
 
@@ -395,7 +395,7 @@ stories:
   - slot_was_set:
     - portfolio_query: "invalid"
     #- name: "shrek"
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: add_amount_null_name
   steps:
@@ -405,7 +405,7 @@ stories:
   - slot_was_set:
     - portfolio_query: null
     #- name: null
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: add_amount_invalid_amount
   steps:
@@ -416,7 +416,7 @@ stories:
     - amount_query: "invalid"
     #- name: "Andrzej Kraviec"
     #- amount: "-12.00"
-  - action: utter_invalid_amount
+  - action: action_invalid_amount
 
 - story: add_amount_null_amount
   steps:
@@ -428,7 +428,7 @@ stories:
     #- name: "Masami Nishimura"
     - amount_query: null
     #- amount: null
-  - action: utter_invalid_amount
+  - action: action_invalid_amount
 
 
 
@@ -498,7 +498,7 @@ stories:
     #- name: "Mark Ritz"
     - amount_query: "valid"
     #- amount: "10.00"
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: withdraw_amount_null_name
   steps:
@@ -508,7 +508,7 @@ stories:
   - slot_was_set:
     - portfolio_query: null
     #- name: null
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: withdraw_amount_not_followed
   steps:
@@ -520,7 +520,7 @@ stories:
     #- name: "William Shore"
     - amount_query: "valid"
     #- amount: "65.50"
-  - action: utter_already_not_followed_portfolio
+  - action: action_already_not_followed_portfolio
 
 - story: withdraw_from_successful
   steps:
@@ -555,30 +555,30 @@ stories:
 - story: unfollow_everyone_affirmed
   steps:
   - intent: unfollow_everyone
-  - action: utter_are_you_sure_unfollow_everyone
+  - action: action_are_you_sure_unfollow_everyone
   - intent: affirm
   - action: action_unfollow_everyone
 
 - story: unfollow_everyone_do_it
   steps:
   - intent: unfollow_everyone
-  - action: utter_are_you_sure_unfollow_everyone
+  - action: action_are_you_sure_unfollow_everyone
   - intent: do_it
   - action: action_unfollow_everyone
 
 - story: unfollow_everyone_denied
   steps:
   - intent: unfollow_everyone
-  - action: utter_are_you_sure_unfollow_everyone
+  - action: action_are_you_sure_unfollow_everyone
   - intent: deny
-  - action: utter_okay
+  - action: action_okay
 
 
 
 - story: follow_everyone
   steps:
   - intent: follow_everyone
-  - action: utter_please_follow_one_portfolio_at_a_time
+  - action: action_please_follow_one_portfolio_at_a_time
 
 
 
@@ -600,7 +600,7 @@ stories:
   - slot_was_set:
     - portfolio_query: "invalid"
     #- name: "Daniel"
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: should_i_follow_none
   steps:
@@ -610,7 +610,7 @@ stories:
   - slot_was_set:
     - portfolio_query: null
     #- name: null
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: should_i_follow_with_follow_successful
   steps:
@@ -670,7 +670,7 @@ stories:
     #- name: "Benjamin Parker"
   - action: action_should_i_follow_advice
   - intent: follow_him_her
-  - action: utter_already_followed_portfolio
+  - action: action_already_followed_portfolio
 
 - story: should_i_follow_with_follow_do_it_already_followed
   steps:
@@ -682,7 +682,7 @@ stories:
     #- name: "Benjamin Parker"
   - action: action_should_i_follow_advice
   - intent: do_it
-  - action: utter_already_followed_portfolio
+  - action: action_already_followed_portfolio
 
 - story: should_i_follow_with_unfollow_successful
   steps:
@@ -712,7 +712,7 @@ stories:
   - slot_was_set:
     - portfolio_query: "not_followed"
     #- name: "Andrzej Kraviec"
-  - action: utter_already_not_followed_portfolio
+  - action: action_already_not_followed_portfolio
 
 - story: should_i_follow_followed_with_add_amount
   steps:
@@ -807,7 +807,7 @@ stories:
     #- name: "Florianne Paget"
   - action: action_should_i_follow_advice
   - intent: withdraw_amount_from_him_her
-  - action: utter_already_not_followed_portfolio
+  - action: action_already_not_followed_portfolio
 
 - story: should_i_follow_with_withdraw_from_him_her_not_followed
   steps:
@@ -819,7 +819,7 @@ stories:
     #- name: "Florianne Paget"
   - action: action_should_i_follow_advice
   - intent: withdraw_from_him_her
-  - action: utter_already_not_followed_portfolio
+  - action: action_already_not_followed_portfolio
 
 
 
@@ -841,7 +841,7 @@ stories:
   - slot_was_set:
     - portfolio_query: "invalid"
     #- name: "Max Jasper"
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: should_i_unfollow_none
   steps:
@@ -851,7 +851,7 @@ stories:
   - slot_was_set:
     - portfolio_query: null
     #- name: null
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: should_i_unfollow_with_unfollow_successful
   steps:
@@ -885,7 +885,7 @@ stories:
   - slot_was_set:
     - portfolio_query: "not_followed"
     #- name: "Paulinho Simoes"
-  - action: utter_already_not_followed_portfolio
+  - action: action_already_not_followed_portfolio
 
 - story: should_i_unfollow_with_add_amount
   steps:
@@ -941,7 +941,7 @@ stories:
   - slot_was_set:
     - portfolio_query: "invalid"
     #- name: "Jack"
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: should_i_add_amount_none
   steps:
@@ -951,7 +951,7 @@ stories:
   - slot_was_set:
     - portfolio_query: null
     #- name: null
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: should_i_add_amount_followed_with_add_amount_successful
   steps:
@@ -1114,7 +1114,7 @@ stories:
   - slot_was_set:
     - portfolio_query: "invalid"
     #- name: "George Smith"
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: should_i_add_amount_null_name
   steps:
@@ -1124,7 +1124,7 @@ stories:
   - slot_was_set:
     - portfolio_query: null
     #- name: null
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: should_i_add_amount_invalid_amount
   steps:
@@ -1134,7 +1134,7 @@ stories:
   - slot_was_set:
     - amount_query: "invalid"
     #- amount: "-48.239"
-  - action: utter_invalid_amount
+  - action: action_invalid_amount
 
 
 
@@ -1147,7 +1147,7 @@ stories:
   - slot_was_set:
     - portfolio_query: "not_followed"
     #- name: "Benjamin Parker"
-  - action: utter_already_not_followed_portfolio
+  - action: action_already_not_followed_portfolio
 
 - story: should_i_withdraw_amount_invalid
   steps:
@@ -1157,7 +1157,7 @@ stories:
   - slot_was_set:
     - portfolio_query: "invalid"
     #- name: "Jack"
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: should_i_withdraw_amount_none
   steps:
@@ -1167,7 +1167,7 @@ stories:
   - slot_was_set:
     - portfolio_query: null
     #- name: null
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: should_i_withdraw_amount_followed_with_withdraw_amount_successful
   steps:
@@ -1261,7 +1261,7 @@ stories:
   - slot_was_set:
     - portfolio_query: "invalid"
     #- name: "George Smith"
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: should_i_withdraw_amount_null_name
   steps:
@@ -1271,7 +1271,7 @@ stories:
   - slot_was_set:
     - portfolio_query: null
     #- name: null
-  - action: utter_invalid_portfolio
+  - action: action_invalid_portfolio
 
 - story: should_i_withdraw_amount_invalid_amount
   steps:
@@ -1281,4 +1281,4 @@ stories:
   - slot_was_set:
     - amount_query: "invalid"
     #- amount: "-48.239"
-  - action: utter_invalid_amount
+  - action: action_invalid_amount
