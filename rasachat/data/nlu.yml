@@ -2,7 +2,7 @@ version: "3.1"
 
 nlu: 
 - intent: what_can_you_do
-  examples: |  
+  examples: |
     - what can you do?
     - what do you do
     - how can you help me?
@@ -60,6 +60,7 @@ nlu:
     - are news reliable?
     - why do the news say
     - the news say that
+    - what is newsfeed
 
 - intent: affirm
   examples: |
