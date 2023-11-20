@@ -53,10 +53,9 @@ def get_user(tracker):
     return user
 
 def get_condition(user):
-    #participant = Participant.objects.get(user=user)
-    #condition = participant.condition.name
-    #return condition
-    return '2nd'
+    participant = Participant.objects.get(user=user)
+    condition = participant.condition.name
+    return condition
 
 """
 Short responses

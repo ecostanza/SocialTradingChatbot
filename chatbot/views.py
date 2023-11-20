@@ -1,7 +1,6 @@
 # coding: utf-8
 import json
-import random
-from random import gauss, randrange
+from random import gauss, randrange, randint, choice as random_choice
 import decimal
 import os
 
@@ -17,6 +16,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.timezone import datetime
 from django.core import serializers
 from django.db import IntegrityError
+from django.db.models import Count, Q
 
 #from rest_framework.response import Response
 #from rest_framework.decorators import api_view
@@ -144,29 +144,33 @@ def participants_view(request):
         data = json.dumps(error)
         return HttpResponseBadRequest(data, content_type='application/json')
 
-    condition = Condition.objects.first()
-    condition_active = condition.active
-
-    participant = Participant(user=user, condition_active=condition_active)
-    participant.save()
-
-    if condition_active:
-        condition.active = False
-    else:
-        condition.active = True
-
-    condition.save()
-
-    # # TODO: create participant
-    # participant = Participant()
-    # participant.user = user
+    participant = Participant()
+    participant.user = user
     # participant.created_for_testing = is_test_user
-    # # TODO: assign condition or task list
-    # all_task_lists = TaskList.objects.filter(active=True
+
+    # assign condition
+    # sort by number of runs/participants
+    # filter out TEST participants from this count
+    all_conditions = Condition.objects.filter(active=True
+        ).annotate(n_participants=Count('participant',
+            exclude=Q(participant__user__username__startswith='TEST_USER__'))
+        ).order_by('n_participants')
+    
+    # take the min value
+    min_participants = all_conditions[0].n_participants
+    # get all TaskList objects which have the min value of completed tasks..
+    min_conditions = all_conditions.filter(n_participants=min_participants)
+    no_conditions = min_conditions.count()
+    # ..and randomly pick one of them
+    index = randint(0, no_conditions-1)
+    participant.condition = min_conditions[index]
+    # all_conditions = Condition.objects.filter(active=True
     #     ).annotate(n_participants=Count('participant')
     #     ).order_by('n_participants')
-    # participant.task_list = all_task_lists[0]
-    # participant.save()
+    # participant.condition = all_conditions[0]
+
+    participant.save()
+
     login(request, user)
 
     #data = json.dumps(to_dict(participant, transverse=True))
@@ -174,15 +178,15 @@ def participants_view(request):
     return HttpResponse(data, content_type='application/json')
 
 
-@login_required
-def get_condition_active(request):
-    user = request.user
+# @login_required
+# def get_condition_active(request):
+#     user = request.user
 
-    condition_active = Participant.objects.get(user=user).condition_active
+#     condition_active = Participant.objects.get(user=user).condition_active
 
-    response = {'condition_active': condition_active}
+#     response = {'condition_active': condition_active}
 
-    return HttpResponse(json.dumps(response), content_type="application/json")
+#     return HttpResponse(json.dumps(response), content_type="application/json")
 
 
 # @csrf_exempt
@@ -264,7 +268,7 @@ def update_portfolios(request):
     response = {}
 
     for portfolio in Portfolio.objects.filter(user=user):
-        next_change = random.choice([portfolio.chatbotNextChange, portfolio.newspostNextChange])
+        next_change = random_choice([portfolio.chatbotNextChange, portfolio.newspostNextChange])
 
         portfolio.lastChange = round(next_change, 2)
 

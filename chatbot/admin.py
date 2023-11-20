@@ -23,7 +23,7 @@ class BalanceResource(resources.ModelResource):
     class Meta:
         model = Balance
         fields = ['user', 'available', 'invested',
-                    'user_username', 'user__participant__condition_active']
+                    'user_username', 'user__participant__condition__name']
 
 
 class BalanceAdmin(ExportActionModelAdmin):
@@ -35,12 +35,12 @@ class MessageResource(resources.ModelResource):
     class Meta:
         model = Message
         fields = ['user', 'month', 'from_participant',
-                    'from_button', 'created_at', 'text', 'user_username', 'user__participant__condition_active']
+                    'from_button', 'created_at', 'text', 'user_username', 'user__participant__condition__name']
 
 
 class MessageAdmin(ExportActionModelAdmin):
     #list_display = ['participant', 'participant__user__username', 'task', 'task__task_list__name']
-    #list_display = ['__str__', 'user__participant__condition_active']
+    #list_display = ['__str__', 'user__participant__condition__name']
     list_display = ['__str__', 'user']
     resource_class = MessageResource
 
@@ -49,7 +49,7 @@ class ResultResource(resources.ModelResource):
     class Meta:
         model = Result
         fields = ['month', 'profit', 'images_tagged', 'total',
-                    'user_username', 'user__participant__condition_active']
+                    'user_username', 'user__participant__condition__name']
 
 
 class ResultAdmin(ExportActionModelAdmin):
@@ -63,7 +63,7 @@ class QuestionnaireResponseResource(resources.ModelResource):
         model = QuestionnaireResponse
         fields = ['user', 'answer', 'completion_time', 'subtask_time',
                     'created_at', 'updated_at',
-                    'user_username', 'user__participant__condition_active']
+                    'user_username', 'user__participant__condition__name']
 
 
 class QuestionnaireResponseAdmin(ExportActionModelAdmin):
@@ -89,7 +89,7 @@ class UserActionResource(resources.ModelResource):
         fields = ['user', 'month', 'available', 'invested',
                     'portfolio', 'chatbot_change', 'newspost_change',
                     'action', 'amount',
-                    'user_username', 'user__participant__condition_active']
+                    'user_username', 'user__participant__condition__name']
 
 
 class UserActionAdmin(ExportActionModelAdmin):
@@ -104,11 +104,26 @@ class UserActionAdmin(ExportActionModelAdmin):
 #     class Meta:
 #         model = DismissNotificationCount
 #         fields = ['user', 'count',
-#                     'user_username', 'user__participant__condition_active']
+#                     'user_username', 'user__participant__condition__name']
 
 # class DismissNotificationCountAdmin(ExportActionModelAdmin):
 #     list_display = ['__str__', 'count']
 #     resource_class = DismissNotificationCountResource
+
+class ParticipantResource(resources.ModelResource):
+    class Meta:
+        model = Participant
+        fields = ['user', 'condition__name']
+
+
+class ParticipantAdmin(ExportActionModelAdmin):
+    list_display = ['user', 'condition']
+    resource_class = ParticipantResource
+
+class ConditionAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'active'] #, 'n_participants', 'n_test_participants']
+    list_editable = ['active']
+
 
 admin.site.register(Balance, BalanceAdmin)
 admin.site.register(Message, MessageAdmin)
@@ -119,7 +134,7 @@ admin.site.register(FallbackCount, FallbackCountAdmin)
 # admin.site.register(DismissNotificationCount, DismissNotificationCountAdmin)
 admin.site.register(Profile)
 admin.site.register(Portfolio)
-admin.site.register(Participant)
-admin.site.register(Condition)
+admin.site.register(Participant, ParticipantAdmin)
+admin.site.register(Condition, ConditionAdmin)
 admin.site.register(NewsfeedButtonClick)
 admin.site.register(BotButtonClick)

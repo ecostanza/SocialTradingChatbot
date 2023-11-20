@@ -6,16 +6,18 @@ from django.db.models import Sum
 
 class Condition(models.Model):
     active = models.BooleanField(default=True, null=False)
+    name = models.CharField(max_length=128, null=False)
 
     def __str__(self):
-        return "Condition"
+        return self.name
 
 
 class Participant(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    condition_active = models.BooleanField(default=True, null=False)
+    # condition_active = models.BooleanField(default=True, null=False)
+    condition = models.ForeignKey(Condition, null=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Participant'
