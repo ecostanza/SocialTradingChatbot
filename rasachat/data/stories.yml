@@ -6,6 +6,11 @@ stories:
   - intent: what_can_you_do
   - action: action_what_I_can_do
 
+- story: remind_me_about_image_tagging
+  steps:
+  - intent: remind_me_about_image_tagging
+  - action: action_remind_image_tagging
+
 - story: doing my best
   steps:
   - intent: why_did_you

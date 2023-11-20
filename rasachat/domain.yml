@@ -41,6 +41,7 @@ intents:
   - withdraw_from_him_her
   - unfollow_everyone
   - follow_everyone
+  - remind_me_about_image_tagging
 
 actions:
   - action_greet
@@ -74,6 +75,7 @@ actions:
   - action_unfollow_everyone
   - action_reset_slots
   - action_fallback
+  - action_remind_image_tagging
 
 # responses:
   # utter_greet:

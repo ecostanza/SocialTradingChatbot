@@ -4,7 +4,7 @@ var botMessageAppended = false;
 var givePeriodicAdvice = true;
 var ignoredBotMessage = false;
 
-$(document).ready(function () {
+$(document).ready(async function () {
   var adviceCountdown = 45;
 
   adviceCountdownInterval = setInterval(function () {
@@ -78,9 +78,10 @@ $(document).ready(function () {
     data = data[0];
 
     console.log(`GOT RESPONSE OF ${data}`);
-    var responseDelay = data["text"].length * 45;
-    if (responseDelay < 1200) {
-      responseDelay = 1200;
+    const delay_per_char = 15;
+    var responseDelay = data["text"].length * delay_per_char;
+    if (responseDelay < (26 * delay_per_char)) {
+      responseDelay = 26 * delay_per_char;
     }
 
     setTimeout(function () {
@@ -321,4 +322,9 @@ $(document).ready(function () {
       );
     }
   });
+
+  sendMessage("What can you do?", true, false, false, false);
+  await new Promise(resolve => setTimeout(resolve, 7000));
+  sendMessage("remind me about image tagging", true, false, false, false);
+
 });

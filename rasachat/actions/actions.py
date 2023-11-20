@@ -13,7 +13,7 @@ sys.path.insert(0, project_dir)
 import os, django
 # os.environ["DJANGO_SETTINGS_MODULE"] = 'investment_bot.settings'
 django.setup()
-from chatbot.models import Portfolio, Profile, Balance, Month, UserAction, FallbackCount
+from chatbot.models import Portfolio, Profile, Balance, Month, UserAction, FallbackCount, Participant
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.aggregates import Count
@@ -24,20 +24,39 @@ from django.db.models import Sum
 from decimal import Decimal, InvalidOperation
 import random
 
-condition = '2nd'
+# condition = '2nd'
 
-def custom_utter_message(message, condition, dispatcher, buttons=None):
-    if condition == '1st':
+def custom_utter_message(message, tracker, dispatcher, buttons=None):
+    user = get_user(tracker)
+    condition = get_condition(user)
+
+    if '1st' in condition:
         new_message = message
-    elif condition == '2nd':
+    elif '2nd' in condition:
         new_message = '2nd: ' + message
-    else:
+    elif 'passive' in condition:
         new_message = 'psv: ' + message
+    else:
+        raise ValueError('Invalid condition')
     
     if buttons is None:
         dispatcher.utter_message(new_message)
     else:
         dispatcher.utter_button_message(new_message, buttons)
+
+
+def get_user(tracker):
+    username = tracker.current_state()["sender_id"]
+
+    connection.close()
+    user = User.objects.get(username=username)
+    return user
+
+def get_condition(user):
+    #participant = Participant.objects.get(user=user)
+    #condition = participant.condition.name
+    #return condition
+    return '2nd'
 
 """
 Short responses
@@ -51,7 +70,7 @@ class Greet(Action):
 
         custom_utter_message(
             "Hey! How are you?",
-            condition,
+            tracker,
             dispatcher)
 
         return []
@@ -64,7 +83,7 @@ class CheerUp(Action):
 
         custom_utter_message(
             "I'm sorry to hear that. I hope you'll get better!",
-            condition,
+            tracker,
             dispatcher)
 
         return []
@@ -77,7 +96,7 @@ class Happy(Action):
 
         custom_utter_message(
             "Great!",
-            condition,
+            tracker,
             dispatcher)
 
         return []
@@ -90,7 +109,7 @@ class Goodbye(Action):
 
         custom_utter_message(
             "Bye!",
-            condition,
+            tracker,
             dispatcher)
 
         return []
@@ -103,7 +122,7 @@ class Okay(Action):
 
         custom_utter_message(
             "Ok",
-            condition,
+            tracker,
             dispatcher)
 
         return []
@@ -116,7 +135,7 @@ class NoProblem(Action):
 
         custom_utter_message(
             "No problem!",
-            condition,
+            tracker,
             dispatcher)
 
         return []
@@ -129,7 +148,7 @@ class Cool(Action):
 
         custom_utter_message(
             "Cool",
-            condition,
+            tracker,
             dispatcher)
 
         return []
@@ -146,8 +165,22 @@ class WhatICanDo(Action):
     def run(self, dispatcher, tracker, domain):
 
         custom_utter_message(
-            "Good question! You can tell me to follow or unfollow portfolios, add or withdraw amounts and ask me things like:  \"Who should I follow?\", \"Who should I unfollow?\", \"Invest another 100 on Aricka\" or \"withdraw from alois\"",
-            condition,
+            "You can tell me to follow or unfollow portfolios, add or withdraw amounts and ask me things like:  \"Who should I follow?\", \"Who should I unfollow?\", \"Invest another 100 on Aricka\" or \"withdraw from alois\"",
+            tracker,
+            dispatcher)
+
+        return []
+
+class RemindImageTagging(Action):
+    def name(self) -> Text:
+        return "action_remind_image_tagging"
+
+    def run(self, dispatcher, tracker, domain):
+
+        # action_remind_image_tagging
+        custom_utter_message(
+            "Remember, you can switch to Image Tagging by clicking the \"Task\" button in the top right corner.",
+            tracker,
             dispatcher)
 
         return []
@@ -160,7 +193,7 @@ class Newsfeed(Action):
 
         custom_utter_message(
             "I'm afraid I don't know much about the newsfeed",
-            condition,
+            tracker,
             dispatcher)
 
         return []
@@ -173,7 +206,7 @@ class ImDoingMyBest(Action):
         
         custom_utter_message(
             "I'm doing my best!",
-            condition,
+            tracker,
             dispatcher
         )
 
@@ -188,7 +221,7 @@ class FollowOnePortfolioAtATime(Action):
         
         custom_utter_message(
             "Please tell me one portfolio to follow at a time so we can decide the amount to invest",
-            condition,
+            tracker,
             dispatcher
         )
 
@@ -202,7 +235,7 @@ class UnfollowEveryone(Action):
         
         custom_utter_message(
             "Are you sure you want to unfollow everyone?",
-            condition,
+            tracker,
             dispatcher
         )
 
@@ -216,7 +249,7 @@ class InvalidAmount(Action):
         
         custom_utter_message(
             "That's not a valid amount!",
-            condition,
+            tracker,
             dispatcher
         )
 
@@ -230,7 +263,7 @@ class InvalidPortfolio(Action):
         
         custom_utter_message(
             "I can't find that portfolio. Have you spelt it right?",
-            condition,
+            tracker,
             dispatcher
         )
 
@@ -244,7 +277,7 @@ class AlreadyNotFollowedPortfolio(Action):
         
         custom_utter_message(
             "You're not following that portfolio",
-            condition,
+            tracker,
             dispatcher
         )
 
@@ -258,7 +291,7 @@ class AlreadyFollowedPortfolio(Action):
         
         custom_utter_message(
             "You are already following that portfolio",
-            condition,
+            tracker,
             dispatcher
         )
 
@@ -272,7 +305,7 @@ class AlreadyFollowedPortfolio(Action):
         
         custom_utter_message(
             "You are already following that portfolio",
-            condition,
+            tracker,
             dispatcher
         )
 
@@ -283,10 +316,7 @@ class GiveGeneralAdvice(Action):
         return "action_give_general_advice"
 
     def run(self, dispatcher, tracker, domain):
-        username = tracker.current_state()["sender_id"]
-
-        connection.close()
-        user = User.objects.get(username=username)
+        user = get_user(tracker)
 
         highest_change = 1
         highest_pronoun = ''
@@ -383,7 +413,7 @@ class GiveGeneralAdvice(Action):
             buttons.append({"title": "Do it", "payload": "Do it"})
             buttons.append({"title": "Never mind", "payload": "Never mind"})
 
-        custom_utter_message(random.choice(messages), condition, dispatcher, buttons)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
 
         return [SlotSet("name", profile_name), SlotSet("portfolio_query", portfolio_query)]
 
@@ -393,11 +423,7 @@ class GiveFollowingAdvice(Action):
         return "action_give_following_advice"
 
     def run(self, dispatcher, tracker, domain):
-        print("action_give_following_advice")
-        username = tracker.current_state()["sender_id"]
-
-        connection.close()
-        user = User.objects.get(username=username)
+        user = get_user(tracker)
 
         not_followed_portfolios = Portfolio.objects.filter(user=user, followed=False)
 
@@ -469,7 +495,7 @@ class GiveFollowingAdvice(Action):
                 if Portfolio.objects.filter(user=user, followed=True):
                     buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
-        custom_utter_message(random.choice(messages), condition, dispatcher, buttons)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
 
         return [SlotSet("name", highest_changing_portfolio_name)]
 
@@ -479,10 +505,7 @@ class GiveUnfollowingAdvice(Action):
         return "action_give_unfollowing_advice"
 
     def run(self, dispatcher, tracker, domain):
-        username = tracker.current_state()["sender_id"]
-
-        connection.close()
-        user = User.objects.get(username=username)
+        user = get_user(tracker)
 
         followed_portfolios = Portfolio.objects.filter(user=user, followed=True)
 
@@ -560,7 +583,7 @@ class GiveUnfollowingAdvice(Action):
                 if Portfolio.objects.filter(user=user, followed=True):
                     buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
-        custom_utter_message(random.choice(messages), condition, dispatcher, buttons)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
 
         return [SlotSet("name", lowest_changing_portfolio_name)]
 
@@ -570,12 +593,7 @@ class FetchPortfolio(Action):
         return "action_fetch_portfolio"
 
     def run(self, dispatcher, tracker, domain):
-        username = tracker.current_state()["sender_id"]
-
-        # print('action_fetch_portfolio')
-
-        connection.close()
-        user = User.objects.get(username=username)
+        user = get_user(tracker)
 
         profile_name = ''
         for e in tracker.latest_message['entities']:
@@ -631,10 +649,7 @@ class AskAddAmount(Action):
         return "action_ask_add_amount"
 
     def run(self, dispatcher, tracker, domain):
-        connection.close()
-        user = User.objects.get(username=(tracker.current_state())["sender_id"])
-
-        profile_name = tracker.get_slot('name')
+        user = get_user(tracker)
 
         balance = Balance.objects.get(user=user)
         available_amount = balance.available
@@ -664,7 +679,7 @@ class AskAddAmount(Action):
         if fourtyPercent > 0 and fourtyPercent != twentyPercent:
             buttons.append({"title": "£" + str(fourtyPercent), "payload": "£" + str(fourtyPercent)})
 
-        custom_utter_message(random.choice(messages), condition, dispatcher, buttons)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
 
         return [SlotSet("name", profile_name)]
 
@@ -674,9 +689,7 @@ class AskWithdrawAmount(Action):
         return "action_ask_withdraw_amount"
 
     def run(self, dispatcher, tracker, domain):
-
-        connection.close()
-        user = User.objects.get(username=(tracker.current_state())["sender_id"])
+        user = get_user(tracker)
 
         profile_name = tracker.get_slot('name')
 
@@ -708,7 +721,7 @@ class AskWithdrawAmount(Action):
         messages.append("What is the amount you would like to invest?")
         messages.append("Got it. How much to invest?")
 
-        custom_utter_message(random.choice(messages), condition, dispatcher, buttons)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
 
         return [SlotSet("name", profile_name)]
 
@@ -718,12 +731,7 @@ class Follow(Action):
         return "action_follow"
 
     def run(self, dispatcher, tracker, domain):
-        username = tracker.current_state()["sender_id"]
-
-        connection.close()
-        user = User.objects.get(username=username)
-
-        print(user.username)
+        user = get_user(tracker)
 
         profile_name = tracker.get_slot('name')
 
@@ -760,6 +768,9 @@ class Follow(Action):
                 amount_query = 'valid'
 
             if amount_query == 'valid':
+                # TODO: could insert here the code to 
+                # inject an error in the amount or portfolio name
+
                 amount = str(amount).replace('£','')
                 balance = Balance.objects.get(user=user)
                 available_before = balance.available
@@ -827,7 +838,7 @@ class Follow(Action):
         if Portfolio.objects.filter(user=user, followed=True):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
-        custom_utter_message(random.choice(messages), condition, dispatcher, buttons)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
 
         return[]
 
@@ -837,9 +848,8 @@ class Unfollow(Action):
         return "action_unfollow"
 
     def run(self, dispatcher, tracker, domain):
-        connection.close()
-        user = User.objects.get(username=(tracker.current_state())["sender_id"])
-
+        user = get_user(tracker)
+        
         profile_name = tracker.get_slot('name')
 
         messages = []
@@ -902,7 +912,7 @@ class Unfollow(Action):
         if Portfolio.objects.filter(user=user, followed=True):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
-        custom_utter_message(random.choice(messages), condition, dispatcher, buttons)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
 
         return[]
 
@@ -912,8 +922,7 @@ class AddAmount(Action):
         return "action_add_amount"
 
     def run(self, dispatcher, tracker, domain):
-        connection.close()
-        user = User.objects.get(username=(tracker.current_state())["sender_id"])
+        user = get_user(tracker)
 
         profile_name = tracker.get_slot('name')
 
@@ -1032,7 +1041,7 @@ class AddAmount(Action):
         if Portfolio.objects.filter(user=user, followed=True):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
-        custom_utter_message(random.choice(messages), condition, dispatcher, buttons)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
 
         return []
 
@@ -1042,11 +1051,7 @@ class WithdrawAmount(Action):
         return "action_withdraw_amount"
 
     def run(self, dispatcher, tracker, domain):
-        username = tracker.current_state()["sender_id"]
-
-        connection.close()
-        user = User.objects.get(username=username)
-
+        user = get_user(tracker)
         profile_name = tracker.get_slot('name')
 
         messages = []
@@ -1165,7 +1170,7 @@ class WithdrawAmount(Action):
         if Portfolio.objects.filter(user=user, followed=True):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
-        custom_utter_message(random.choice(messages), condition, dispatcher, buttons)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
 
         return []
 
@@ -1175,11 +1180,7 @@ class UnfollowEveryone(Action):
         return "action_unfollow_everyone"
 
     def run(self, dispatcher, tracker, domain):
-        username = tracker.current_state()["sender_id"]
-
-        connection.close()
-        user = User.objects.get(username=username)
-
+        user = get_user(tracker)
         followed_portfolios = Portfolio.objects.filter(user=user, followed=True)
 
         messages = []
@@ -1243,7 +1244,7 @@ class UnfollowEveryone(Action):
         if Portfolio.objects.filter(user=user, followed=True):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
-        custom_utter_message(random.choice(messages), condition, dispatcher, buttons)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
 
         return []
 
@@ -1253,10 +1254,7 @@ class ShouldIFollowAdvice(Action):
         return 'action_should_i_follow_advice'
 
     def run(self, dispatcher, tracker, domain):
-        username = tracker.current_state()["sender_id"]
-
-        connection.close()
-        user = User.objects.get(username=username)
+        user = get_user(tracker)
         messages = []
 
         profile_name = tracker.get_slot('name')
@@ -1381,7 +1379,7 @@ class ShouldIFollowAdvice(Action):
 
             messages.append(random.choice(answers) + random.choice(verbs) + profile_name.title() + '\'s portfolio will ' + increase_or_decrease + ' next month')
 
-        custom_utter_message(random.choice(messages), condition, dispatcher, buttons)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
 
         return[]
 
@@ -1435,11 +1433,7 @@ class ShouldIUnfollowAdvice(Action):
         return 'action_should_i_unfollow_advice'
 
     def run(self, dispatcher, tracker, domain):
-        username = tracker.current_state()["sender_id"]
-
-        connection.close()
-        user = User.objects.get(username=username)
-
+        user = get_user(tracker)
         messages = []
 
         profile_name = tracker.get_slot('name')
@@ -1557,7 +1551,7 @@ class ShouldIUnfollowAdvice(Action):
 
             messages.append(random.choice(answers) + random.choice(verbs) + profile_name.title() + '\'s portfolio will ' + increase_or_decrease + ' next month')
 
-        custom_utter_message(random.choice(messages), condition, dispatcher, buttons)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
 
         return[]
 
@@ -1607,11 +1601,7 @@ class FallbackAction(Action):
 
     # def run(self, dispatcher, tracker, domain):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        username = tracker.current_state()["sender_id"]
-
-        connection.close()
-        user = User.objects.get(username=username)
-
+        user = get_user(tracker)
         fallback_count = FallbackCount.objects.get(user=user)
         fallback_count.count += 1
         fallback_count.save()

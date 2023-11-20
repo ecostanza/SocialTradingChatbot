@@ -2,10 +2,10 @@ var conditionActive;
 var month = 1;
 
 $(document).ready(function () {
-  window.variants = [
-    0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0,
-    1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5,
-  ];
+  // window.variants = [
+  //   0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0,
+  //   1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5,
+  // ];
 
   var contentHeight = $(".content-container").height();
   var portfoliosHeight = $("#portfolios").height();
@@ -66,75 +66,69 @@ $(document).ready(function () {
     });
   });
 
-  $.ajax({
-    type: "GET",
-    url: server_url + "/getconditionactive/",
-    success: function (response) {
-      conditionActive = false;
+  // -----------
+  // setTimeout(function () {
+  //   $("#result_div").append(
+  //     '<img id="typing-gif" src="' +
+  //       staticUrl +
+  //       'chatbot/images/typing.svg">',
+  //   );
+  // }, 1200);
 
-      setTimeout(function () {
-        $("#result_div").append(
-          '<img id="typing-gif" src="' +
-            staticUrl +
-            'chatbot/images/typing.svg">',
-        );
-      }, 1200);
+  // setTimeout(function () {
+  //   $("#result_div #typing-gif").remove();
+  //   $("#result_div").append("<p id='bot-message'>Hi there!</p><br>");
+  // }, 2200);
 
-      setTimeout(function () {
-        $("#result_div #typing-gif").remove();
-        $("#result_div").append("<p id='bot-message'>Hi there!</p><br>");
-      }, 2200);
+  // setTimeout(function () {
+  //   $("#result_div").append(
+  //     '<img id="typing-gif" src="' +
+  //       staticUrl +
+  //       'chatbot/images/typing.svg">',
+  //   );
+  // }, 2700);
 
-      setTimeout(function () {
-        $("#result_div").append(
-          '<img id="typing-gif" src="' +
-            staticUrl +
-            'chatbot/images/typing.svg">',
-        );
-      }, 2700);
+  // setTimeout(function () {
+  //   $("#result_div #typing-gif").remove();
+  //   $("#result_div").append(
+  //     '<p id=\'bot-message\'>You can tell me to follow or unfollow portfolios, add or withdraw amounts and ask me things like: "Should I invest 50 in ralph?", "Who should I unfollow?", "Invest another 100 on Aricka" or "withdraw from alois".</p><br>',
+  //   );
+  // }, 700);
 
-      setTimeout(function () {
-        $("#result_div #typing-gif").remove();
-        $("#result_div").append(
-          '<p id=\'bot-message\'>You can tell me to follow or unfollow portfolios, add or withdraw amounts and ask me things like: "Should I invest 50 in ralph?", "Who should I unfollow?", "Invest another 100 on Aricka" or "withdraw from alois".</p><br>',
-        );
-      }, 7700);
+  // setTimeout(function () {
+  //   $("#result_div").append(
+  //     '<img id="typing-gif" src="' +
+  //       staticUrl +
+  //       'chatbot/images/typing.svg">',
+  //   );
+  // }, 8200);
 
-      setTimeout(function () {
-        $("#result_div").append(
-          '<img id="typing-gif" src="' +
-            staticUrl +
-            'chatbot/images/typing.svg">',
-        );
-      }, 8200);
+  // setTimeout(function () {
+  //   $("#result_div #typing-gif").remove();
+  //   $("#result_div").append(
+  //     "<p id='bot-message'>Remember, you can switch to Image Tagging by clicking the \"Task\" button in the top right corner.</p><br>",
+  //   );
+  // }, 1100);
 
-      setTimeout(function () {
-        $("#result_div #typing-gif").remove();
-        $("#result_div").append(
-          "<p id='bot-message'>Remember, you can switch to Image Tagging by clicking the \"Task\" button in the top right corner.</p><br>",
-        );
-      }, 11200);
+  // if (conditionActive) {
+  //   setTimeout(function () {
+  //     $('<div class="row suggestion-row"></div>').appendTo("#result_div");
+  //     $('<p class="sugg-options">Give me some advice</p>').appendTo(
+  //       ".suggestion-row",
+  //     );
+  //     $('<p class="sugg-options">Who should I follow?</p>').appendTo(
+  //       ".suggestion-row",
+  //     );
 
-      if (conditionActive) {
-        setTimeout(function () {
-          $('<div class="row suggestion-row"></div>').appendTo("#result_div");
-          $('<p class="sugg-options">Give me some advice</p>').appendTo(
-            ".suggestion-row",
-          );
-          $('<p class="sugg-options">Who should I follow?</p>').appendTo(
-            ".suggestion-row",
-          );
+  //     suggestionRowHeight = $(".suggestion-row").height();
+  //     resultDivHeight = $(window).height() - (215 + suggestionRowHeight);
 
-          suggestionRowHeight = $(".suggestion-row").height();
-          resultDivHeight = $(window).height() - (215 + suggestionRowHeight);
-
-          $("#result_div").css("height", resultDivHeight);
-          $("#result_div").scrollTop($("#result_div")[0].scrollHeight);
-        }, 4500);
-      }
-    },
-  });
-
+  //     $("#result_div").css("height", resultDivHeight);
+  //     $("#result_div").scrollTop($("#result_div")[0].scrollHeight);
+  //   }, 4500);
+  // }
+  // -------------
+  
   $("#parentheses").hide();
 
   $("#month-number").html(month);
@@ -370,7 +364,7 @@ $(document).ready(function () {
     }
   }
 
-  shuffleArray(window.variants);
+  // shuffleArray(window.variants);
 
   window.showModal = (item, clickType) => {
     //$.ajax({
@@ -458,11 +452,11 @@ $(document).ready(function () {
             text = name + "'s portfolio to stay the same.";
           }
 
-          const currVariant = window.variants.pop();
+          // const currVariant = window.variants.pop();
 
           // const btn = `<button class= cred-button onClick="showModal(${currVariant}, 'news')">recommendation is verified</button>`;
 
-          window.variants.splice(0, 0, currVariant);
+          // window.variants.splice(0, 0, currVariant);
 
           var div =
             '<div class="wrapper-newspost"> \

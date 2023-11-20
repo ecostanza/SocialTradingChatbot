@@ -14,6 +14,17 @@ nlu:
     - tell me what you do:
     - tell me what you can do
 
+- intent: remind_me_about_image_tagging
+  examples: |
+    - remind me about image tagging
+    - what about image tatgging
+    - what about tagging images
+    - how do I tag images?
+    - how do I do image tagging?
+    - tell me about image tagging
+    - tell me about tagging images
+
+
 - intent: greet
   examples: |
     - hey
