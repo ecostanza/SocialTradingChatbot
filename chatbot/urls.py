@@ -9,7 +9,7 @@ from .views import (
     consent_page,
     instructions_page,
     chatbot_page,
-    get_condition_active,
+    # get_condition_active,
     update_portfolios,
     update_balances,
     update_month,
