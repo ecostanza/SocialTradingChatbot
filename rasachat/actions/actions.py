@@ -23,19 +23,34 @@ from django.db import connection
 from django.db.models import Sum
 from decimal import Decimal, InvalidOperation
 import random
+from django.utils import timezone
 
 # condition = '2nd'
 
-def custom_utter_message(message, tracker, dispatcher, buttons=None):
+from csv import reader
+r = reader(open('./responses.csv', 'r'))
+# skip header line
+next(r)
+second_lut = {}
+passive_lut = {}
+for line in r:
+    print(line)
+    first, second, passive = line
+    second_lut[first] = second
+    passive_lut[first] = passive
+
+def custom_utter_message(message, tracker, dispatcher, buttons=None, message_params=None):
     user = get_user(tracker)
     condition = get_condition(user)
 
     if '1st' in condition:
-        new_message = message
+        new_message = message % message_params
     elif '2nd' in condition:
-        new_message = '2nd: ' + message
+        # new_message = '2nd: ' + message
+        new_message = second_lut[message] % message_params
     elif 'passive' in condition:
-        new_message = 'psv: ' + message
+        # new_message = 'psv: ' + message
+        new_message = passive_lut[message] % message_params
     else:
         raise ValueError('Invalid condition')
     
@@ -56,6 +71,24 @@ def get_condition(user):
     participant = Participant.objects.get(user=user)
     condition = participant.condition.name
     return condition
+
+def is_time_for_error(user):
+    # get the last month of current user
+    month = Month.objects.filter(user=user).order_by('number').last()
+    now = timezone.now()
+    elapsed_time = (now - month.created_at).total_seconds()
+    
+    # no errors for odd numbered months
+    if month.number % 2 == 1:
+        return False
+    
+    # TODO: tweak this and possibly make it parametric
+    if elapsed_time > 10 and month.errors_experienced == 0:
+        month.errors_experienced += 1
+        month.save()
+        return True
+    
+    return False
 
 """
 Short responses
@@ -361,59 +394,80 @@ class GiveGeneralAdvice(Action):
         higher_is_greater = highest_change >= abs(lowest_change)
 
         buttons = []
+        message_params = {}
 
         if highest_changing_portfolio_name is None and lowest_changing_portfolio_name is None:
-            messages.append("You're doing great! I don't think you should follow or unfollow anyone else this month")
             messages.append("I don't think there is anyone you should follow or unfollow currently")
-            messages.append("You're doing great! I don't think there is anyone else you should follow or unfollow at the moment")
-            messages.append("I don't think you should follow or unfollow anyone else at the moment")
-            messages.append("That's it! I don't think there is any other portfolio you should follow or unfollow this month")
-            messages.append("That's it, you're doing great! I don't think there is anyone else you should follow or unfollow")
-            messages.append("I can't think of anyone else you should follow or unfollow at the moment. You're doing great!")
-            messages.append("I don't think there is anyone else you should start or stop following at the moment")
-            messages.append("You're doing great! I can't think of anyone else to follow or unfollow")
-            messages.append("I don't think you should follow or unfollow anyone else this month")
+            # messages.append("You're doing great! I don't think you should follow or unfollow anyone else this month")
+            # messages.append("You're doing great! I don't think there is anyone else you should follow or unfollow at the moment")
+            # messages.append("I don't think you should follow or unfollow anyone else at the moment")
+            # messages.append("That's it! I don't think there is any other portfolio you should follow or unfollow this month")
+            # messages.append("That's it, you're doing great! I don't think there is anyone else you should follow or unfollow")
+            # messages.append("I can't think of anyone else you should follow or unfollow at the moment. You're doing great!")
+            # messages.append("I don't think there is anyone else you should start or stop following at the moment")
+            # messages.append("You're doing great! I can't think of anyone else to follow or unfollow")
+            # messages.append("I don't think you should follow or unfollow anyone else this month")
 
             buttons.append({"title": "Give me some advice", "payload": "Give me some advice"})
             if Portfolio.objects.filter(user=user, followed=False):
                 buttons.append({"title": "Who should I follow?", "payload": "Who should i follow?"})
             if Portfolio.objects.filter(user=user, followed=True):
                 buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
+   
+            custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
+
         elif lowest_changing_portfolio_name is None or higher_is_greater:
-            messages.append("I think you should start following " + highest_changing_portfolio_name + ". I believe " + highest_pronoun + " porfolio will increase by " + str(round(highest_change)) + "% next month")
-            messages.append("You should follow " + highest_changing_portfolio_name + ". I think " + highest_pronoun + " porfolio will increase by " + str(round(highest_change)) + "%")
-            messages.append("I think  " + highest_changing_portfolio_name + "'s portfolio will increase by " + str(round(highest_change)) + "% next month, so you should follow " + highest_him_her)
-            messages.append("I believe " + highest_changing_portfolio_name + "'s portfolio will increase by " + str(round(highest_change)) + "%. I think you should start following " + highest_him_her)
-            messages.append("I predict a positive change of " + str(round(highest_change)) + "% in " + highest_changing_portfolio_name + "'s portfolio next month. I think you should follow " + highest_him_her)
-            messages.append("You should follow " + highest_changing_portfolio_name + ". I predict a positive change of " + str(round(highest_change)) + "% in " + highest_pronoun + " portfolio next month")
-            messages.append("I'd start following " + highest_changing_portfolio_name + " if I were you. I think " + highest_pronoun + " portfolio will increase by " + str(round(highest_change)) + "%")
-            messages.append("I would start following " + highest_changing_portfolio_name + ". I believe " + highest_pronoun + " portfolio will grow by " + str(round(highest_change)) + "% next month")
-            messages.append("You should follow " + highest_changing_portfolio_name + "\'s portfolio. I think it will increase by " + str(round(highest_change)) + "% next month")
-            messages.append("I predict a positive change of " + str(round(highest_change)) + "% in " + highest_changing_portfolio_name + "\'s portfolio. I think you should start following " + highest_him_her)
+            # messages.append("I think you should start following " + highest_changing_portfolio_name + ". I believe " + highest_pronoun + " porfolio will increase by " + str(round(highest_change)) + "% next month")
+            messages.append("I think you should start following %(portfolio_name)s. I believe %(pronoun)s porfolio will increase by %(amount)s% next month")
+
+            # messages.append("You should follow " + highest_changing_portfolio_name + ". I think " + highest_pronoun + " porfolio will increase by " + str(round(highest_change)) + "%")
+            # messages.append("I think  " + highest_changing_portfolio_name + "'s portfolio will increase by " + str(round(highest_change)) + "% next month, so you should follow " + highest_him_her)
+            # messages.append("I believe " + highest_changing_portfolio_name + "'s portfolio will increase by " + str(round(highest_change)) + "%. I think you should start following " + highest_him_her)
+            # messages.append("I predict a positive change of " + str(round(highest_change)) + "% in " + highest_changing_portfolio_name + "'s portfolio next month. I think you should follow " + highest_him_her)
+            # messages.append("You should follow " + highest_changing_portfolio_name + ". I predict a positive change of " + str(round(highest_change)) + "% in " + highest_pronoun + " portfolio next month")
+            # messages.append("I'd start following " + highest_changing_portfolio_name + " if I were you. I think " + highest_pronoun + " portfolio will increase by " + str(round(highest_change)) + "%")
+            # messages.append("I would start following " + highest_changing_portfolio_name + ". I believe " + highest_pronoun + " portfolio will grow by " + str(round(highest_change)) + "% next month")
+            # messages.append("You should follow " + highest_changing_portfolio_name + "\'s portfolio. I think it will increase by " + str(round(highest_change)) + "% next month")
+            # messages.append("I predict a positive change of " + str(round(highest_change)) + "% in " + highest_changing_portfolio_name + "\'s portfolio. I think you should start following " + highest_him_her)
 
             profile_name = highest_changing_portfolio_name
             portfolio_query = "not_followed"
             buttons.append({"title": "Do it", "payload": "Do it"})
             buttons.append({"title": "Never mind", "payload": "Never mind"})
+
+            message_params = {
+                'portfolio_name': highest_changing_portfolio_name, 
+                'value': str(round(highest_change)),
+                'pronoun': highest_pronoun,
+                'him_her': highest_him_her
+            }
+
         else:
-            messages.append("I think you should stop following " + lowest_changing_portfolio_name + ". I believe " + lowest_pronoun + " porfolio will decrease by " + str(round(abs(lowest_change))) + "% next month")
-            messages.append("I think " + lowest_changing_portfolio_name + "'s portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month. You should stop following " + lowest_him_her)
-            messages.append("You should unfollow " + lowest_changing_portfolio_name + ". I predict " + lowest_pronoun + " porfolio will decrease by " + str(round(abs(lowest_change))) + "%")
-            messages.append("I predict a negative change of " + str(round(abs(lowest_change)))  + " in " + lowest_changing_portfolio_name + "'s portfolio next month. I think you should stop following " + lowest_him_her)
-            messages.append("If I were you, I would stop following " + lowest_changing_portfolio_name + ". I think " + lowest_pronoun + " porfolio will decrease by " + str(round(abs(lowest_change))) + "% next month")
-            messages.append("You should stop following " + lowest_changing_portfolio_name + ". I believe " + lowest_pronoun + " portfolio will decrease by " + str(round(abs(lowest_change))) + "%")
-            messages.append("I think " + lowest_changing_portfolio_name + "\'s portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month. You should unfollow " + lowest_him_her)
-            messages.append("My predictions tell me " + lowest_changing_portfolio_name + "\'s portfolio will decrease by " + str(round(abs(lowest_change))) + "%. You should consider unfollowing " + lowest_him_her)
-            messages.append("I predict the value of " + lowest_changing_portfolio_name + "\'s portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month. I would unfollow " + lowest_him_her + " if I were you")
-            messages.append("You should unfollow " + lowest_changing_portfolio_name + ". I think " + lowest_pronoun + " portfolio will decrease by " + str(round(abs(lowest_change))) + "%")
+            # messages.append("I think you should stop following " + lowest_changing_portfolio_name + ". I believe " + lowest_pronoun + " porfolio will decrease by " + str(round(abs(lowest_change))) + "% next month")
+            messages.append("I think you should stop following %(portfolio_name)s. I believe %(pronoun)s porfolio will decrease by %(amount)s% next month")
+            # messages.append("I think " + lowest_changing_portfolio_name + "'s portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month. You should stop following " + lowest_him_her)
+            # messages.append("You should unfollow " + lowest_changing_portfolio_name + ". I predict " + lowest_pronoun + " porfolio will decrease by " + str(round(abs(lowest_change))) + "%")
+            # messages.append("I predict a negative change of " + str(round(abs(lowest_change)))  + " in " + lowest_changing_portfolio_name + "'s portfolio next month. I think you should stop following " + lowest_him_her)
+            # messages.append("If I were you, I would stop following " + lowest_changing_portfolio_name + ". I think " + lowest_pronoun + " porfolio will decrease by " + str(round(abs(lowest_change))) + "% next month")
+            # messages.append("You should stop following " + lowest_changing_portfolio_name + ". I believe " + lowest_pronoun + " portfolio will decrease by " + str(round(abs(lowest_change))) + "%")
+            # messages.append("I think " + lowest_changing_portfolio_name + "\'s portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month. You should unfollow " + lowest_him_her)
+            # messages.append("My predictions tell me " + lowest_changing_portfolio_name + "\'s portfolio will decrease by " + str(round(abs(lowest_change))) + "%. You should consider unfollowing " + lowest_him_her)
+            # messages.append("I predict the value of " + lowest_changing_portfolio_name + "\'s portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month. I would unfollow " + lowest_him_her + " if I were you")
+            # messages.append("You should unfollow " + lowest_changing_portfolio_name + ". I think " + lowest_pronoun + " portfolio will decrease by " + str(round(abs(lowest_change))) + "%")
 
             profile_name = lowest_changing_portfolio_name
             portfolio_query = "followed"
             buttons.append({"title": "Do it", "payload": "Do it"})
             buttons.append({"title": "Never mind", "payload": "Never mind"})
 
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
+            message_params = {
+                'portfolio_name': lowest_changing_portfolio_name, 
+                'value': str(round(lowest_change)),
+                'pronoun': lowest_pronoun,
+                'him_her': lowest_him_her
+            }
 
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
         return [SlotSet("name", profile_name), SlotSet("portfolio_query", portfolio_query)]
 
 
@@ -650,6 +704,11 @@ class AskAddAmount(Action):
     def run(self, dispatcher, tracker, domain):
         user = get_user(tracker)
 
+        profile_name = ''
+        for e in tracker.latest_message['entities']:
+            if e['entity'] == 'portfolio_name':
+                profile_name = e['value']
+
         balance = Balance.objects.get(user=user)
         available_amount = balance.available
 
@@ -734,6 +793,14 @@ class Follow(Action):
 
         profile_name = tracker.get_slot('name')
 
+        buttons = []
+
+        buttons.append({"title": "Give me some advice", "payload": "Give me some advice"})
+        if Portfolio.objects.filter(user=user, followed=False):
+            buttons.append({"title": "Who should I follow?", "payload": "Who should i follow?"})
+        if Portfolio.objects.filter(user=user, followed=True):
+            buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
+
         messages = []
 
         if profile_name is None:
@@ -751,6 +818,18 @@ class Follow(Action):
             profile_object = Profile.objects.get(name__icontains=profile_name)
             portfolio = Portfolio.objects.get(user=user, profile=profile_object.id)
 
+            condition = get_condition(tracker)
+            if 'mistake' in condition or 'miss' in condition:
+                # inject an error in the portfolio name
+                if is_time_for_error(user):
+                    if 'mistake' in condition:
+                        portfolio = Portfolio.objects.filter(user=user).exclude(profile=profile_object.id).first()
+                    elif 'miss' in condition:
+                        profile_name = None
+                        messages.append("I can't seem to find that portfolio. Have you spelt the name right?")
+                        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
+                        return []
+
             amount_query = tracker.get_slot('amount_query')
             amount = tracker.get_slot('amount')
 
@@ -767,9 +846,6 @@ class Follow(Action):
                 amount_query = 'valid'
 
             if amount_query == 'valid':
-                # TODO: could insert here the code to 
-                # inject an error in the amount or portfolio name
-
                 amount = str(amount).replace('£','')
                 balance = Balance.objects.get(user=user)
                 available_before = balance.available
@@ -829,17 +905,10 @@ class Follow(Action):
                 messages.append("That's not a right amount!")
                 messages.append("I don't think that's a right amount")
 
-        buttons = []
-
-        buttons.append({"title": "Give me some advice", "payload": "Give me some advice"})
-        if Portfolio.objects.filter(user=user, followed=False):
-            buttons.append({"title": "Who should I follow?", "payload": "Who should i follow?"})
-        if Portfolio.objects.filter(user=user, followed=True):
-            buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
         custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
 
-        return[]
+        return []
 
 
 class Unfollow(Action):

@@ -43,6 +43,10 @@ class Month(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     number = models.IntegerField(default=1, null=False)
 
+    errors_experienced = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     class Meta:
         verbose_name = 'Month'
         verbose_name_plural = 'Months'
