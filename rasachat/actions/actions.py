@@ -861,7 +861,8 @@ class Follow(Action):
             profile_object = Profile.objects.get(name__icontains=profile_name)
             portfolio = Portfolio.objects.get(user=user, profile=profile_object.id)
 
-            condition = get_condition(tracker)
+            # condition = get_condition(tracker)
+            condition = get_condition(user)
             if 'mistake' in condition or 'miss' in condition:
                 # inject an error in the portfolio name
                 if is_time_for_error(user):
@@ -1070,7 +1071,6 @@ class AddAmount(Action):
             profile_object = Profile.objects.get(name__icontains=profile_name)
             portfolio = Portfolio.objects.get(user=user, profile=profile_object.id)
 
-            amount = tracker.get_slot('amount')
 
             if amount is None:
                 try:
