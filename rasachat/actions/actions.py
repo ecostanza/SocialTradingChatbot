@@ -28,7 +28,7 @@ from django.utils import timezone
 # condition = '2nd'
 
 from csv import reader
-r = reader(open('./responses.csv', 'r'))
+r = reader(open('./responses_test.csv', 'r'))
 # skip header line
 next(r)
 second_lut = {}
@@ -39,20 +39,35 @@ for line in r:
     second_lut[first] = second
     passive_lut[first] = passive
 
-def custom_utter_message(message, tracker, dispatcher, buttons=None, message_params=None):
+def custom_utter_message(message, tracker, dispatcher, buttons=None, message_params=None, is_short_response=False):
     user = get_user(tracker)
     condition = get_condition(user)
 
-    if '1st' in condition:
-        new_message = message % message_params
-    elif '2nd' in condition:
-        # new_message = '2nd: ' + message
-        new_message = second_lut[message] % message_params
-    elif 'passive' in condition:
-        # new_message = 'psv: ' + message
-        new_message = passive_lut[message] % message_params
-    else:
-        raise ValueError('Invalid condition')
+    print("condition: ", condition)
+    print("'2nd' in condition: ", '2nd' in condition)
+    print("is_short_response: ", is_short_response)
+
+    new_message = message
+
+    if not is_short_response:
+        if '1st' in condition:
+            print(message_params)
+            new_message = message % message_params if message_params else message
+            
+        elif '2nd' in condition:
+            # new_message = '2nd: ' + message
+            print(message_params)
+            new_message = second_lut[message] % message_params if message_params else message
+
+        elif 'passive' in condition:
+            # new_message = 'psv: ' + message
+            print(message_params)
+            new_message = passive_lut[message] % message_params if message_params else message
+            
+        else:
+            raise ValueError('Invalid condition')
+        
+    print(new_message)
     
     if buttons is None:
         dispatcher.utter_message(new_message)
@@ -103,7 +118,8 @@ class Greet(Action):
         custom_utter_message(
             "Hey! How are you?",
             tracker,
-            dispatcher)
+            dispatcher,
+            is_short_response=True)
 
         return []
 
@@ -116,7 +132,8 @@ class CheerUp(Action):
         custom_utter_message(
             "I'm sorry to hear that. I hope you'll get better!",
             tracker,
-            dispatcher)
+            dispatcher,
+            is_short_response=True)
 
         return []
 
@@ -129,7 +146,8 @@ class Happy(Action):
         custom_utter_message(
             "Great!",
             tracker,
-            dispatcher)
+            dispatcher,
+            is_short_response=True)
 
         return []
 
@@ -142,7 +160,8 @@ class Goodbye(Action):
         custom_utter_message(
             "Bye!",
             tracker,
-            dispatcher)
+            dispatcher,
+            is_short_response=True)
 
         return []
 
@@ -155,7 +174,8 @@ class Okay(Action):
         custom_utter_message(
             "Ok",
             tracker,
-            dispatcher)
+            dispatcher,
+            is_short_response=True)
 
         return []
 
@@ -168,7 +188,8 @@ class NoProblem(Action):
         custom_utter_message(
             "No problem!",
             tracker,
-            dispatcher)
+            dispatcher,
+            is_short_response=True)
 
         return []
 
@@ -181,7 +202,8 @@ class Cool(Action):
         custom_utter_message(
             "Cool",
             tracker,
-            dispatcher)
+            dispatcher,
+            is_short_response=True)
 
         return []
 
@@ -199,7 +221,8 @@ class WhatICanDo(Action):
         custom_utter_message(
             "You can tell me to follow or unfollow portfolios, add or withdraw amounts and ask me things like:  \"Who should I follow?\", \"Who should I unfollow?\", \"Invest another 100 on Aricka\" or \"withdraw from alois\"",
             tracker,
-            dispatcher)
+            dispatcher,
+            is_short_response=True)
 
         return []
 
@@ -213,7 +236,8 @@ class RemindImageTagging(Action):
         custom_utter_message(
             "Remember, you can switch to Image Tagging by clicking the \"Task\" button in the top right corner.",
             tracker,
-            dispatcher)
+            dispatcher,
+            is_short_response=True)
 
         return []
 
@@ -226,7 +250,8 @@ class Newsfeed(Action):
         custom_utter_message(
             "I'm afraid I don't know much about the newsfeed",
             tracker,
-            dispatcher)
+            dispatcher,
+            is_short_response=True)
 
         return []
 
@@ -239,7 +264,8 @@ class ImDoingMyBest(Action):
         custom_utter_message(
             "I'm doing my best!",
             tracker,
-            dispatcher
+            dispatcher,
+            is_short_response=True
         )
 
         return []
@@ -254,7 +280,8 @@ class FollowOnePortfolioAtATime(Action):
         custom_utter_message(
             "Please tell me one portfolio to follow at a time so we can decide the amount to invest",
             tracker,
-            dispatcher
+            dispatcher,
+            is_short_response=True
         )
 
         return []
@@ -280,7 +307,8 @@ class InvalidAmount(Action):
     def run(self, dispatcher, tracker, domain):
         
         custom_utter_message(
-            "That's not a valid amount!",
+            #"That's not a valid amount!",
+            "I'm afraid that's not a valid amount",
             tracker,
             dispatcher
         )
@@ -294,7 +322,7 @@ class InvalidPortfolio(Action):
     def run(self, dispatcher, tracker, domain):
         
         custom_utter_message(
-            "I can't find that portfolio. Have you spelt it right?",
+            "Sorry, I can't find that portfolio. Have you spelt the name correctly?",
             tracker,
             dispatcher
         )
@@ -308,7 +336,7 @@ class AlreadyNotFollowedPortfolio(Action):
     def run(self, dispatcher, tracker, domain):
         
         custom_utter_message(
-            "You're not following that portfolio",
+            "I don't think you're following that portfolio",
             tracker,
             dispatcher
         )
@@ -322,21 +350,7 @@ class AlreadyFollowedPortfolio(Action):
     def run(self, dispatcher, tracker, domain):
         
         custom_utter_message(
-            "You are already following that portfolio",
-            tracker,
-            dispatcher
-        )
-
-        return []
-
-class AlreadyFollowedPortfolio(Action):
-    def name(self) -> Text:
-        return "action_already_followed_portfolio"
-
-    def run(self, dispatcher, tracker, domain):
-        
-        custom_utter_message(
-            "You are already following that portfolio",
+            "I think you are already following that portfolio",
             tracker,
             dispatcher
         )
@@ -418,7 +432,7 @@ class GiveGeneralAdvice(Action):
 
         elif lowest_changing_portfolio_name is None or higher_is_greater:
             # messages.append("I think you should start following " + highest_changing_portfolio_name + ". I believe " + highest_pronoun + " porfolio will increase by " + str(round(highest_change)) + "% next month")
-            messages.append("I think you should start following %(portfolio_name)s. I believe %(pronoun)s porfolio will increase by %(amount)s% next month")
+            messages.append("I think you should start following %(portfolio_name)s. I believe %(pronoun)s porfolio will increase by %(value)s%% next month")
 
             # messages.append("You should follow " + highest_changing_portfolio_name + ". I think " + highest_pronoun + " porfolio will increase by " + str(round(highest_change)) + "%")
             # messages.append("I think  " + highest_changing_portfolio_name + "'s portfolio will increase by " + str(round(highest_change)) + "% next month, so you should follow " + highest_him_her)
@@ -444,7 +458,7 @@ class GiveGeneralAdvice(Action):
 
         else:
             # messages.append("I think you should stop following " + lowest_changing_portfolio_name + ". I believe " + lowest_pronoun + " porfolio will decrease by " + str(round(abs(lowest_change))) + "% next month")
-            messages.append("I think you should stop following %(portfolio_name)s. I believe %(pronoun)s porfolio will decrease by %(amount)s% next month")
+            messages.append("I think you should stop following %(portfolio_name)s. I believe %(pronoun)s porfolio will decrease by %(value)s%% next month")
             # messages.append("I think " + lowest_changing_portfolio_name + "'s portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month. You should stop following " + lowest_him_her)
             # messages.append("You should unfollow " + lowest_changing_portfolio_name + ". I predict " + lowest_pronoun + " porfolio will decrease by " + str(round(abs(lowest_change))) + "%")
             # messages.append("I predict a negative change of " + str(round(abs(lowest_change)))  + " in " + lowest_changing_portfolio_name + "'s portfolio next month. I think you should stop following " + lowest_him_her)
@@ -467,7 +481,9 @@ class GiveGeneralAdvice(Action):
                 'him_her': lowest_him_her
             }
 
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
+        # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params, is_short_response=False)
+        
         return [SlotSet("name", profile_name), SlotSet("portfolio_query", portfolio_query)]
 
 
@@ -485,18 +501,19 @@ class GiveFollowingAdvice(Action):
         messages = []
 
         buttons = []
+        message_params = {}
 
         if not not_followed_portfolios:
-            messages.append("You are following everyone at the moment!")
-            messages.append("There is no one left to follow!")
-            messages.append("You are following every portfolio at the moment!")
-            messages.append("You are following everyone currently!")
-            messages.append("Every portfolio is being followed at the moment!")
-            messages.append("There's no one left to follow!")
-            messages.append("There's no portfolio left to follow!")
+            # messages.append("You are following everyone at the moment!")
+            # messages.append("There is no one left to follow!")
+            # messages.append("You are following every portfolio at the moment!")
+            # messages.append("You are following everyone currently!")
+            # messages.append("Every portfolio is being followed at the moment!")
+            # messages.append("There's no one left to follow!")
+            # messages.append("There's no portfolio left to follow!")
             messages.append("I'm afraid there's no one left to follow!")
-            messages.append("You're following everyone already!")
-            messages.append("You're already following everyone!")
+            # messages.append("You're following everyone already!")
+            # messages.append("You're already following everyone!")
         else:
             highest_change = 1
             pronoun = ''
@@ -515,32 +532,41 @@ class GiveFollowingAdvice(Action):
                     else:
                         pronoun = 'her'
                         him_her = 'her'
+            
+            message_params = {
+                'portfolio_name': highest_changing_portfolio_name, 
+                'value': str(round(highest_change)),
+                'pronoun': pronoun,
+                'him_her': him_her
+            }
 
             if highest_changing_portfolio_name is not None:
-                messages.append("I think you should start following " + highest_changing_portfolio_name + ". I believe " + pronoun + " porfolio will increase by " + str(round(abs(highest_change))) + "% next month")
-                messages.append("I believe " + highest_changing_portfolio_name + "'s portfolio will increase by " + str(round(abs(highest_change))) + "% next month, so I think you should follow " + him_her)
-                messages.append("Well, I think you should invest in " + highest_changing_portfolio_name + ". I believe " + pronoun + " porfolio will increase by " + str(round(abs(highest_change))) + "% next month")
-                messages.append("I predict a positive change of " + str(round(abs(highest_change))) + "% in " + highest_changing_portfolio_name + "'s portfolio next month, so I think you should start following " + him_her)
-                messages.append(highest_changing_portfolio_name + ". I believe " + pronoun + " porfolio will increase by " + str(round(abs(highest_change))) + "% next month")
-                messages.append(highest_changing_portfolio_name + ". I think " + pronoun + " portfolio will grow by " + str(round(abs(highest_change))) + "%")
-                messages.append("That would be " + highest_changing_portfolio_name + ". I predict a positive change of " + str(round(abs(highest_change))) + "% in " + pronoun + " portfolio")
-                messages.append("Well, I think " + highest_changing_portfolio_name + "\'s portfolio will grow by " + str(round(abs(highest_change))) + "% next month. You should follow " + him_her)
-                messages.append("That would be " + highest_changing_portfolio_name + ". My predictions tell me " + pronoun + " portfolio will increase by " + str(round(abs(highest_change))) + "%")
-                messages.append(highest_changing_portfolio_name + ". I predict a positive change of " + str(round(abs(highest_change))) + "% in " + pronoun + " portfolio. You should invest in " + him_her)
+                # messages.append("I think you should start following " + highest_changing_portfolio_name + ". I believe " + pronoun + " porfolio will increase by " + str(round(abs(highest_change))) + "% next month")
+                messages.append("I think you should start following %(portfolio_name)s. I believe %(pronoun)s porfolio will increase by %(value)s%% next month")
+                # messages.append("I believe " + highest_changing_portfolio_name + "'s portfolio will increase by " + str(round(abs(highest_change))) + "% next month, so I think you should follow " + him_her)
+                # messages.append("Well, I think you should invest in " + highest_changing_portfolio_name + ". I believe " + pronoun + " porfolio will increase by " + str(round(abs(highest_change))) + "% next month")
+                # messages.append("I predict a positive change of " + str(round(abs(highest_change))) + "% in " + highest_changing_portfolio_name + "'s portfolio next month, so I think you should start following " + him_her)
+                # messages.append(highest_changing_portfolio_name + ". I believe " + pronoun + " porfolio will increase by " + str(round(abs(highest_change))) + "% next month")
+                # messages.append(highest_changing_portfolio_name + ". I think " + pronoun + " portfolio will grow by " + str(round(abs(highest_change))) + "%")
+                # messages.append("That would be " + highest_changing_portfolio_name + ". I predict a positive change of " + str(round(abs(highest_change))) + "% in " + pronoun + " portfolio")
+                # messages.append("Well, I think " + highest_changing_portfolio_name + "\'s portfolio will grow by " + str(round(abs(highest_change))) + "% next month. You should follow " + him_her)
+                # messages.append("That would be " + highest_changing_portfolio_name + ". My predictions tell me " + pronoun + " portfolio will increase by " + str(round(abs(highest_change))) + "%")
+                # messages.append(highest_changing_portfolio_name + ". I predict a positive change of " + str(round(abs(highest_change))) + "% in " + pronoun + " portfolio. You should invest in " + him_her)
 
                 buttons.append({"title": "Do it", "payload": "Do it"})
                 buttons.append({"title": "Never mind", "payload": "Never mind"})
             else:
+                # messages.append("I don't think there is anyone you should start following right now")
                 messages.append("I don't think there is anyone you should start following right now")
-                messages.append("I can't think of any other portfolio you should follow this month")
-                messages.append("I don't think there aren't any other portfolio you should start following for now")
-                messages.append("I believe no one else is worth following for now")
-                messages.append("I don't think you should follow anyone else this month")
-                messages.append("There isn't anyone I think you should start follow this month")
-                messages.append("I don't think there is anyone else I would start following for now")
-                messages.append("I wouldn't start following anyone else right now")
-                messages.append("I wouldn't start following any other portfolio this month")
-                messages.append("There isn't anyone else worth following this month")
+                # messages.append("I can't think of any other portfolio you should follow this month")
+                # messages.append("I don't think there aren't any other portfolio you should start following for now")
+                # messages.append("I believe no one else is worth following for now")
+                # messages.append("I don't think you should follow anyone else this month")
+                # messages.append("There isn't anyone I think you should start follow this month")
+                # messages.append("I don't think there is anyone else I would start following for now")
+                # messages.append("I wouldn't start following anyone else right now")
+                # messages.append("I wouldn't start following any other portfolio this month")
+                # messages.append("There isn't anyone else worth following this month")
 
                 buttons.append({"title": "Give me some advice", "payload": "Give me some advice"})
                 if Portfolio.objects.filter(user=user, followed=False):
@@ -548,7 +574,7 @@ class GiveFollowingAdvice(Action):
                 if Portfolio.objects.filter(user=user, followed=True):
                     buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params, is_short_response=False)
 
         return [SlotSet("name", highest_changing_portfolio_name)]
 
@@ -568,17 +594,19 @@ class GiveUnfollowingAdvice(Action):
 
         buttons = []
 
+        message_params = {}
+
         if not followed_portfolios:
-            messages.append("You are not following anyone at the moment")
-            messages.append("There is no one to unfollow")
-            messages.append("You're not following any portfolio currently")
-            messages.append("No portfolio is being followed right now")
-            messages.append("You're not following anyone for now")
-            messages.append("But you're not following anyone at the moment!")
-            messages.append("But there is no one to unfollow!")
+            # messages.append("You are not following anyone at the moment")
+            # messages.append("There is no one to unfollow")
+            # messages.append("You're not following any portfolio currently")
+            # messages.append("No portfolio is being followed right now")
+            # messages.append("You're not following anyone for now")
+            # messages.append("But you're not following anyone at the moment!")
+            # messages.append("But there is no one to unfollow!")
             messages.append("I'm afraid you're not following any portfolios right now")
-            messages.append("No portfolios are being followed right now!")
-            messages.append("You're not following any portfolio for now")
+            # messages.append("No portfolios are being followed right now!")
+            # messages.append("You're not following any portfolio for now")
 
             buttons.append({"title": "Give me some advice", "payload": "Give me some advice"})
             if Portfolio.objects.filter(user=user, followed=False):
@@ -603,32 +631,40 @@ class GiveUnfollowingAdvice(Action):
                     else:
                         pronoun = 'her'
                         him_her = 'him'
+            
+            message_params = {
+                'portfolio_name': lowest_changing_portfolio_name, 
+                'value': str(round(abs(lowest_change))),
+                'pronoun': pronoun,
+                'him_her': him_her
+            }
 
             if lowest_changing_portfolio_name is not None:
-                messages.append("I think you should stop following " + lowest_changing_portfolio_name + ". I believe " + pronoun + " porfolio will decrease by " + str(round(abs(lowest_change))) + "% next month")
-                messages.append("I believe " + lowest_changing_portfolio_name + "'s portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month. You should probably stop following " + him_her)
-                messages.append("Well, I would stop following " + lowest_changing_portfolio_name + " if I were you. I think " + pronoun + " porfolio will decrease by " + str(round(abs(lowest_change))) + "% next month")
-                messages.append("You should unfollow " + lowest_changing_portfolio_name + "'s portfolio. I think its value will decrease by " + str(round(abs(lowest_change))) + "% next month")
-                messages.append("I predict a negative change of " + str(round(abs(lowest_change))) + "% in " + lowest_changing_portfolio_name + "'s portfolio. I think you should stop following " + him_her)
-                messages.append(lowest_changing_portfolio_name + ". I think " + pronoun + " portfolio will decreasy by " + str(round(abs(lowest_change))) + "%. You should unfollow " + him_her)
-                messages.append(lowest_changing_portfolio_name + ". I predict a negative change of " + str(round(abs(lowest_change))) + "% next month, so I suggest unfollowing " + him_her)
-                messages.append(lowest_changing_portfolio_name + ". I believe the value of " + pronoun + " portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month. I suggest unfollowing " + him_her)
-                messages.append(lowest_changing_portfolio_name + "\'s portfolio should decrease by " + str(round(abs(lowest_change))) + "% next month. I think you should stop following " + him_her)
-                messages.append("I would stop following " + lowest_changing_portfolio_name + ". I believe " + pronoun + " portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month")
+                # messages.append("I think you should stop following " + lowest_changing_portfolio_name + ". I believe " + pronoun + " porfolio will decrease by " + str(round(abs(lowest_change))) + "% next month")
+                messages.append("I think you should stop following %(portfolio_name)s . I believe %(pronoun)s porfolio will decrease by %(value)s%% next month")
+                # messages.append("I believe " + lowest_changing_portfolio_name + "'s portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month. You should probably stop following " + him_her)
+                # messages.append("Well, I would stop following " + lowest_changing_portfolio_name + " if I were you. I think " + pronoun + " porfolio will decrease by " + str(round(abs(lowest_change))) + "% next month")
+                # messages.append("You should unfollow " + lowest_changing_portfolio_name + "'s portfolio. I think its value will decrease by " + str(round(abs(lowest_change))) + "% next month")
+                # messages.append("I predict a negative change of " + str(round(abs(lowest_change))) + "% in " + lowest_changing_portfolio_name + "'s portfolio. I think you should stop following " + him_her)
+                # messages.append(lowest_changing_portfolio_name + ". I think " + pronoun + " portfolio will decreasy by " + str(round(abs(lowest_change))) + "%. You should unfollow " + him_her)
+                # messages.append(lowest_changing_portfolio_name + ". I predict a negative change of " + str(round(abs(lowest_change))) + "% next month, so I suggest unfollowing " + him_her)
+                # messages.append(lowest_changing_portfolio_name + ". I believe the value of " + pronoun + " portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month. I suggest unfollowing " + him_her)
+                # messages.append(lowest_changing_portfolio_name + "\'s portfolio should decrease by " + str(round(abs(lowest_change))) + "% next month. I think you should stop following " + him_her)
+                # messages.append("I would stop following " + lowest_changing_portfolio_name + ". I believe " + pronoun + " portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month")
 
                 buttons.append({"title": "Do it", "payload": "Do it"})
                 buttons.append({"title": "Never mind", "payload": "Never mind"})
             else:
                 messages.append("I don't think there is anyone you should stop following right now")
-                messages.append("I don't think you should stop following anyone for now")
-                messages.append("I don't think anyone is currently worth unfollowing")
-                messages.append("I wouldn't unfollow anyone at the moment")
-                messages.append("I wouldn't stop following any portfolio for now")
-                messages.append("There isn't anyone I think you should stop following right now")
-                messages.append("Right now, I don't think there is anyone you should stop following")
-                messages.append("Hmm. I can't think of anyone you should stop following")
-                messages.append("Hmm. There isn't anyone you should stop following in my opinion")
-                messages.append("In my opinion, you shouldn't unfollow anyone at the moment")
+                # messages.append("I don't think you should stop following anyone for now")
+                # messages.append("I don't think anyone is currently worth unfollowing")
+                # messages.append("I wouldn't unfollow anyone at the moment")
+                # messages.append("I wouldn't stop following any portfolio for now")
+                # messages.append("There isn't anyone I think you should stop following right now")
+                # messages.append("Right now, I don't think there is anyone you should stop following")
+                # messages.append("Hmm. I can't think of anyone you should stop following")
+                # messages.append("Hmm. There isn't anyone you should stop following in my opinion")
+                # messages.append("In my opinion, you shouldn't unfollow anyone at the moment")
 
                 buttons.append({"title": "Give me some advice", "payload": "Give me some advice"})
                 if Portfolio.objects.filter(user=user, followed=False):
@@ -636,7 +672,8 @@ class GiveUnfollowingAdvice(Action):
                 if Portfolio.objects.filter(user=user, followed=True):
                     buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
+        # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params, is_short_response=False)
 
         return [SlotSet("name", lowest_changing_portfolio_name)]
 
@@ -715,15 +752,15 @@ class AskAddAmount(Action):
         messages = []
 
         messages.append("How much would you like to invest?")
-        messages.append("Got it. How much do you want to invest?")
-        messages.append("Okay, how much do you want to invest?")
-        messages.append("Great, how much would you like to invest?")
-        messages.append("Alright. How much do you want to invest?")
-        messages.append("Great. How much should you invest?")
-        messages.append("Ok. How much do you want to invest in this portfolio?")
-        messages.append("How much would you like to invest in this portfolio?")
-        messages.append("What is the amount you would like to invest?")
-        messages.append("Got it. How much to invest?")
+        # messages.append("Got it. How much do you want to invest?")
+        # messages.append("Okay, how much do you want to invest?")
+        # messages.append("Great, how much would you like to invest?")
+        # messages.append("Alright. How much do you want to invest?")
+        # messages.append("Great. How much should you invest?")
+        # messages.append("Ok. How much do you want to invest in this portfolio?")
+        # messages.append("How much would you like to invest in this portfolio?")
+        # messages.append("What is the amount you would like to invest?")
+        # messages.append("Got it. How much to invest?")
 
         buttons = []
         tenPercent = int(50 * round(float(available_amount/10)/50))
@@ -737,7 +774,8 @@ class AskAddAmount(Action):
         if fourtyPercent > 0 and fourtyPercent != twentyPercent:
             buttons.append({"title": "£" + str(fourtyPercent), "payload": "£" + str(fourtyPercent)})
 
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
+        # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, is_short_response=False)
 
         return [SlotSet("name", profile_name)]
 
@@ -768,18 +806,21 @@ class AskWithdrawAmount(Action):
 
         messages = []
 
-        messages.append("How much would you like to withdraw?")
-        messages.append("Okay, how much do you want to withdraw?")
-        messages.append("Alright. How much would you like to withdraw?")
-        messages.append("Great, how much do you want to withdraw?")
-        messages.append("Got it. How much would you like to withdraw?")
-        messages.append("Great. How much should you invest?")
-        messages.append("Ok. How much do you want to invest in this portfolio?")
-        messages.append("How much would you like to invest in this portfolio?")
-        messages.append("What is the amount you would like to invest?")
-        messages.append("Got it. How much to invest?")
+        messages.append("How much should I withdraw for you?") 
+        # messages.append("How much would you like to withdraw?")
+        # messages.append("Okay, how much do you want to withdraw?")
+        # messages.append("Alright. How much would you like to withdraw?")
+        # messages.append("Great, how much do you want to withdraw?")
+        # messages.append("Got it. How much would you like to withdraw?")
+        # messages.append("Great. How much should you invest?")
+        # messages.append("Ok. How much do you want to invest in this portfolio?")
+        # messages.append("How much would you like to invest in this portfolio?")
+        # messages.append("What is the amount you would like to invest?")
+        # messages.append("Got it. How much to invest?")
 
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
+        # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, is_short_response=False)
+        
 
         return [SlotSet("name", profile_name)]
 
@@ -802,18 +843,20 @@ class Follow(Action):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
         messages = []
+        
+        message_params = {}
 
         if profile_name is None:
             messages.append("Sorry, I can't find that portfolio. Have you spelt the name correctly?")
-            messages.append("Sorry, I'm having trouble finding that portfolio. Have you spelt the name correctly?")
-            messages.append("I can't seem to find that portfolio. Have you spelt the name right?")
-            messages.append("I'm sorry, I can't find that portfolio. Have you spelt it correctly?")
-            messages.append("Apologies, I can't seem to find that portfolio. Have you spelt the name right?")
-            messages.append("Sorry, I can't find that one. Have you spelt the name right?")
-            messages.append("Have you spelt the name right? I can't find that portfolio!")
-            messages.append("My bad. I can't find that portfolio, have you spelt it right?")
-            messages.append("Hmm, I can't find that portfolio. Have you spelt the name correctly?")
-            messages.append("Have you spelt the name correctly? I can't seem to find that portfolio")
+            # messages.append("Sorry, I'm having trouble finding that portfolio. Have you spelt the name correctly?")
+            # messages.append("I can't seem to find that portfolio. Have you spelt the name right?")
+            # messages.append("I'm sorry, I can't find that portfolio. Have you spelt it correctly?")
+            # messages.append("Apologies, I can't seem to find that portfolio. Have you spelt the name right?")
+            # messages.append("Sorry, I can't find that one. Have you spelt the name right?")
+            # messages.append("Have you spelt the name right? I can't find that portfolio!")
+            # messages.append("My bad. I can't find that portfolio, have you spelt it right?")
+            # messages.append("Hmm, I can't find that portfolio. Have you spelt the name correctly?")
+            # messages.append("Have you spelt the name correctly? I can't seem to find that portfolio")
         else:
             profile_object = Profile.objects.get(name__icontains=profile_name)
             portfolio = Portfolio.objects.get(user=user, profile=profile_object.id)
@@ -854,15 +897,15 @@ class Follow(Action):
 
                 if balance.available < 0:
                     messages.append("I'm afraid your current balance is not sufficient")
-                    messages.append("I'm afraid your current balance is insufficient")
-                    messages.append("I don't think your available balance is sufficient!")
-                    messages.append("I don't think you have enough in your available balance")
-                    messages.append("That's more than your available balance!")
-                    messages.append("I don't think your available balance is enough!")
-                    messages.append("That amount is more than your available balance, I'm afraid")
-                    messages.append("I don't think your balance is enough!")
-                    messages.append("That amount is too large for your available balance")
-                    messages.append("Your available balance isn't enough!")
+                    # messages.append("I'm afraid your current balance is insufficient")
+                    # messages.append("I don't think your available balance is sufficient!")
+                    # messages.append("I don't think you have enough in your available balance")
+                    # messages.append("That's more than your available balance!")
+                    # messages.append("I don't think your available balance is enough!")
+                    # messages.append("That amount is more than your available balance, I'm afraid")
+                    # messages.append("I don't think your balance is enough!")
+                    # messages.append("That amount is too large for your available balance")
+                    # messages.append("Your available balance isn't enough!")
                 else:
                     balance.save()
 
@@ -870,16 +913,21 @@ class Follow(Action):
                     portfolio.invested = round(Decimal(amount), 2)
                     portfolio.save()
                     print(Portfolio.objects.filter(followed=True).aggregate(Sum('invested')).get('invested__sum'))
-                    messages.append("You are now following " + profile_name.title())
-                    messages.append("You have started following " + profile_name.title())
-                    messages.append("Okay, you are now following " + profile_name.title() + "'s portfolio")
-                    messages.append("You have invested in " + profile_name.title() + "'s portfolio")
-                    messages.append("Ok, you have started following " + profile_name.title())
-                    messages.append("Alright. You are now following " + profile_name.title())
-                    messages.append("Cool. You have started following " + profile_name.title() + "\'s portfolio")
-                    messages.append("Okay. You have invested in " + profile_name.title() + "\'s portfolio")
-                    messages.append("Alright, you have started following " + profile_name.title())
-                    messages.append("Got it. You are now following " + profile_name.title())
+
+                    message_params = {
+                        'profile_name': profile_name.title()
+                    }
+
+                    messages.append("You are now following %(profile_name)s")
+                    # messages.append("You have started following " + profile_name.title())
+                    # messages.append("Okay, you are now following " + profile_name.title() + "'s portfolio")
+                    # messages.append("You have invested in " + profile_name.title() + "'s portfolio")
+                    # messages.append("Ok, you have started following " + profile_name.title())
+                    # messages.append("Alright. You are now following " + profile_name.title())
+                    # messages.append("Cool. You have started following " + profile_name.title() + "\'s portfolio")
+                    # messages.append("Okay. You have invested in " + profile_name.title() + "\'s portfolio")
+                    # messages.append("Alright, you have started following " + profile_name.title())
+                    # messages.append("Got it. You are now following " + profile_name.title())
 
                     month = Month.objects.get(user=user).number
 
@@ -894,19 +942,20 @@ class Follow(Action):
                      amount=amount)
                     user_action.save()
             else:
-                messages.append("That's not a valid amount")
+                # messages.append("That's not a valid amount")
                 messages.append("I'm afraid that's not a valid amount")
-                messages.append("That amount is not valid")
-                messages.append("That's an invalid amount, I'm afraid")
-                messages.append("That amount doesn't look right!")
-                messages.append("I'm afraid that amount doesn't look right")
-                messages.append("That amount doesn't look valid to me")
-                messages.append("I don't think that's a valid amount")
-                messages.append("That's not a right amount!")
-                messages.append("I don't think that's a right amount")
+                # messages.append("That amount is not valid")
+                # messages.append("That's an invalid amount, I'm afraid")
+                # messages.append("That amount doesn't look right!")
+                # messages.append("I'm afraid that amount doesn't look right")
+                # messages.append("That amount doesn't look valid to me")
+                # messages.append("I don't think that's a valid amount")
+                # messages.append("That's not a right amount!")
+                # messages.append("I don't think that's a right amount")
 
 
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
+        # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params, is_short_response=False)
 
         return []
 
@@ -922,17 +971,19 @@ class Unfollow(Action):
 
         messages = []
 
+        message_params = {}
+
         if profile_name is None:
             messages.append("Sorry, I can't find that portfolio. Have you spelt the name correctly?")
-            messages.append("Sorry, have you spelt the name correctly? I can't find that portfolio")
-            messages.append("I'm sorry, I can't find that portfolio. Have you spelt the name right?")
-            messages.append("I can't seem to find that portfolio. Have you spelt it correctly?")
-            messages.append("Sorry, have you spelt the name right? I can't seem to find that portfolio")
-            messages.append("Sorry, I can't find that one. Have you spelt the name right?")
-            messages.append("Have you spelt the name right? I can't find that portfolio!")
-            messages.append("My bad. I can't find that portfolio, have you spelt it right?")
-            messages.append("Hmm, I can't find that portfolio. Have you spelt the name correctly?")
-            messages.append("Have you spelt the name correctly? I can't seem to find that portfolio")
+            # messages.append("Sorry, have you spelt the name correctly? I can't find that portfolio")
+            # messages.append("I'm sorry, I can't find that portfolio. Have you spelt the name right?")
+            # messages.append("I can't seem to find that portfolio. Have you spelt it correctly?")
+            # messages.append("Sorry, have you spelt the name right? I can't seem to find that portfolio")
+            # messages.append("Sorry, I can't find that one. Have you spelt the name right?")
+            # messages.append("Have you spelt the name right? I can't find that portfolio!")
+            # messages.append("My bad. I can't find that portfolio, have you spelt it right?")
+            # messages.append("Hmm, I can't find that portfolio. Have you spelt the name correctly?")
+            # messages.append("Have you spelt the name correctly? I can't seem to find that portfolio")
         else:
             profile_object = Profile.objects.get(name__icontains=profile_name)
             portfolio = Portfolio.objects.get(user=user, profile=profile_object.id)
@@ -961,16 +1012,20 @@ class Unfollow(Action):
              amount=portfolio_invested_before)
             user_action.save()
 
-            messages.append("You have stopped following " + profile_name.title())
-            messages.append("Okay, you have now stopped following " + profile_name.title())
-            messages.append("Alright. You have now unfollowed " + profile_name.title())
-            messages.append("You have unfollowed " + profile_name.title())
-            messages.append("Ok. You are not following " + profile_name.title() + " anymore")
-            messages.append("Got it. You have now stopped following " + profile_name.title())
-            messages.append("Alright. You're not following " + profile_name.title() + " anymore")
-            messages.append("Got it. You have now unfollowed " + profile_name.title())
-            messages.append("You are not following " + profile_name.title() + " anymore")
-            messages.append("Okay. You have unfollowed " + profile_name.title())
+            message_params = {
+                'profile_name': profile_name.title()
+            }
+
+            messages.append("You have stopped following %(profile_name)s")
+            # messages.append("Okay, you have now stopped following " + profile_name.title())
+            # messages.append("Alright. You have now unfollowed " + profile_name.title())
+            # messages.append("You have unfollowed " + profile_name.title())
+            # messages.append("Ok. You are not following " + profile_name.title() + " anymore")
+            # messages.append("Got it. You have now stopped following " + profile_name.title())
+            # messages.append("Alright. You're not following " + profile_name.title() + " anymore")
+            # messages.append("Got it. You have now unfollowed " + profile_name.title())
+            # messages.append("You are not following " + profile_name.title() + " anymore")
+            # messages.append("Okay. You have unfollowed " + profile_name.title())
 
         buttons = []
 
@@ -980,7 +1035,8 @@ class Unfollow(Action):
         if Portfolio.objects.filter(user=user, followed=True):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
+        # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params, is_short_response=False)
 
         return[]
 
@@ -997,17 +1053,19 @@ class AddAmount(Action):
         messages = []
         buttons = []
 
+        message_params = {}
+
         if profile_name is None:
             messages.append("Sorry, I can't find that portfolio. Have you spelt the name correctly?")
-            messages.append("Sorry, have you spelt the name correctly? I can't find that portfolio")
-            messages.append("I'm sorry, I can't find that portfolio. Have you spelt the name right?")
-            messages.append("I can't seem to find that portfolio. Have you spelt it correctly?")
-            messages.append("Sorry, have you spelt the name right? I can't seem to find that portfolio")
-            messages.append("Sorry, I can't find that one. Have you spelt the name right?")
-            messages.append("Have you spelt the name right? I can't find that portfolio!")
-            messages.append("My bad. I can't find that portfolio, have you spelt it right?")
-            messages.append("Hmm, I can't find that portfolio. Have you spelt the name correctly?")
-            messages.append("Have you spelt the name correctly? I can't seem to find that portfolio")
+            # messages.append("Sorry, have you spelt the name correctly? I can't find that portfolio")
+            # messages.append("I'm sorry, I can't find that portfolio. Have you spelt the name right?")
+            # messages.append("I can't seem to find that portfolio. Have you spelt it correctly?")
+            # messages.append("Sorry, have you spelt the name right? I can't seem to find that portfolio")
+            # messages.append("Sorry, I can't find that one. Have you spelt the name right?")
+            # messages.append("Have you spelt the name right? I can't find that portfolio!")
+            # messages.append("My bad. I can't find that portfolio, have you spelt it right?")
+            # messages.append("Hmm, I can't find that portfolio. Have you spelt the name correctly?")
+            # messages.append("Have you spelt the name correctly? I can't seem to find that portfolio")
         else:
             profile_object = Profile.objects.get(name__icontains=profile_name)
             portfolio = Portfolio.objects.get(user=user, profile=profile_object.id)
@@ -1019,16 +1077,16 @@ class AddAmount(Action):
                     amount = tracker.latest_message['entities'][0]['value'].replace('£','')
 
                 except IndexError:
-                    messages.append("That's not a valid amount")
+                    # messages.append("That's not a valid amount")
                     messages.append("I'm afraid that's not a valid amount")
-                    messages.append("That amount is not valid")
-                    messages.append("That's an invalid amount, I'm afraid")
-                    messages.append("That amount doesn't look right")
-                    messages.append("I'm afraid that amount doesn't look right")
-                    messages.append("That amount doesn't look valid to me")
-                    messages.append("I don't think that's a valid amount")
-                    messages.append("That's not a right amount!")
-                    messages.append("I don't think that's a right amount")
+                    # messages.append("That amount is not valid")
+                    # messages.append("That's an invalid amount, I'm afraid")
+                    # messages.append("That amount doesn't look right")
+                    # messages.append("I'm afraid that amount doesn't look right")
+                    # messages.append("That amount doesn't look valid to me")
+                    # messages.append("I don't think that's a valid amount")
+                    # messages.append("That's not a right amount!")
+                    # messages.append("I don't think that's a right amount")
 
             if amount is not None:
                 amount = str(amount).replace('£','')
@@ -1042,15 +1100,15 @@ class AddAmount(Action):
 
                     if balance.available < 0:
                         messages.append("I'm afraid your current balance is not sufficient")
-                        messages.append("I'm afraid your current balance is insufficient")
-                        messages.append("I don't think your available balance is sufficient!")
-                        messages.append("I don't think you have enough in your available balance")
-                        messages.append("That's more than your available balance!")
-                        messages.append("I don't think your available balance is enough!")
-                        messages.append("That amount is more than your available balance, I'm afraid")
-                        messages.append("I don't think your balance is enough!")
-                        messages.append("That amount is too large for your available balance")
-                        messages.append("Your available balance isn't enough!")
+                        # messages.append("I'm afraid your current balance is insufficient")
+                        # messages.append("I don't think your available balance is sufficient!")
+                        # messages.append("I don't think you have enough in your available balance")
+                        # messages.append("That's more than your available balance!")
+                        # messages.append("I don't think your available balance is enough!")
+                        # messages.append("That amount is more than your available balance, I'm afraid")
+                        # messages.append("I don't think your balance is enough!")
+                        # messages.append("That amount is too large for your available balance")
+                        # messages.append("Your available balance isn't enough!")
                     else:
                         balance.save()
 
@@ -1070,38 +1128,43 @@ class AddAmount(Action):
                          amount=amount)
                         user_action.save()
 
-                        messages.append("You have invested another £" + str(amount) + " in " + profile_name.title())
-                        messages.append("Okay. You have added £" + str(amount) + " to " + profile_name.title())
-                        messages.append("Alright. You have invested another £" + str(amount) + " in " + profile_name.title() + "'s portfolio")
-                        messages.append("You have put another £" + str(amount) + " in " + profile_name.title() + "'s portfolio")
-                        messages.append("You have added £" + str(amount) + " to " + profile_name.title() + "'s portfolio")
-                        messages.append("Got it. You have now invested another £" + str(amount) + " in " + profile_name.title())
-                        messages.append("Ok, you have put another £" + str(amount) + " in " + profile_name.title())
-                        messages.append("Another £" + str(amount) + " was invested in " + profile_name.title() + "\'s portfolio")
-                        messages.append("You have increased the amount invested in " + profile_name.title() + "\'s portfolio by £" + str(amount))
-                        messages.append("OK. You have invested £" + str(amount) + " more in " + profile_name.title() + "\'s portfolio")
+                        message_params = {
+                            'value': str(amount),
+                            'profile_name': profile_name.title()
+                        }
+
+                        messages.append("You have invested another £%(value)s in %(profile_name)s")
+                        # messages.append("Okay. You have added £" + str(amount) + " to " + profile_name.title())
+                        # messages.append("Alright. You have invested another £" + str(amount) + " in " + profile_name.title() + "'s portfolio")
+                        # messages.append("You have put another £" + str(amount) + " in " + profile_name.title() + "'s portfolio")
+                        # messages.append("You have added £" + str(amount) + " to " + profile_name.title() + "'s portfolio")
+                        # messages.append("Got it. You have now invested another £" + str(amount) + " in " + profile_name.title())
+                        # messages.append("Ok, you have put another £" + str(amount) + " in " + profile_name.title())
+                        # messages.append("Another £" + str(amount) + " was invested in " + profile_name.title() + "\'s portfolio")
+                        # messages.append("You have increased the amount invested in " + profile_name.title() + "\'s portfolio by £" + str(amount))
+                        # messages.append("OK. You have invested £" + str(amount) + " more in " + profile_name.title() + "\'s portfolio")
                 else:
-                    messages.append("That's not a valid amount")
+                    # messages.append("That's not a valid amount")
                     messages.append("I'm afraid that's not a valid amount")
-                    messages.append("That amount is not valid")
-                    messages.append("That's an invalid amount, I'm afraid")
-                    messages.append("That amount doesn't look right")
-                    messages.append("I'm afraid that amount doesn't look right")
-                    messages.append("That amount doesn't look valid to me")
-                    messages.append("I don't think that's a valid amount")
-                    messages.append("That's not a right amount!")
-                    messages.append("I don't think that's a right amount")
+                    # messages.append("That amount is not valid")
+                    # messages.append("That's an invalid amount, I'm afraid")
+                    # messages.append("That amount doesn't look right")
+                    # messages.append("I'm afraid that amount doesn't look right")
+                    # messages.append("That amount doesn't look valid to me")
+                    # messages.append("I don't think that's a valid amount")
+                    # messages.append("That's not a right amount!")
+                    # messages.append("I don't think that's a right amount")
             else:
-                messages.append("That's not a valid amount")
+                # messages.append("That's not a valid amount")
                 messages.append("I'm afraid that's not a valid amount")
-                messages.append("That amount is not valid")
-                messages.append("That's an invalid amount, I'm afraid")
-                messages.append("That amount doesn't look right")
-                messages.append("I'm afraid that amount doesn't look right")
-                messages.append("That amount doesn't look valid to me")
-                messages.append("I don't think that's a valid amount")
-                messages.append("That's not a right amount!")
-                messages.append("I don't think that's a right amount")
+                # messages.append("That amount is not valid")
+                # messages.append("That's an invalid amount, I'm afraid")
+                # messages.append("That amount doesn't look right")
+                # messages.append("I'm afraid that amount doesn't look right")
+                # messages.append("That amount doesn't look valid to me")
+                # messages.append("I don't think that's a valid amount")
+                # messages.append("That's not a right amount!")
+                # messages.append("I don't think that's a right amount")
 
         buttons.append({"title": "Give me some advice", "payload": "Give me some advice"})
         if Portfolio.objects.filter(user=user, followed=False):
@@ -1109,7 +1172,8 @@ class AddAmount(Action):
         if Portfolio.objects.filter(user=user, followed=True):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
+        # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params, is_short_response=False)
 
         return []
 
@@ -1125,17 +1189,19 @@ class WithdrawAmount(Action):
         messages = []
         buttons = []
 
+        message_params = {}
+
         if profile_name is None:
             messages.append("Sorry, I can't find that portfolio. Have you spelt the name correctly?")
-            messages.append("Sorry, have you spelt the name correctly? I can't find that portfolio")
-            messages.append("I'm sorry, I can't find that portfolio. Have you spelt the name right?")
-            messages.append("I can't seem to find that portfolio. Have you spelt it correctly?")
-            messages.append("Sorry, have you spelt the name right? I can't seem to find that portfolio")
-            messages.append("Sorry, I can't find that one. Have you spelt the name right?")
-            messages.append("Have you spelt the name right? I can't find that portfolio!")
-            messages.append("My bad. I can't find that portfolio, have you spelt it right?")
-            messages.append("Hmm, I can't find that portfolio. Have you spelt the name correctly?")
-            messages.append("Have you spelt the name correctly? I can't seem to find that portfolio")
+            # messages.append("Sorry, have you spelt the name correctly? I can't find that portfolio")
+            # messages.append("I'm sorry, I can't find that portfolio. Have you spelt the name right?")
+            # messages.append("I can't seem to find that portfolio. Have you spelt it correctly?")
+            # messages.append("Sorry, have you spelt the name right? I can't seem to find that portfolio")
+            # messages.append("Sorry, I can't find that one. Have you spelt the name right?")
+            # messages.append("Have you spelt the name right? I can't find that portfolio!")
+            # messages.append("My bad. I can't find that portfolio, have you spelt it right?")
+            # messages.append("Hmm, I can't find that portfolio. Have you spelt the name correctly?")
+            # messages.append("Have you spelt the name correctly? I can't seem to find that portfolio")
         else:
             profile_object = Profile.objects.get(name__icontains=profile_name)
             portfolio = Portfolio.objects.get(user=user, profile=profile_object.id)
@@ -1147,34 +1213,39 @@ class WithdrawAmount(Action):
                     amount = tracker.latest_message['entities'][0]['value'].replace('£','')
 
                 except IndexError:
-                    messages.append("That's not a valid amount")
+                    # messages.append("That's not a valid amount")
                     messages.append("I'm afraid that's not a valid amount")
-                    messages.append("That amount is not valid")
-                    messages.append("That's an invalid amount, I'm afraid")
-                    messages.append("That amount doesn't look right")
-                    messages.append("I'm afraid that amount doesn't look right")
-                    messages.append("That amount doesn't look valid to me")
-                    messages.append("I don't think that's a valid amount")
-                    messages.append("That's not a right amount!")
-                    messages.append("I don't think that's a right amount")
+                    # messages.append("That amount is not valid")
+                    # messages.append("That's an invalid amount, I'm afraid")
+                    # messages.append("That amount doesn't look right")
+                    # messages.append("I'm afraid that amount doesn't look right")
+                    # messages.append("That amount doesn't look valid to me")
+                    # messages.append("I don't think that's a valid amount")
+                    # messages.append("That's not a right amount!")
+                    # messages.append("I don't think that's a right amount")
 
             if amount is not None:
                 amount = str(amount).replace('£','')
                 amount = round(Decimal(amount), 2)
 
+                message_params = {
+                    'profile_name': profile_name.title(),
+                    'value': amount
+                }
+
                 portfolio.invested -= amount
 
                 if portfolio.invested < 0:
                     messages.append("That's not a valid amount")
-                    messages.append("I'm afraid that's not a valid amount")
-                    messages.append("That amount is not valid")
-                    messages.append("That's an invalid amount, I'm afraid")
-                    messages.append("That amount doesn't look right")
-                    messages.append("I'm afraid that amount doesn't look right")
-                    messages.append("That amount doesn't look valid to me")
-                    messages.append("I don't think that's a valid amount")
-                    messages.append("That's not a right amount!")
-                    messages.append("I don't think that's a right amount")
+                    # messages.append("I'm afraid that's not a valid amount")
+                    # messages.append("That amount is not valid")
+                    # messages.append("That's an invalid amount, I'm afraid")
+                    # messages.append("That amount doesn't look right")
+                    # messages.append("I'm afraid that amount doesn't look right")
+                    # messages.append("That amount doesn't look valid to me")
+                    # messages.append("I don't think that's a valid amount")
+                    # messages.append("That's not a right amount!")
+                    # messages.append("I don't think that's a right amount")
                 else:
                     balance = Balance.objects.get(user=user)
                     available_before = balance.available
@@ -1184,27 +1255,30 @@ class WithdrawAmount(Action):
 
                     if portfolio.invested == 0:
                         portfolio.followed = False
-                        messages.append("You have stopped following " + profile_name.title())
-                        messages.append("Okay, you have now stopped following " + profile_name.title())
-                        messages.append("Alright. You have now unfollowed " + profile_name.title())
-                        messages.append("You have unfollowed " + profile_name.title())
-                        messages.append("Ok. You are not following " + profile_name.title() + " anymore")
-                        messages.append("Got it. You have stopped following " + profile_name.title())
-                        messages.append("Ok, you have just unfollowed " + profile_name.title())
-                        messages.append("Got it. You're not following " + profile_name.title() + "\'s portfolio anymore")
-                        messages.append("You have stopped following " + profile_name.title())
-                        messages.append("OK. You have unfollowed " + profile_name.title())
+                        # messages.append("You have stopped following " + profile_name.title())
+                        messages.append("You have stopped following %(profile_name)s")
+
+                        # messages.append("Okay, you have now stopped following " + profile_name.title())
+                        # messages.append("Alright. You have now unfollowed " + profile_name.title())
+                        # messages.append("You have unfollowed " + profile_name.title())
+                        # messages.append("Ok. You are not following " + profile_name.title() + " anymore")
+                        # messages.append("Got it. You have stopped following " + profile_name.title())
+                        # messages.append("Ok, you have just unfollowed " + profile_name.title())
+                        # messages.append("Got it. You're not following " + profile_name.title() + "\'s portfolio anymore")
+                        # messages.append("You have stopped following " + profile_name.title())
+                        # messages.append("OK. You have unfollowed " + profile_name.title())
                     else:
-                        messages.append("You have withdrawn £" + str(amount) + " from " + profile_name.title())
-                        messages.append("Ok, you have withdrawn £" + str(amount) + " from " + profile_name.title() + "'s portfolio")
-                        messages.append("Got it. You have withdrawn £" + str(amount) + " from " + profile_name.title())
-                        messages.append("Alright. You have withdrawn £" + str(amount) + " from " + profile_name.title() + "'s portfolio")
-                        messages.append("You have withdrawn £" + str(amount) + " from " + profile_name.title() + "'s portfolio")
-                        messages.append("£" + str(amount) + " was withdrawn from " + profile_name.title() + "\'s portfolio")
-                        messages.append("£" + str(amount) + " was withdrawn from " + profile_name.title())
-                        messages.append("Okay, you have just withdrawn £" + str(amount) + " from " + profile_name.title())
-                        messages.append("Understood. You have withdrawn £" + str(amount) + " from " + profile_name.title() + "\'s portfolio")
-                        messages.append("Got it. Withdrew £" + str(amount) + " from " + profile_name.title())
+                        messages.append("I already helped you withdrawn £%(value)s from %(profile_name)s")
+                        # messages.append("You have withdrawn £%(value)s from %(profile_name)s")
+                        # messages.append("Ok, you have withdrawn £" + str(amount) + " from " + profile_name.title() + "'s portfolio")
+                        # messages.append("Got it. You have withdrawn £" + str(amount) + " from " + profile_name.title())
+                        # messages.append("Alright. You have withdrawn £" + str(amount) + " from " + profile_name.title() + "'s portfolio")
+                        # messages.append("You have withdrawn £" + str(amount) + " from " + profile_name.title() + "'s portfolio")
+                        # messages.append("£" + str(amount) + " was withdrawn from " + profile_name.title() + "\'s portfolio")
+                        # messages.append("£" + str(amount) + " was withdrawn from " + profile_name.title())
+                        # messages.append("Okay, you have just withdrawn £" + str(amount) + " from " + profile_name.title())
+                        # messages.append("Understood. You have withdrawn £" + str(amount) + " from " + profile_name.title() + "\'s portfolio")
+                        # messages.append("Got it. Withdrew £" + str(amount) + " from " + profile_name.title())
 
                     portfolio.save()
 
@@ -1221,16 +1295,16 @@ class WithdrawAmount(Action):
                      amount=amount)
                     user_action.save()
             else:
-                messages.append("That's not a valid amount")
+                # messages.append("That's not a valid amount")
                 messages.append("I'm afraid that's not a valid amount")
-                messages.append("That amount is not valid")
-                messages.append("That's an invalid amount, I'm afraid")
-                messages.append("That amount doesn't look right")
-                messages.append("I'm afraid that amount doesn't look right")
-                messages.append("That amount doesn't look valid to me")
-                messages.append("I don't think that's a valid amount")
-                messages.append("That's not a right amount!")
-                messages.append("I don't think that's a right amount")
+                # messages.append("That amount is not valid")
+                # messages.append("That's an invalid amount, I'm afraid")
+                # messages.append("That amount doesn't look right")
+                # messages.append("I'm afraid that amount doesn't look right")
+                # messages.append("That amount doesn't look valid to me")
+                # messages.append("I don't think that's a valid amount")
+                # messages.append("That's not a right amount!")
+                # messages.append("I don't think that's a right amount")
 
         buttons.append({"title": "Give me some advice", "payload": "Give me some advice"})
         if Portfolio.objects.filter(user=user, followed=False):
@@ -1238,7 +1312,8 @@ class WithdrawAmount(Action):
         if Portfolio.objects.filter(user=user, followed=True):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
+        # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params, is_short_response=False)
 
         return []
 
@@ -1254,16 +1329,17 @@ class UnfollowEveryone(Action):
         messages = []
 
         if not followed_portfolios:
-            messages.append("You are not following anyone at the moment")
-            messages.append("There is no one to unfollow")
-            messages.append("You're not following any portfolio currently")
-            messages.append("No portfolio is being followed right now")
-            messages.append("You're not following anyone for now")
-            messages.append("There isn't anyone you can unfollow right now")
-            messages.append("You can't unfollow anyone at the moment")
-            messages.append("But you're not following anyone currently!")
-            messages.append("But there is no one to unfollow!")
-            messages.append("But no one is being followed right now!")
+            # messages.append("You are not following anyone at the moment")
+            messages.append("I'm afraid that you are not following anyone at the moment")
+            # messages.append("There is no one to unfollow")
+            # messages.append("You're not following any portfolio currently")
+            # messages.append("No portfolio is being followed right now")
+            # messages.append("You're not following anyone for now")
+            # messages.append("There isn't anyone you can unfollow right now")
+            # messages.append("You can't unfollow anyone at the moment")
+            # messages.append("But you're not following anyone currently!")
+            # messages.append("But there is no one to unfollow!")
+            # messages.append("But no one is being followed right now!")
         else:
             balance = Balance.objects.get(user=user)
 
@@ -1293,16 +1369,17 @@ class UnfollowEveryone(Action):
 
             balance.save()
 
-            messages.append("You have unfollowed everyone")
-            messages.append("Got it. You have stopped following everyone")
-            messages.append("Okay, you have now unfollowed everyone")
-            messages.append("Alright. You have unfollowed everyone")
-            messages.append("Ok. You have just unfollowed every portfolio")
-            messages.append("Everyone was unfollowed")
-            messages.append("Got it. You have unfollowed every portfolio")
-            messages.append("OK. You have stopped following every portfolio")
-            messages.append("You have stopped following everyone")
-            messages.append("Alright. Every portfolio was unfollowed")
+            messages.append("Got it. I helped you stopped following everyone")
+            # messages.append("You have unfollowed everyone")
+            # messages.append("Got it. You have stopped following everyone")
+            # messages.append("Okay, you have now unfollowed everyone")
+            # messages.append("Alright. You have unfollowed everyone")
+            # messages.append("Ok. You have just unfollowed every portfolio")
+            # messages.append("Everyone was unfollowed")
+            # messages.append("Got it. You have unfollowed every portfolio")
+            # messages.append("OK. You have stopped following every portfolio")
+            # messages.append("You have stopped following everyone")
+            # messages.append("Alright. Every portfolio was unfollowed")
 
         buttons = []
 
@@ -1312,7 +1389,8 @@ class UnfollowEveryone(Action):
         if Portfolio.objects.filter(user=user, followed=True):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
+        # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, is_short_response=False)
 
         return []
 
@@ -1331,20 +1409,22 @@ class ShouldIFollowAdvice(Action):
         messages = []
         buttons = []
 
+        message_params = {}
+
         if profile_name is None:
             profile_name = tracker.latest_message['entities'][0]['value']
 
         if profile_name is None:
             messages.append("Sorry, I can't find that portfolio. Have you spelt the name correctly?")
-            messages.append("Sorry, have you spelt the name correctly? I can't find that portfolio")
-            messages.append("I'm sorry, I can't find that portfolio. Have you spelt the name right?")
-            messages.append("I can't seem to find that portfolio. Have you spelt it correctly?")
-            messages.append("Sorry, have you spelt the name right? I can't seem to find that portfolio")
-            messages.append("Sorry, I can't find that one. Have you spelt the name right?")
-            messages.append("Have you spelt the name right? I can't find that portfolio!")
-            messages.append("My bad. I can't find that portfolio, have you spelt it right?")
-            messages.append("Hmm, I can't find that portfolio. Have you spelt the name correctly?")
-            messages.append("Have you spelt the name correctly? I can't seem to find that portfolio")
+            # messages.append("Sorry, have you spelt the name correctly? I can't find that portfolio")
+            # messages.append("I'm sorry, I can't find that portfolio. Have you spelt the name right?")
+            # messages.append("I can't seem to find that portfolio. Have you spelt it correctly?")
+            # messages.append("Sorry, have you spelt the name right? I can't seem to find that portfolio")
+            # messages.append("Sorry, I can't find that one. Have you spelt the name right?")
+            # messages.append("Have you spelt the name right? I can't find that portfolio!")
+            # messages.append("My bad. I can't find that portfolio, have you spelt it right?")
+            # messages.append("Hmm, I can't find that portfolio. Have you spelt the name correctly?")
+            # messages.append("Have you spelt the name correctly? I can't seem to find that portfolio")
 
             buttons.append({"title": "Give me some advice", "payload": "Give me some advice"})
             if Portfolio.objects.filter(user=user, followed=False):
@@ -1445,9 +1525,16 @@ class ShouldIFollowAdvice(Action):
             verbs.append('I think ')
             verbs.append('I expect that ')
 
-            messages.append(random.choice(answers) + random.choice(verbs) + profile_name.title() + '\'s portfolio will ' + increase_or_decrease + ' next month')
+            message_params = {
+                'profile_name': profile_name.title(),
+                'decrease_or_increase': increase_or_decrease
+            }
 
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
+            # messages.append(random.choice(answers) + random.choice(verbs) + profile_name.title() + '\'s portfolio will ' + increase_or_decrease + ' next month')
+            messages.append("I believe %(profile_name)s\'s portfolio will %(increase_or_decrease)s next month")
+
+        #custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params, is_short_response=False)
 
         return[]
 
@@ -1509,20 +1596,22 @@ class ShouldIUnfollowAdvice(Action):
 
         buttons = []
 
+        message_params = {}
+
         if profile_name is None:
             profile_name = tracker.latest_message['entities'][0]['value']
 
         if profile_name is None:
             messages.append("Sorry, I can't find that portfolio. Have you spelt the name correctly?")
-            messages.append("Sorry, have you spelt the name correctly? I can't find that portfolio")
-            messages.append("I'm sorry, I can't find that portfolio. Have you spelt the name right?")
-            messages.append("I can't seem to find that portfolio. Have you spelt it correctly?")
-            messages.append("Sorry, have you spelt the name right? I can't seem to find that portfolio")
-            messages.append("Sorry, I can't find that one. Have you spelt the name right?")
-            messages.append("Have you spelt the name right? I can't find that portfolio!")
-            messages.append("My bad. I can't find that portfolio, have you spelt it right?")
-            messages.append("Hmm, I can't find that portfolio. Have you spelt the name correctly?")
-            messages.append("Have you spelt the name correctly? I can't seem to find that portfolio")
+            # messages.append("Sorry, have you spelt the name correctly? I can't find that portfolio")
+            # messages.append("I'm sorry, I can't find that portfolio. Have you spelt the name right?")
+            # messages.append("I can't seem to find that portfolio. Have you spelt it correctly?")
+            # messages.append("Sorry, have you spelt the name right? I can't seem to find that portfolio")
+            # messages.append("Sorry, I can't find that one. Have you spelt the name right?")
+            # messages.append("Have you spelt the name right? I can't find that portfolio!")
+            # messages.append("My bad. I can't find that portfolio, have you spelt it right?")
+            # messages.append("Hmm, I can't find that portfolio. Have you spelt the name correctly?")
+            # messages.append("Have you spelt the name correctly? I can't seem to find that portfolio")
         else:
             profile_object = Profile.objects.get(name__icontains=profile_name)
             portfolio = Portfolio.objects.get(user=user, profile=profile_object.id)
@@ -1617,9 +1706,16 @@ class ShouldIUnfollowAdvice(Action):
             verbs.append('I think ')
             verbs.append('I expect that ')
 
-            messages.append(random.choice(answers) + random.choice(verbs) + profile_name.title() + '\'s portfolio will ' + increase_or_decrease + ' next month')
+            message_params = {
+                'profile_name': profile_name.title(),
+                'increase_or_decrease': increase_or_decrease,
+            }
 
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
+            # messages.append(random.choice(answers) + random.choice(verbs) + profile_name.title() + '\'s portfolio will ' + increase_or_decrease + ' next month')
+            messages.append("I believe %(profile_name)s\'s portfolio will %(increase_or_decrease)s next month")
+
+        # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params, is_short_response=False)
 
         return[]
 
@@ -1677,16 +1773,17 @@ class FallbackAction(Action):
         messages = []
 
         messages.append("Sorry, I didn't quite catch that")
-        messages.append("Sorry, could you rephrase that?")
-        messages.append("I'm sorry, I didn't quite get that")
-        messages.append("Sorry, I'm afraid I didn't catch that")
-        messages.append("Could you rephrase that please?")
-        messages.append("Apologies, I don't understand")
-        messages.append("Sorry, can you rephrase that please?")
-        messages.append("Hmm, not sure about that. Could you rephrase?")
-        messages.append("I'm not sure I understand. Can you rephrase that please?")
-        messages.append("Please rephrase that. I'm not sure I understand")
+        # messages.append("Sorry, could you rephrase that?")
+        # messages.append("I'm sorry, I didn't quite get that")
+        # messages.append("Sorry, I'm afraid I didn't catch that")
+        # messages.append("Could you rephrase that please?")
+        # messages.append("Apologies, I don't understand")
+        # messages.append("Sorry, can you rephrase that please?")
+        # messages.append("Hmm, not sure about that. Could you rephrase?")
+        # messages.append("I'm not sure I understand. Can you rephrase that please?")
+        # messages.append("Please rephrase that. I'm not sure I understand")
 
-        dispatcher.utter_message(random.choice(messages))
+        # dispatcher.utter_message(random.choice(messages))
+        custom_utter_message(random.choice(messages), tracker, dispatcher, is_short_response=False)
 
         return [UserUtteranceReverted()]
