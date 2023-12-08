@@ -21,3 +21,6 @@ first_person,second_person,passive
 "I'm afraid that you are not following anyone at the moment","You are not following anyone at the moment","No one is currently being followed by you at the moment."
 "Got it. I helped you stopped following everyone","You have unfollowed everyone","Every portfolio was unfollowed"
 "Sorry, I didn't quite catch that","Sorry, could you rephrase that?","Please rephrase the request"
+"I don't think you're following that portfolio","You're not following that portfolio","That portfolio is not being followed."
+"I think you are already following that portfolio","You are already following that portfoli", "That portfolio is already being followed"
+
