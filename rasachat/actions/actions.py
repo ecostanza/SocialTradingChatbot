@@ -39,33 +39,29 @@ for line in r:
     second_lut[first] = second
     passive_lut[first] = passive
 
-def custom_utter_message(message, tracker, dispatcher, buttons=None, message_params=None, is_short_response=False):
+def custom_utter_message(message, tracker, dispatcher, buttons=None, message_params=None):
     user = get_user(tracker)
     condition = get_condition(user)
 
     print("condition: ", condition)
     print("'2nd' in condition: ", '2nd' in condition)
-    print("is_short_response: ", is_short_response)
 
-    new_message = message
-
-    if not is_short_response:
-        if '1st' in condition:
-            print(message_params)
-            new_message = message % message_params if message_params else message
+    if '1st' in condition:
+        print(message_params)
+        new_message = message % message_params if message_params else message
             
-        elif '2nd' in condition:
-            # new_message = '2nd: ' + message
-            print(message_params)
-            new_message = second_lut[message] % message_params if message_params else message
+    elif '2nd' in condition:
+        # new_message = '2nd: ' + message
+        print(message_params)
+        new_message = second_lut[message] % message_params if message_params else message
 
-        elif 'passive' in condition:
-            # new_message = 'psv: ' + message
-            print(message_params)
-            new_message = passive_lut[message] % message_params if message_params else message
+    elif 'passive' in condition:
+        # new_message = 'psv: ' + message
+        print(message_params)
+        new_message = passive_lut[message] % message_params if message_params else message
             
-        else:
-            raise ValueError('Invalid condition')
+    else:
+        raise ValueError('Invalid condition')    
         
     print(new_message)
     
@@ -118,8 +114,7 @@ class Greet(Action):
         custom_utter_message(
             "Hey! How are you?",
             tracker,
-            dispatcher,
-            is_short_response=True)
+            dispatcher)
 
         return []
 
@@ -132,8 +127,7 @@ class CheerUp(Action):
         custom_utter_message(
             "I'm sorry to hear that. I hope you'll get better!",
             tracker,
-            dispatcher,
-            is_short_response=True)
+            dispatcher)
 
         return []
 
@@ -146,8 +140,7 @@ class Happy(Action):
         custom_utter_message(
             "Great!",
             tracker,
-            dispatcher,
-            is_short_response=True)
+            dispatcher)
 
         return []
 
@@ -160,8 +153,7 @@ class Goodbye(Action):
         custom_utter_message(
             "Bye!",
             tracker,
-            dispatcher,
-            is_short_response=True)
+            dispatcher)
 
         return []
 
@@ -174,8 +166,7 @@ class Okay(Action):
         custom_utter_message(
             "Ok",
             tracker,
-            dispatcher,
-            is_short_response=True)
+            dispatcher)
 
         return []
 
@@ -188,8 +179,7 @@ class NoProblem(Action):
         custom_utter_message(
             "No problem!",
             tracker,
-            dispatcher,
-            is_short_response=True)
+            dispatcher)
 
         return []
 
@@ -202,8 +192,7 @@ class Cool(Action):
         custom_utter_message(
             "Cool",
             tracker,
-            dispatcher,
-            is_short_response=True)
+            dispatcher)
 
         return []
 
@@ -221,8 +210,7 @@ class WhatICanDo(Action):
         custom_utter_message(
             "You can tell me to follow or unfollow portfolios, add or withdraw amounts and ask me things like:  \"Who should I follow?\", \"Who should I unfollow?\", \"Invest another 100 on Aricka\" or \"withdraw from alois\"",
             tracker,
-            dispatcher,
-            is_short_response=True)
+            dispatcher)
 
         return []
 
@@ -236,8 +224,7 @@ class RemindImageTagging(Action):
         custom_utter_message(
             "Remember, you can switch to Image Tagging by clicking the \"Task\" button in the top right corner.",
             tracker,
-            dispatcher,
-            is_short_response=True)
+            dispatcher)
 
         return []
 
@@ -250,8 +237,7 @@ class Newsfeed(Action):
         custom_utter_message(
             "I'm afraid I don't know much about the newsfeed",
             tracker,
-            dispatcher,
-            is_short_response=True)
+            dispatcher)
 
         return []
 
@@ -264,8 +250,7 @@ class ImDoingMyBest(Action):
         custom_utter_message(
             "I'm doing my best!",
             tracker,
-            dispatcher,
-            is_short_response=True
+            dispatcher
         )
 
         return []
@@ -280,8 +265,7 @@ class FollowOnePortfolioAtATime(Action):
         custom_utter_message(
             "Please tell me one portfolio to follow at a time so we can decide the amount to invest",
             tracker,
-            dispatcher,
-            is_short_response=True
+            dispatcher
         )
 
         return []
@@ -482,7 +466,7 @@ class GiveGeneralAdvice(Action):
             }
 
         # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params, is_short_response=False)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params)
         
         return [SlotSet("name", profile_name), SlotSet("portfolio_query", portfolio_query)]
 
@@ -574,7 +558,7 @@ class GiveFollowingAdvice(Action):
                 if Portfolio.objects.filter(user=user, followed=True):
                     buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params, is_short_response=False)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params)
 
         return [SlotSet("name", highest_changing_portfolio_name)]
 
@@ -673,7 +657,7 @@ class GiveUnfollowingAdvice(Action):
                     buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
         # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params, is_short_response=False)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params)
 
         return [SlotSet("name", lowest_changing_portfolio_name)]
 
@@ -775,7 +759,7 @@ class AskAddAmount(Action):
             buttons.append({"title": "£" + str(fourtyPercent), "payload": "£" + str(fourtyPercent)})
 
         # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, is_short_response=False)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons)
 
         return [SlotSet("name", profile_name)]
 
@@ -819,7 +803,7 @@ class AskWithdrawAmount(Action):
         # messages.append("Got it. How much to invest?")
 
         # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, is_short_response=False)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons)
         
 
         return [SlotSet("name", profile_name)]
@@ -956,7 +940,7 @@ class Follow(Action):
 
 
         # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params, is_short_response=False)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params)
 
         return []
 
@@ -1037,7 +1021,7 @@ class Unfollow(Action):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
         # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params, is_short_response=False)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params)
 
         return[]
 
@@ -1174,7 +1158,7 @@ class AddAmount(Action):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
         # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params, is_short_response=False)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params)
 
         return []
 
@@ -1314,7 +1298,7 @@ class WithdrawAmount(Action):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
         # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params, is_short_response=False)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params)
 
         return []
 
@@ -1391,7 +1375,7 @@ class UnfollowEveryone(Action):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
         # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, is_short_response=False)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons)
 
         return []
 
@@ -1535,7 +1519,7 @@ class ShouldIFollowAdvice(Action):
             messages.append("I believe %(profile_name)s\'s portfolio will %(increase_or_decrease)s next month")
 
         #custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params, is_short_response=False)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params)
 
         return[]
 
@@ -1716,7 +1700,7 @@ class ShouldIUnfollowAdvice(Action):
             messages.append("I believe %(profile_name)s\'s portfolio will %(increase_or_decrease)s next month")
 
         # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params, is_short_response=False)
+        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params)
 
         return[]
 
@@ -1785,6 +1769,6 @@ class FallbackAction(Action):
         # messages.append("Please rephrase that. I'm not sure I understand")
 
         # dispatcher.utter_message(random.choice(messages))
-        custom_utter_message(random.choice(messages), tracker, dispatcher, is_short_response=False)
+        custom_utter_message(random.choice(messages), tracker, dispatcher)
 
         return [UserUtteranceReverted()]
