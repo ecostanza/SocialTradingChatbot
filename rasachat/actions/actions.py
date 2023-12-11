@@ -1120,7 +1120,8 @@ class AddAmount(Action):
                             'profile_name': profile_name.title()
                         }
 
-                        messages.append("You have invested another £%(value)s in %(profile_name)s")
+                        # messages.append("You have invested another £%(value)s in %(profile_name)s")
+                        messages.append("I have helped you invest another %(value)s in %(profile_name)s")
                         # messages.append("Okay. You have added £" + str(amount) + " to " + profile_name.title())
                         # messages.append("Alright. You have invested another £" + str(amount) + " in " + profile_name.title() + "'s portfolio")
                         # messages.append("You have put another £" + str(amount) + " in " + profile_name.title() + "'s portfolio")
