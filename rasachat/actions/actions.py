@@ -1002,7 +1002,8 @@ class Unfollow(Action):
                 'profile_name': profile_name.title()
             }
 
-            messages.append("You have stopped following %(profile_name)s")
+            # messages.append("You have stopped following %(profile_name)s")
+            messages.append("I have helped you stop following %(profile_name)s")
             # messages.append("Okay, you have now stopped following " + profile_name.title())
             # messages.append("Alright. You have now unfollowed " + profile_name.title())
             # messages.append("You have unfollowed " + profile_name.title())
