@@ -903,7 +903,8 @@ class Follow(Action):
                         'profile_name': profile_name.title()
                     }
 
-                    messages.append("You are now following %(profile_name)s")
+                    # messages.append("You are now following %(profile_name)s")
+                    messages.append("I have helped you start following %(profile_name)s")
                     # messages.append("You have started following " + profile_name.title())
                     # messages.append("Okay, you are now following " + profile_name.title() + "'s portfolio")
                     # messages.append("You have invested in " + profile_name.title() + "'s portfolio")
