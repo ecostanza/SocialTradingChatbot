@@ -91,7 +91,7 @@ def is_time_for_error(user):
         return False
     
     # TODO: tweak this and possibly make it parametric
-    if elapsed_time > 10 and month.errors_experienced == 0:
+    if elapsed_time > 60 and month.errors_experienced == 0:
         month.errors_experienced += 1
         month.save()
         return True
@@ -464,7 +464,7 @@ class GiveGeneralAdvice(Action):
 
         # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
         custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params)
-        
+
         return [SlotSet("name", profile_name), SlotSet("portfolio_query", portfolio_query)]
 
 
@@ -677,6 +677,7 @@ class FetchPortfolio(Action):
         else:
             portfolio_query = None
 
+            # TODO: check whether the following actually works
             for e in tracker.latest_message['entities']:
 
                 if e['entity'] == 'amount':
