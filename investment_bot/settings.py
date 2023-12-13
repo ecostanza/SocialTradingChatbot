@@ -31,7 +31,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 PROJECT_NAME = 'investment_bot'
-DEPLOYMENT_NAME = PROJECT_NAME
+DEPLOYMENT_NAME = 'i_bot'
 
 PROTOCOL = "https"
 # Put the hostname where the site will be deployed here.
@@ -54,8 +54,8 @@ if LIVE:
     FORCE_SCRIPT_NAME = BASE_URL
     HOSTING = 'deployment'
     # SECURITY WARNING: don't run with debug turned on in production!
-    DEBUG = False
-    # DEBUG = True
+    # DEBUG = False
+    DEBUG = True
     ALLOWED_HOSTS.append(hostname)
     EMAIL_HOST = 'smtp.cs.ucl.ac.uk'
     #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
