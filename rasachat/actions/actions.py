@@ -1349,7 +1349,7 @@ class UnfollowEveryone(Action):
 
             balance.save()
 
-            messages.append("Got it. I helped you stopped following everyone")
+            messages.append("I have helped you stopped following everyone")
             # messages.append("You have unfollowed everyone")
             # messages.append("Got it. You have stopped following everyone")
             # messages.append("Okay, you have now unfollowed everyone")
