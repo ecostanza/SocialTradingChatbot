@@ -205,7 +205,7 @@ class WhatICanDo(Action):
     def run(self, dispatcher, tracker, domain):
 
         custom_utter_message(
-            "You can tell me to follow or unfollow portfolios, add or withdraw amounts and ask me things like:  \"Who should I follow?\", \"Who should I unfollow?\", \"Invest another 100 on Aricka\" or \"withdraw from alois\"",
+            "I can follow or unfollow portfolios, add or withdraw amounts for you and provide advice like: \"Who should I follow?\", \"Who should I unfollow?\", \"Invest another 100 on Aricka\" or \"withdraw from alois\"",
             tracker,
             dispatcher)
 
