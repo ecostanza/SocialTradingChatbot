@@ -25,7 +25,7 @@ from patchwork.transfers import rsync
 
 env = {}
 env['project_local'] = 'investment_bot'
-env['project_remote'] = 'investment_bot'
+env['project_remote'] = 'i_bot'
 
 # the db name must be at most 16 chars
 env['dbname'] = env['project_remote']
@@ -55,8 +55,10 @@ def touch(c):
 @task
 def sync(c):
     rsync(c, './', "/srv/django-projects/" + env['project_remote'] + "/",
-                   exclude=("fabfile.py", "*.pyc",".git*","*.db", "*.log", "venv",
-                            "uploads", 'media', '*.tar.gz'),
+                   exclude=("fabfile.py", "*.pyc",".git*","*.db", 
+                            "*.log", "venv",
+                            "uploads", 'media', '*.tar.gz','.rasa',
+                            'start_rasa_actions_service.sh'),
                    delete=False,
                    rsync_opts="",
                   )
@@ -79,6 +81,7 @@ def deploy(c):
     collect_static(c)
     migrate(c)
     restart_gunicorn(c)
+    restart_rasa(c)
 
 @task
 def reset_db(c):
@@ -125,13 +128,16 @@ def setup_virtualenv(c):
 
 @task
 def setup_db(c):
-    command = """echo "create database if not exists %(dbname)s; GRANT ALL ON %(dbname)s.* TO '%(dbname)s'@'localhost' IDENTIFIED BY '%(dbname)s@%(dbpass)s'; " | mysql -u root -p%(dbpass)s""" % env
+    command = """echo "create database if not exists %(dbname)s; CREATE USER '%(dbname)s'@'localhost' IDENTIFIED BY '%(dbname)s@%(dbpass)s'; GRANT ALL ON %(dbname)s.* TO'%(dbname)s'@'localhost'" | mysql -u root -p%(dbpass)s""" % env
     c.run(command)
+    # command = """echo "create database if not exists %(dbname)s; GRANT ALL ON %(dbname)s.* TO '%(dbname)s'@'localhost' IDENTIFIED BY '%(dbname)s@%(dbpass)s'; " | mysql -u root -p%(dbpass)s""" % env
+    # c.run(command)
 
 @task
 def setup_project(c):
     with c.cd('/srv/django-projects/'):
-        virtualenv(c, 'django-admin.py startproject %(project_remote)s' % env)
+        virtualenv(c, 'django-admin startproject %(project_remote)s' % env)
+
 
 @task
 def setup_logfile(c):
@@ -317,8 +323,8 @@ WantedBy=multi-user.target
 
 @task
 def setup(c):
-    setup_virtualenv(c)
-    setup_db(c)
+    # setup_virtualenv(c)
+    # setup_db(c)
     setup_project(c)
     setup_directories(c)
     setup_nginx(c)

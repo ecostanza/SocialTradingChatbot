@@ -4,6 +4,7 @@ $(function () {
 
     var render_tagging_task = function () {
         var image_url = server_url + '/static' + _task.image_url;
+        image_url = image_url.replace('i_bot/static/i_bot','i_bot/static');
         console.log('IMAGE URL = ' + image_url);
 
         console.log(image_url);

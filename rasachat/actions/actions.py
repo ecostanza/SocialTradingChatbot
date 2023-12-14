@@ -34,7 +34,7 @@ next(r)
 second_lut = {}
 passive_lut = {}
 for line in r:
-    print(line)
+    # print(line)
     first, second, passive = line
     second_lut[first] = second
     passive_lut[first] = passive
@@ -65,10 +65,7 @@ def custom_utter_message(message, tracker, dispatcher, buttons=None, message_par
         
     print(new_message)
     
-    if buttons is None:
-        dispatcher.utter_message(new_message)
-    else:
-        dispatcher.utter_button_message(new_message, buttons)
+    dispatcher.utter_message(new_message)
 
 
 def get_user(tracker):
@@ -94,7 +91,7 @@ def is_time_for_error(user):
         return False
     
     # TODO: tweak this and possibly make it parametric
-    if elapsed_time > 10 and month.errors_experienced == 0:
+    if elapsed_time > 60 and month.errors_experienced == 0:
         month.errors_experienced += 1
         month.save()
         return True
@@ -467,7 +464,7 @@ class GiveGeneralAdvice(Action):
 
         # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
         custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params)
-        
+
         return [SlotSet("name", profile_name), SlotSet("portfolio_query", portfolio_query)]
 
 
@@ -669,10 +666,7 @@ class FetchPortfolio(Action):
     def run(self, dispatcher, tracker, domain):
         user = get_user(tracker)
 
-        profile_name = ''
-        for e in tracker.latest_message['entities']:
-            if e['entity'] == 'portfolio_name':
-                profile_name = e['value']
+        profile_name = tracker.get_slot('name')
         # print('profile_name:', profile_name)
 
         amount = None
@@ -683,6 +677,7 @@ class FetchPortfolio(Action):
         else:
             portfolio_query = None
 
+            # TODO: check whether the following actually works
             for e in tracker.latest_message['entities']:
 
                 if e['entity'] == 'amount':
@@ -725,10 +720,7 @@ class AskAddAmount(Action):
     def run(self, dispatcher, tracker, domain):
         user = get_user(tracker)
 
-        profile_name = ''
-        for e in tracker.latest_message['entities']:
-            if e['entity'] == 'portfolio_name':
-                profile_name = e['value']
+        profile_name = tracker.get_slot('name')
 
         balance = Balance.objects.get(user=user)
         available_amount = balance.available

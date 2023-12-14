@@ -15,7 +15,8 @@ def webhook_view(request):
     client_data = json.loads(request.body.decode('utf-8'))
     pprint(("CLIENT DATA TO RASA WEBHOOK IS", client_data))
     # localhost:5005/webhooks/rest/webhook
-    url = "http://localhost:5500/webhooks/rest/webhook"
+    # url = "http://localhost:5500/webhooks/rest/webhook"
+    url = "http://localhost:5057/webhooks/rest/webhook"
     # TODO: get json data from the request
     # print('client_data:', client_data)
     json_data = json.dumps(client_data)
