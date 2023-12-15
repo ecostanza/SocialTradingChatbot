@@ -47,17 +47,20 @@ def custom_utter_message(message, tracker, dispatcher, buttons=None, message_par
     # print("'2nd' in condition: ", '2nd' in condition)
 
     if '1st' in condition:
-        new_message = message % message_params if message_params else message
+        new_message = message 
             
     elif '2nd' in condition:
-        new_message = second_lut[message] % message_params if message_params else message
+        new_message = second_lut[message] 
 
     elif 'passive' in condition:
-        new_message = passive_lut[message] % message_params if message_params else message
+        new_message = passive_lut[message] 
             
     else:
         raise ValueError('Invalid condition')    
-        
+    
+    if message_params:
+        new_message = new_message % message_params
+
     print(new_message)
     
     dispatcher.utter_message(new_message)
