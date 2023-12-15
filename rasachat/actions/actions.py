@@ -43,21 +43,16 @@ def custom_utter_message(message, tracker, dispatcher, buttons=None, message_par
     user = get_user(tracker)
     condition = get_condition(user)
 
-    print("condition: ", condition)
-    print("'2nd' in condition: ", '2nd' in condition)
+    # print("condition: ", condition)
+    # print("'2nd' in condition: ", '2nd' in condition)
 
     if '1st' in condition:
-        print(message_params)
         new_message = message % message_params if message_params else message
             
     elif '2nd' in condition:
-        # new_message = '2nd: ' + message
-        print(message_params)
         new_message = second_lut[message] % message_params if message_params else message
 
     elif 'passive' in condition:
-        # new_message = 'psv: ' + message
-        print(message_params)
         new_message = passive_lut[message] % message_params if message_params else message
             
     else:
@@ -664,10 +659,17 @@ class FetchPortfolio(Action):
         return "action_fetch_portfolio"
 
     def run(self, dispatcher, tracker, domain):
+        print("\n", self.name())
         user = get_user(tracker)
 
-        profile_name = tracker.get_slot('name')
-        # print('profile_name:', profile_name)
+        # TODO: check this
+        # profile_name = tracker.get_slot('name')
+        profile_name = ''
+        for e in tracker.latest_message['entities']:
+            print('entities loop:', e['entity'], e['value'])
+            if e['entity'] == 'portfolio_name':
+                profile_name = e['value']
+        print('profile_name:', profile_name)
 
         amount = None
         amount_query = None
@@ -677,14 +679,17 @@ class FetchPortfolio(Action):
         else:
             portfolio_query = None
 
+            # TODO: check this
             # TODO: check whether the following actually works
             for e in tracker.latest_message['entities']:
-
+                print('entities loop:', e['entity'], e['value'])
                 if e['entity'] == 'amount':
                     try:
                         amount = round(Decimal(e['value'].replace('£','')), 2)
                     except (IndexError, InvalidOperation):
                         amount_query = 'invalid'
+            print('amount:', amount)
+            print('amount_query:', amount_query)
 
             try:
                 profile_object = Profile.objects.get(name__icontains=profile_name)
@@ -718,9 +723,13 @@ class AskAddAmount(Action):
         return "action_ask_add_amount"
 
     def run(self, dispatcher, tracker, domain):
+        print("\n", self.name())
         user = get_user(tracker)
 
+        # TODO: check this
         profile_name = tracker.get_slot('name')
+        print('profile_name:', profile_name)
+
 
         balance = Balance.objects.get(user=user)
         available_amount = balance.available
@@ -806,9 +815,18 @@ class Follow(Action):
         return "action_follow"
 
     def run(self, dispatcher, tracker, domain):
+        print("\n", self.name())
         user = get_user(tracker)
 
+        # TODO: check this
         profile_name = tracker.get_slot('name')
+        # profile_name = ''
+        for e in tracker.latest_message['entities']:
+            print('entities loop:', e['entity'], e['value'])
+            if e['entity'] == 'portfolio_name':
+                profile_name = e['value']
+        print('profile_name:', profile_name)
+        print("tracker.get_slot('name')", tracker.get_slot('name'))
 
         buttons = []
 
