@@ -100,57 +100,57 @@ def is_time_for_error(user):
 Short responses
 """
 
-class Greet(Action):
-    def name(self) -> Text:
-        return "action_greet"
+# # class Greet(Action):
+# #     def name(self) -> Text:
+# #         return "action_greet"
 
-    def run(self, dispatcher, tracker, domain):
+# #     def run(self, dispatcher, tracker, domain):
 
-        custom_utter_message(
-            "Hey! How are you?",
-            tracker,
-            dispatcher)
+# #         custom_utter_message(
+# #             "Hey! How are you?",
+# #             tracker,
+# #             dispatcher)
 
-        return []
+# #         return []
 
-class CheerUp(Action):
-    def name(self) -> Text:
-        return "action_cheer_up"
+# # class CheerUp(Action):
+# #     def name(self) -> Text:
+# #         return "action_cheer_up"
 
-    def run(self, dispatcher, tracker, domain):
+# #     def run(self, dispatcher, tracker, domain):
 
-        custom_utter_message(
-            "I'm sorry to hear that. I hope you'll get better!",
-            tracker,
-            dispatcher)
+# #         custom_utter_message(
+# #             "I'm sorry to hear that. I hope you'll get better!",
+# #             tracker,
+# #             dispatcher)
 
-        return []
+# #         return []
 
-class Happy(Action):
-    def name(self) -> Text:
-        return "action_happy"
+# # class Happy(Action):
+# #     def name(self) -> Text:
+# #         return "action_happy"
 
-    def run(self, dispatcher, tracker, domain):
+# #     def run(self, dispatcher, tracker, domain):
 
-        custom_utter_message(
-            "Great!",
-            tracker,
-            dispatcher)
+# #         custom_utter_message(
+# #             "Great!",
+# #             tracker,
+# #             dispatcher)
 
-        return []
+# #         return []
 
-class Goodbye(Action):
-    def name(self) -> Text:
-        return "action_goodbye"
+# class Goodbye(Action):
+#     def name(self) -> Text:
+#         return "action_goodbye"
 
-    def run(self, dispatcher, tracker, domain):
+#     def run(self, dispatcher, tracker, domain):
 
-        custom_utter_message(
-            "Bye!",
-            tracker,
-            dispatcher)
+#         custom_utter_message(
+#             "Bye!",
+#             tracker,
+#             dispatcher)
 
-        return []
+#         return []
 
 class Okay(Action):
     def name(self) -> Text:

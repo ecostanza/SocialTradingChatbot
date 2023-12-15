@@ -9,16 +9,12 @@ entities:
 
 intents:
   - what_can_you_do
-  - greet
-  - goodbye
   - thank_you
   - ok
   - why_did_you
   - newsfeed
   - affirm
   - deny
-  - mood_great
-  - mood_unhappy
   - do_it
   - ask_general_advice
   - ask_follow_advice
@@ -44,10 +40,6 @@ intents:
   - remind_me_about_image_tagging
 
 actions:
-  - action_greet
-  - action_cheer_up
-  - action_happy
-  - action_goodbye
   - action_invalid_portfolio
   - action_already_followed_portfolio
   - action_already_not_followed_portfolio
