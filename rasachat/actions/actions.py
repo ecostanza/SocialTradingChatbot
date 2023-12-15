@@ -217,7 +217,7 @@ class RemindImageTagging(Action):
 
         # action_remind_image_tagging
         custom_utter_message(
-            "Remember, you can switch to Image Tagging by clicking the \"Task\" button in the top right corner.",
+            "I remind you: you can switch to Image Tagging by clicking the \"Task\" button in the top right corner",
             tracker,
             dispatcher)
 
@@ -243,7 +243,7 @@ class ImDoingMyBest(Action):
     def run(self, dispatcher, tracker, domain):
         
         custom_utter_message(
-            "I'm doing my best!",
+            "Sorry, I am doing my best: predictions and responses are meant to be as accurate as possible, but might contain errors",
             tracker,
             dispatcher
         )
@@ -258,7 +258,7 @@ class FollowOnePortfolioAtATime(Action):
     def run(self, dispatcher, tracker, domain):
         
         custom_utter_message(
-            "Please tell me one portfolio to follow at a time so we can decide the amount to invest",
+            "Sorry, I can only follow one portfolio at the time (one message for each portfolio)",
             tracker,
             dispatcher
         )
