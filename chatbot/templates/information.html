@@ -10,6 +10,9 @@
 <div class="container">
     <div class="row">
         <div class="offset-2 col-8">
+            {% if is_test_user %}
+            <p><a href="{{ROOT_URL}}/investment/">skip</a></p>
+            {% endif %}
             <p>Project Title: Interacting with an investment assistant: online study.</p>
 
             <br>

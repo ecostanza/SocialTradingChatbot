@@ -206,6 +206,12 @@ def populate_context(request):
         unsupported_browser = detect_unsupported_browsers(request.META)
     except KeyError:
         unsupported_browser = False
+    is_test_user = False
+    if request.user:
+        print('request.user.username:', request.user.username)
+        if request.user.username.startswith('TEST'):
+            is_test_user = True
+    
     context = {
                'ROOT_URL': settings.ROOT_URL,
                'MEDIA_URL': settings.MEDIA_URL,
@@ -213,6 +219,7 @@ def populate_context(request):
                'deployment_local': settings.HOSTING == 'localdeployment',
                'experimental_group': experimental_group,
                'unsupported_browser': unsupported_browser,
+               'is_test_user': is_test_user,
                'site': get_current_site(request)
                }
     return context
