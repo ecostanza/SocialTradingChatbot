@@ -43,7 +43,7 @@ def custom_utter_message(message, tracker, dispatcher, buttons=None, message_par
     user = get_user(tracker)
     condition = get_condition(user)
 
-    # print("condition: ", condition)
+    print("condition: ", condition)
     # print("'2nd' in condition: ", '2nd' in condition)
 
     if '1st' in condition:
