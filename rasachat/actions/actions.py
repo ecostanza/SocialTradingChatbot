@@ -34,7 +34,6 @@ next(r)
 second_lut = {}
 passive_lut = {}
 for line in r:
-    # print(line)
     first, second, passive = line
     second_lut[first] = second
     passive_lut[first] = passive
@@ -42,9 +41,6 @@ for line in r:
 def custom_utter_message(message, tracker, dispatcher, buttons=None, message_params=None):
     user = get_user(tracker)
     condition = get_condition(user)
-
-    # print("condition: ", condition)
-    # print("'2nd' in condition: ", '2nd' in condition)
 
     if '1st' in condition:
         new_message = message 
@@ -99,58 +95,6 @@ def is_time_for_error(user):
 """
 Short responses
 """
-
-# # class Greet(Action):
-# #     def name(self) -> Text:
-# #         return "action_greet"
-
-# #     def run(self, dispatcher, tracker, domain):
-
-# #         custom_utter_message(
-# #             "Hey! How are you?",
-# #             tracker,
-# #             dispatcher)
-
-# #         return []
-
-# # class CheerUp(Action):
-# #     def name(self) -> Text:
-# #         return "action_cheer_up"
-
-# #     def run(self, dispatcher, tracker, domain):
-
-# #         custom_utter_message(
-# #             "I'm sorry to hear that. I hope you'll get better!",
-# #             tracker,
-# #             dispatcher)
-
-# #         return []
-
-# # class Happy(Action):
-# #     def name(self) -> Text:
-# #         return "action_happy"
-
-# #     def run(self, dispatcher, tracker, domain):
-
-# #         custom_utter_message(
-# #             "Great!",
-# #             tracker,
-# #             dispatcher)
-
-# #         return []
-
-# class Goodbye(Action):
-#     def name(self) -> Text:
-#         return "action_goodbye"
-
-#     def run(self, dispatcher, tracker, domain):
-
-#         custom_utter_message(
-#             "Bye!",
-#             tracker,
-#             dispatcher)
-
-#         return []
 
 class Okay(Action):
     def name(self) -> Text:
@@ -662,17 +606,14 @@ class FetchPortfolio(Action):
         return "action_fetch_portfolio"
 
     def run(self, dispatcher, tracker, domain):
-        print("\n", self.name())
         user = get_user(tracker)
 
         # TODO: check this
         # profile_name = tracker.get_slot('name')
         profile_name = ''
         for e in tracker.latest_message['entities']:
-            print('entities loop:', e['entity'], e['value'])
             if e['entity'] == 'portfolio_name':
                 profile_name = e['value']
-        print('profile_name:', profile_name)
 
         amount = None
         amount_query = None
@@ -682,26 +623,18 @@ class FetchPortfolio(Action):
         else:
             portfolio_query = None
 
-            # TODO: check this
-            # TODO: check whether the following actually works
             for e in tracker.latest_message['entities']:
-                print('entities loop:', e['entity'], e['value'])
                 if e['entity'] == 'amount':
                     try:
                         amount = round(Decimal(e['value'].replace('£','')), 2)
                     except (IndexError, InvalidOperation):
                         amount_query = 'invalid'
-            print('amount:', amount)
-            print('amount_query:', amount_query)
 
             try:
                 profile_object = Profile.objects.get(name__icontains=profile_name)
-                # print('profile_object', profile_object)
                 profile_name = profile_object.name
-                # print('profile_name', profile_name)
 
                 portfolio = Portfolio.objects.get(user=user, profile=profile_object.id)
-                # print('portfolio', portfolio)
 
                 if portfolio.followed:
                     portfolio_query = "followed"
@@ -714,10 +647,8 @@ class FetchPortfolio(Action):
                     amount_query = "invalid"
 
             except (IndexError, MultipleObjectsReturned) as e:
-                # print('exception:', e)
                 portfolio_query = "invalid"
 
-        # print('portfolio_query', portfolio_query)
         return [SlotSet("portfolio_query", portfolio_query), SlotSet("name", profile_name), SlotSet("amount_query", amount_query), SlotSet("amount", amount)]
 
 
@@ -726,13 +657,11 @@ class AskAddAmount(Action):
         return "action_ask_add_amount"
 
     def run(self, dispatcher, tracker, domain):
-        print("\n", self.name())
+        
         user = get_user(tracker)
 
         # TODO: check this
         profile_name = tracker.get_slot('name')
-        print('profile_name:', profile_name)
-
 
         balance = Balance.objects.get(user=user)
         available_amount = balance.available
@@ -818,18 +747,14 @@ class Follow(Action):
         return "action_follow"
 
     def run(self, dispatcher, tracker, domain):
-        print("\n", self.name())
+        print(self.name())
+
         user = get_user(tracker)
 
-        # TODO: check this
         profile_name = tracker.get_slot('name')
-        # profile_name = ''
         for e in tracker.latest_message['entities']:
-            print('entities loop:', e['entity'], e['value'])
             if e['entity'] == 'portfolio_name':
                 profile_name = e['value']
-        print('profile_name:', profile_name)
-        print("tracker.get_slot('name')", tracker.get_slot('name'))
 
         buttons = []
 
@@ -910,7 +835,7 @@ class Follow(Action):
                     portfolio.followed = True
                     portfolio.invested = round(Decimal(amount), 2)
                     portfolio.save()
-                    print(Portfolio.objects.filter(followed=True).aggregate(Sum('invested')).get('invested__sum'))
+                    # print(Portfolio.objects.filter(followed=True).aggregate(Sum('invested')).get('invested__sum'))
 
                     message_params = {
                         'profile_name': profile_name.title()
