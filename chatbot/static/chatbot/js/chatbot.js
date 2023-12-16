@@ -1,8 +1,8 @@
-var conditionActive;
-var month = 1;
 
 $(document).ready(function () {
-  // window.variants = [
+  // var conditionActive;
+  // var month = month_number;
+    // window.variants = [
   //   0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0,
   //   1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5,
   // ];
@@ -133,199 +133,203 @@ $(document).ready(function () {
 
   $("#month-number").html(month);
 
-  var isPaused = false;
-
-  var _seconds_left = 240;
+  // var isPaused = false;
 
   var newspostTimeout;
 
+  // TODO: fix this so that it gets the time from the server
+  var _seconds_left = seconds_left;
   var update_timer = function () {
-    if (!isPaused) {
-      var seconds, minutes, html;
-      _seconds_left -= 1;
-      if (_seconds_left < 1) {
-        _seconds_left = 240;
+    var seconds, minutes;
+    _seconds_left -= 1;
+    if (_seconds_left < 1) {
+      clearInterval(update_timer_handle); // stop timer
 
-        old_invested_amount = parseFloat($("#invested-balance-amount").text());
+      old_invested_amount = parseFloat($("#invested-balance-amount").text());
 
-        isPaused = true;
-        clearTimeout(newspostTimeout);
+      clearTimeout(newspostTimeout);
 
-        $(".notification").hide();
+      $(".notification").hide();
 
-        $("#myModal").modal({
-          backdrop: "static",
-          keyboard: false,
-        });
+      $("#myModal").modal({
+        backdrop: "static",
+        keyboard: false,
+      });
 
-        $.ajax({
-          type: "GET",
-          url: server_url + "/updateportfolios/",
-          success: function (response) {
-            console.log(response);
+      $.ajax({
+        type: "GET",
+        url: server_url + "/updateportfolios/",
+        success: function (response) {
+          console.log(response);
 
-            if (!$("#loading-gif").length) {
-              $(".scrollable-newsposts").append(
-                '<img id="loading-gif" src="' +
-                  staticUrl +
-                  'chatbot/images/loading.gif">',
-              );
-            }
-
-            $("#portfolios").load(
-              location.href + " #portfolios>*",
-              "",
-              function () {
-                if ($("#followed-portfolio-wrapper").length) {
-                  $("#empty-followed-tag").hide();
-                } else {
-                  $("#empty-followed-tag").show();
-                }
-
-                if ($("#not-followed-portfolio-wrapper").length) {
-                  $("#empty-not-followed-tag").hide();
-                } else {
-                  $("#empty-not-followed-tag").show();
-                }
-              },
+          if (!$("#loading-gif").length) {
+            $(".scrollable-newsposts").append(
+              '<img id="loading-gif" src="' +
+                staticUrl +
+                'chatbot/images/loading.gif">',
             );
+          }
 
-            $("#invested-balance-amount").html(
-              (
-                Math.round(response.invested_balance_amount * 100) / 100
-              ).toFixed(2),
-            );
+          $("#portfolios").load(
+            location.href + " #portfolios>*",
+            "",
+            function () {
+              if ($("#followed-portfolio-wrapper").length) {
+                $("#empty-followed-tag").hide();
+              } else {
+                $("#empty-followed-tag").show();
+              }
 
-            new_invested_amount = parseFloat(
-              $("#invested-balance-amount").text(),
-            );
-            new_invested_amount = parseFloat(
-              Math.round(new_invested_amount * 100) / 100,
+              if ($("#not-followed-portfolio-wrapper").length) {
+                $("#empty-not-followed-tag").hide();
+              } else {
+                $("#empty-not-followed-tag").show();
+              }
+            },
+          );
+
+          $("#invested-balance-amount").html(
+            (
+              Math.round(response.invested_balance_amount * 100) / 100
+            ).toFixed(2),
+          );
+
+          new_invested_amount = parseFloat(
+            $("#invested-balance-amount").text(),
+          );
+          new_invested_amount = parseFloat(
+            Math.round(new_invested_amount * 100) / 100,
+          ).toFixed(2);
+
+          span = $("#invested-balance-change");
+
+          string = "";
+
+          invested_balance_change = 0;
+
+          if (old_invested_amount == 0) {
+            string = "+0.00%";
+            span.removeClass("positive-change");
+            span.removeClass("negative-change");
+            span.addClass("no-change");
+          } else {
+            invested_balance_change =
+              (100 * (new_invested_amount - old_invested_amount)) /
+              old_invested_amount;
+            invested_balance_change = parseFloat(
+              Math.round(invested_balance_change * 100) / 100,
             ).toFixed(2);
 
-            span = $("#invested-balance-change");
+            console.log(
+              "invested balance change = " + invested_balance_change,
+            );
 
-            string = "";
-
-            invested_balance_change = 0;
-
-            if (old_invested_amount == 0) {
+            if (invested_balance_change > 0) {
+              string = "+" + invested_balance_change + "%";
+              span.removeClass("negative-change");
+              span.removeClass("no-change");
+              span.addClass("positive-change");
+            } else if (invested_balance_change == 0) {
               string = "+0.00%";
               span.removeClass("positive-change");
               span.removeClass("negative-change");
               span.addClass("no-change");
             } else {
-              invested_balance_change =
-                (100 * (new_invested_amount - old_invested_amount)) /
-                old_invested_amount;
-              invested_balance_change = parseFloat(
-                Math.round(invested_balance_change * 100) / 100,
-              ).toFixed(2);
-
-              console.log(
-                "invested balance change = " + invested_balance_change,
-              );
-
-              if (invested_balance_change > 0) {
-                string = "+" + invested_balance_change + "%";
-                span.removeClass("negative-change");
-                span.removeClass("no-change");
-                span.addClass("positive-change");
-              } else if (invested_balance_change == 0) {
-                string = "+0.00%";
-                span.removeClass("positive-change");
-                span.removeClass("negative-change");
-                span.addClass("no-change");
-              } else {
-                string = invested_balance_change + "%";
-                span.removeClass("positive-change");
-                span.removeClass("no-change");
-                span.addClass("negative-change");
-              }
+              string = invested_balance_change + "%";
+              span.removeClass("positive-change");
+              span.removeClass("no-change");
+              span.addClass("negative-change");
             }
+          }
 
-            available_balance = parseFloat(
-              $("#available-balance-amount").text(),
+          available_balance = parseFloat(
+            $("#available-balance-amount").text(),
+          );
+          profit =
+            parseFloat(
+              parseFloat(available_balance) + parseFloat(new_invested_amount),
+            ) -
+            parseFloat(
+              parseFloat(
+                parseFloat(available_balance) +
+                  parseFloat(old_invested_amount),
+              ),
             );
-            profit =
-              parseFloat(
-                parseFloat(available_balance) + parseFloat(new_invested_amount),
-              ) -
-              parseFloat(
-                parseFloat(
-                  parseFloat(available_balance) +
-                    parseFloat(old_invested_amount),
-                ),
-              );
 
-            $.ajax({
-              type: "POST",
-              url: server_url + "/updateresults/",
-              data: {
-                month: month,
-                invested_change: profit,
-                profit: parseFloat(profit),
-                total:
-                  parseFloat(available_balance) +
-                  parseFloat(new_invested_amount),
-              },
-              success: function () {
-                $.ajax({
-                  type: "GET",
-                  url: server_url + "/updatemonth/",
-                  success: function (response) {
-                    console.log(response);
-
-                    ignoredBotMessage = false;
-
-                    if (response["has_increased"]) {
-                      month++;
-                      $("#month-number").html(month);
-                      $("#result_div").append(
-                        '<row><p id="month-chat">Month: ' +
-                          month +
-                          "/5</p></row>",
-                      );
-                      $("#result_div").scrollTop(
-                        $("#result_div")[0].scrollHeight,
-                      );
-                    } else {
-                      window.location.href = server_url + "/results";
-                    }
-                  },
-                });
-              },
-              error: function () {},
-            });
-
-            span.text(string);
-            $("#parentheses").show();
-          },
-        });
-
-        $(".scrollable-newsposts").empty();
-        newspostCounter = 0;
-
-        $("#ok-button")
-          .unbind()
-          .on("click", function () {
-            isPaused = false;
-
-            setNewspostTimer();
+          $.ajax({
+            type: "POST",
+            url: server_url + "/updateresults/",
+            data: {
+              month: month,
+              invested_change: profit,
+              profit: parseFloat(profit),
+              total:
+                parseFloat(available_balance) +
+                parseFloat(new_invested_amount),
+            },
+            success: function () {
+              console.log("results updated, month:", month)
+              if (+month < 5 ) {
+                // TODO: show modal?
+              } else {
+                console.log("redirecting to results page");
+                window.location.href = server_url + "/results";
+              }
+            },
+            error: function () {
+              window.location.href = server_url + "/results";
+            },
           });
-      }
-      minutes = Math.floor(_seconds_left / 60);
-      minutes = minutes.toLocaleString("en", { minimumIntegerDigits: 2 });
-      seconds = _seconds_left % 60;
-      seconds = seconds.toLocaleString("en", { minimumIntegerDigits: 2 });
-      text = minutes + ":" + seconds;
-      $("#timer").text(text);
-    } else {
-      console.log("IS PAUSED");
+
+          span.text(string);
+          $("#parentheses").show();
+        },
+      });
+
+      $(".scrollable-newsposts").empty();
+      newspostCounter = 0;
+
+      $("#ok-button")
+        .unbind()
+        .on("click", function () {
+          // TODO: update month
+          $.ajax({
+            type: "GET",
+            url: server_url + "/updatemonth/",
+            success: function (response) {
+              console.log(response);
+
+              ignoredBotMessage = false;
+
+              month++;
+              $("#month-number").html(month);
+              $("#result_div").append(
+                '<row><p id="month-chat">Month: ' +
+                  month +
+                  "/5</p></row>",
+              );
+              $("#result_div").scrollTop(
+                $("#result_div")[0].scrollHeight,
+              );
+              
+              setNewspostTimer();
+              _seconds_left = month_total_seconds;
+              update_timer_handle = window.setInterval(update_timer, 1000);
+              update_timer();              
+            },
+          });
+      
+        });
     }
+    minutes = Math.floor(_seconds_left / 60);
+    minutes = minutes.toLocaleString("en", { minimumIntegerDigits: 2 });
+    seconds = _seconds_left % 60;
+    seconds = seconds.toLocaleString("en", { minimumIntegerDigits: 2 });
+    text = minutes + ":" + seconds;
+    $("#timer").text(text);
   };
 
-  window.setInterval(update_timer, 1000);
+  let update_timer_handle = window.setInterval(update_timer, 1000);
   update_timer();
 
   function shuffle(array) {

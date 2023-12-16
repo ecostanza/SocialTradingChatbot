@@ -17,6 +17,7 @@ from django.utils.timezone import datetime
 from django.core import serializers
 from django.db import IntegrityError
 from django.db.models import Count, Q
+from django.utils import timezone
 
 #from rest_framework.response import Response
 #from rest_framework.decorators import api_view
@@ -238,6 +239,17 @@ def chatbot_page(request):
     for profile in profiles:
         image_names.append(profile.name.replace(' ', '-') + ".jpg")
 
+    month_total_seconds = int(4 * 60)
+    total_months = 5
+
+    # get the last month of current user
+    month = Month.objects.filter(user=user).order_by('number').last()
+    now = timezone.now()
+    elapsed_seconds = int((now - month.created_at).total_seconds())
+    seconds_left = month_total_seconds - elapsed_seconds
+    if month.number >= total_months and seconds_left < 1:
+        return redirect('resultspage')
+ 
     context = {
         'available_balance_amount': format(Balance.objects.get(user=user).available, '.2f'),
         'invested_balance_amount': format(Balance.objects.get(user=user).invested, '.2f'),
@@ -245,6 +257,9 @@ def chatbot_page(request):
         'profiles': serializers.serialize('json', Profile.objects.all()),
         'followed_portfolios': Portfolio.objects.filter(user=user, followed=True),
         'not_followed_portfolios': Portfolio.objects.filter(user=user, followed=False),
+        'seconds_left': seconds_left,
+        'month_total_seconds': month_total_seconds,
+        'month_number': month.number
         }
 
     return render(request, 'chatbot.html', context)

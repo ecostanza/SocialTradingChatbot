@@ -10,6 +10,13 @@
     <script src="{% static 'imagetagging/js/imagetagging.js' %}"></script>
     <!-- <script src="{% static 'chatbot/js/bundle.js' %}" type="text/javascript" charset="utf-8"></script> -->
     <script src="{% static 'chatbot/js/chat.js' %}"></script>
+    <script>
+        let seconds_left = {{ seconds_left}},
+            month_total_seconds = {{ month_total_seconds }},
+            month = {{ month_number }},
+            conditionActive = false;
+    </script>
+
 {% endblock %}
 
 {% block content %}
