@@ -336,15 +336,19 @@ def update_balances(request):
 @login_required
 def update_month(request):
     user = request.user
-    month = Month.objects.get(user=user)
+    old_month = Month.objects.filter(user=user).order_by('number').last()
 
     response = {}
 
-    if month.number < 5:
-        month.number += 1
-        month.save()
+    if old_month.number < 5:
+        new_month = Month(
+            user=user, 
+            errors_experienced=0,
+            number=old_month.number+1
+            )
+        new_month.save()
 
-        result = Result(user=user, month=month.number, profit=0.00, images_tagged=0, total=0.00)
+        result = Result(user=user, month=new_month.number, profit=0.00, images_tagged=0, total=0.00)
         result.save()
 
         response['has_increased'] = True

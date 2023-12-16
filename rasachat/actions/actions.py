@@ -59,7 +59,7 @@ def custom_utter_message(message, tracker, dispatcher, buttons=None, message_par
 
     print(new_message)
     
-    dispatcher.utter_message(new_message)
+    dispatcher.utter_message(new_message, buttons=buttons)
 
 
 def get_user(tracker):
@@ -79,6 +79,10 @@ def is_time_for_error(user):
     month = Month.objects.filter(user=user).order_by('number').last()
     now = timezone.now()
     elapsed_time = (now - month.created_at).total_seconds()
+    print('elapsed_time:', elapsed_time)
+    print('month.number:', month.number)
+    print('month.errors_experienced:', month.errors_experienced)
+    print('total months:', Month.objects.filter(user=user).count()) 
     
     # no errors for odd numbered months
     if month.number % 2 == 1:
@@ -747,7 +751,7 @@ class Follow(Action):
         return "action_follow"
 
     def run(self, dispatcher, tracker, domain):
-        print(self.name())
+        print("\n", self.name())
 
         user = get_user(tracker)
 
@@ -783,13 +787,18 @@ class Follow(Action):
             profile_object = Profile.objects.get(name__icontains=profile_name)
             portfolio = Portfolio.objects.get(user=user, profile=profile_object.id)
 
-            # condition = get_condition(tracker)
             condition = get_condition(user)
             if 'mistake' in condition or 'miss' in condition:
+                print("'mistake' in condition or 'miss' in condition")
                 # inject an error in the portfolio name
                 if is_time_for_error(user):
                     if 'mistake' in condition:
-                        portfolio = Portfolio.objects.filter(user=user).exclude(profile=profile_object.id).first()
+                        # filter the portfolios that are not already followed
+                        unfollowed_portfolio = Portfolio.objects.filter(user=user, followed=False)
+                        # exclude the requested portfolio and take the first one
+                        portfolio = unfollowed_portfolio.exclude(profile=profile_object.id).first()
+                        # update the profile name
+                        profile_name = portfolio.profile.name
                     elif 'miss' in condition:
                         profile_name = None
                         messages.append("I can't seem to find that portfolio. Have you spelt the name right?")
@@ -835,7 +844,7 @@ class Follow(Action):
                     portfolio.followed = True
                     portfolio.invested = round(Decimal(amount), 2)
                     portfolio.save()
-                    # print(Portfolio.objects.filter(followed=True).aggregate(Sum('invested')).get('invested__sum'))
+
 
                     message_params = {
                         'profile_name': profile_name.title()
@@ -853,17 +862,19 @@ class Follow(Action):
                     # messages.append("Alright, you have started following " + profile_name.title())
                     # messages.append("Got it. You are now following " + profile_name.title())
 
-                    month = Month.objects.get(user=user).number
+                    month_no = Month.objects.filter(user=user).order_by('number').last().number
 
-                    user_action = UserAction(user=user,
-                     month=month,
-                     available=available_before,
-                     invested=invested_before,
-                     portfolio=profile_name.title(),
-                     chatbot_change=portfolio.chatbotNextChange,
-                     newspost_change=portfolio.newspostNextChange,
-                     action="Follow",
-                     amount=amount)
+                    user_action = UserAction(
+                        user=user,
+                        month=month_no,
+                        available=available_before,
+                        invested=invested_before,
+                        portfolio=profile_name.title(),
+                        chatbot_change=portfolio.chatbotNextChange,
+                        newspost_change=portfolio.newspostNextChange,
+                        action="Follow",
+                        amount=amount
+                    )
                     user_action.save()
             else:
                 # messages.append("That's not a valid amount")
@@ -923,10 +934,10 @@ class Unfollow(Action):
             portfolio.invested = 0.00
             portfolio.save()
 
-            month = Month.objects.get(user=user).number
+            month_no = Month.objects.filter(user=user).order_by('number').last().number
 
             user_action = UserAction(user=user,
-             month=month,
+             month=month_no,
              available=available_before,
              invested=invested_before,
              portfolio=profile_name.title(),
@@ -1040,10 +1051,10 @@ class AddAmount(Action):
                         portfolio.invested += amount
                         portfolio.save()
 
-                        month = Month.objects.get(user=user).number
+                        month_no = Month.objects.filter(user=user).order_by('number').last().number
 
                         user_action = UserAction(user=user,
-                         month=month,
+                         month=month_no,
                          available=available_before,
                          invested=invested_before,
                          portfolio=profile_name.title(),
@@ -1208,10 +1219,10 @@ class WithdrawAmount(Action):
 
                     portfolio.save()
 
-                    month = Month.objects.get(user=user).number
+                    month_no = Month.objects.filter(user=user).order_by('number').last().number
 
                     user_action = UserAction(user=user,
-                     month=month,
+                     month=month_no,
                      available=available_before,
                      invested=invested_before,
                      portfolio=profile_name.title(),
@@ -1280,17 +1291,19 @@ class UnfollowEveryone(Action):
 
                 portfolio.save()
 
-                month = Month.objects.get(user=user).number
+                month_no = Month.objects.filter(user=user).order_by('number').last().number
 
-                user_action = UserAction(user=user,
-                 month=month,
-                 available=available_before,
-                 invested=invested_before,
-                 portfolio=portfolio.profile.name.title(),
-                 chatbot_change=portfolio.chatbotNextChange,
-                 newspost_change=portfolio.newspostNextChange,
-                 action="Unfollow",
-                 amount=portfolio_invested_before)
+                user_action = UserAction(
+                    user=user,
+                    month=month_no,
+                    available=available_before,
+                    invested=invested_before,
+                    portfolio=portfolio.profile.name.title(),
+                    chatbot_change=portfolio.chatbotNextChange,
+                    newspost_change=portfolio.newspostNextChange,
+                    action="Unfollow",
+                    amount=portfolio_invested_before
+                )
                 user_action.save()
 
             balance.save()
