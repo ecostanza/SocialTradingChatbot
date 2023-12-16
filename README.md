@@ -1,7 +1,5 @@
 # Social Trading Chatbot -- 2023 update
 
-This repo was cloned from https://github.com/niccioci/STC-edited
-
 ## Setup
 clone the git repository
 
@@ -11,8 +9,12 @@ create conda environment with python 3.9.12
 
 activate the environment: `conda activate rasa`
 
-install the required libraries: `pip install -r requirements.txt` <br>
-**note**: this requirements file is for OS X -- on other OSs a different version tensor flow is probably needed. The packages required should be:
+install the required libraries: 
+
+**macOS**: `pip install -r requirements.txt`<br>
+**Windows**: `pip install -r winreq.txt`
+
+The packages required should be:
 - rasa
 - spacy
 - django
