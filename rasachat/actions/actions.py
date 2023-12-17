@@ -607,7 +607,6 @@ class GiveUnfollowingAdvice(Action):
 
         return [SlotSet("name", lowest_changing_portfolio_name)]
 
-
 class FetchPortfolio(Action):
     def name(self) -> Text:
         return "action_fetch_portfolio"
@@ -625,7 +624,7 @@ class FetchPortfolio(Action):
         amount = None
         amount_query = None
 
-        if profile_name is None:
+        if profile_name is None or profile_name == '':
             portfolio_query = "invalid"
         else:
             portfolio_query = None
@@ -1382,97 +1381,97 @@ class ShouldIFollowAdvice(Action):
 
             chatbot_change = round(portfolio.chatbotNextChange)
 
-            answers = []
+            # answers = []
             increase_or_decrease = ''
 
             if chatbot_change >= 30:
-                answers.append('Absolutely! ')
-                answers.append('Definitely! ')
-                answers.append('For sure! ')
-                answers.append('Certainly! ')
-                answers.append('Yes! ')
-                answers.append('Definitely yes! ')
-                answers.append('Totally! ')
-                answers.append('Without question! ')
-                answers.append('Yeah! ')
-                answers.append('Of course! ')
+                # answers.append('Absolutely! ')
+                # answers.append('Definitely! ')
+                # answers.append('For sure! ')
+                # answers.append('Certainly! ')
+                # answers.append('Yes! ')
+                # answers.append('Definitely yes! ')
+                # answers.append('Totally! ')
+                # answers.append('Without question! ')
+                # answers.append('Yeah! ')
+                # answers.append('Of course! ')
                 increase_or_decrease = 'increase by ' + str(abs(chatbot_change)) + '%'
                 self.appendButtons(True, user, portfolio.followed, profile_object.gender, amount_query, buttons)
             elif chatbot_change > 0:
-                answers.append('Yes. ')
-                answers.append('Yep. ')
-                answers.append('Yeah. ')
-                answers.append('Sure. ')
-                answers.append('Yup. ')
-                answers.append('Yeah, ')
-                answers.append('Yes, ')
-                answers.append('Yup, ')
-                answers.append('Yep, ')
-                answers.append('Sure, ')
+                # answers.append('Yes. ')
+                # answers.append('Yep. ')
+                # answers.append('Yeah. ')
+                # answers.append('Sure. ')
+                # answers.append('Yup. ')
+                # answers.append('Yeah, ')
+                # answers.append('Yes, ')
+                # answers.append('Yup, ')
+                # answers.append('Yep, ')
+                # answers.append('Sure, ')
                 increase_or_decrease = 'increase by ' + str(abs(chatbot_change)) + '%'
                 self.appendButtons(True, user, portfolio.followed, profile_object.gender, amount_query, buttons)
             elif chatbot_change == 0:
-                answers.append('Not really. ')
-                answers.append('No, not really. ')
-                answers.append('Not really, no. ')
-                answers.append('Nope, not really. ')
-                answers.append('Nah. ')
-                answers.append('Not really, no. ')
-                answers.append('Hmm, not really. ')
-                answers.append('Nah, not really. ')
-                answers.append('Hmm, nah. ')
-                answers.append('No. Not really. ')
+                # answers.append('Not really. ')
+                # answers.append('No, not really. ')
+                # answers.append('Not really, no. ')
+                # answers.append('Nope, not really. ')
+                # answers.append('Nah. ')
+                # answers.append('Not really, no. ')
+                # answers.append('Hmm, not really. ')
+                # answers.append('Nah, not really. ')
+                # answers.append('Hmm, nah. ')
+                # answers.append('No. Not really. ')
                 increase_or_decrease = 'not change'
                 self.appendButtons(False, user, portfolio.followed, profile_object.gender, amount_query, buttons)
             elif chatbot_change > -10:
-                answers.append('Not really. ')
-                answers.append('No, not really. ')
-                answers.append('Not really, no. ')
-                answers.append('Nope, not really. ')
-                answers.append('Nah. ')
-                answers.append('Not really, no. ')
-                answers.append('Hmm, not really. ')
-                answers.append('Nah, not really. ')
-                answers.append('Hmm, nah. ')
-                answers.append('No. Not really. ')
+                # answers.append('Not really. ')
+                # answers.append('No, not really. ')
+                # answers.append('Not really, no. ')
+                # answers.append('Nope, not really. ')
+                # answers.append('Nah. ')
+                # answers.append('Not really, no. ')
+                # answers.append('Hmm, not really. ')
+                # answers.append('Nah, not really. ')
+                # answers.append('Hmm, nah. ')
+                # answers.append('No. Not really. ')
                 increase_or_decrease = 'decrease by ' + str(abs(chatbot_change)) + '%'
                 self.appendButtons(False, user, portfolio.followed, profile_object.gender, amount_query, buttons)
             elif chatbot_change > -30:
-                answers.append('No. ')
-                answers.append('Nope. ')
-                answers.append('I don\'t think so. ')
-                answers.append('Nope, don\'t think so. ')
-                answers.append('That\'s a no from me. ')
-                answers.append('Negative. ')
-                answers.append('By no means. ')
-                answers.append('Hmm. Nope. ')
-                answers.append('Hmm. I don\'t think so. ')
-                answers.append('Hmm. No. ')
+                # answers.append('No. ')
+                # answers.append('Nope. ')
+                # answers.append('I don\'t think so. ')
+                # answers.append('Nope, don\'t think so. ')
+                # answers.append('That\'s a no from me. ')
+                # answers.append('Negative. ')
+                # answers.append('By no means. ')
+                # answers.append('Hmm. Nope. ')
+                # answers.append('Hmm. I don\'t think so. ')
+                # answers.append('Hmm. No. ')
                 increase_or_decrease = 'decrease by ' + str(abs(chatbot_change)) + '%'
                 self.appendButtons(False, user, portfolio.followed, profile_object.gender, amount_query, buttons)
             else:
-                answers.append('Absolutely not! ')
-                answers.append('No way! ')
-                answers.append('Certainly not! ')
-                answers.append('Definitely not! ')
-                answers.append('No! ')
-                answers.append('Not at all! ')
-                answers.append('Most certainly not! ')
-                answers.append('Oh, no!')
-                answers.append('Oh, definitely not! ')
-                answers.append('Oh, no way! ')
+                # answers.append('Absolutely not! ')
+                # answers.append('No way! ')
+                # answers.append('Certainly not! ')
+                # answers.append('Definitely not! ')
+                # answers.append('No! ')
+                # answers.append('Not at all! ')
+                # answers.append('Most certainly not! ')
+                # answers.append('Oh, no!')
+                # answers.append('Oh, definitely not! ')
+                # answers.append('Oh, no way! ')
                 increase_or_decrease = 'decrease by ' + str(abs(chatbot_change)) + '%'
                 self.appendButtons(False, user, portfolio.followed, profile_object.gender, amount_query, buttons)
 
-            verbs = []
-            verbs.append('I believe ')
-            verbs.append('I predict ')
-            verbs.append('I think ')
-            verbs.append('I expect that ')
+            # verbs = []
+            # verbs.append('I believe ')
+            # verbs.append('I predict ')
+            # verbs.append('I think ')
+            # verbs.append('I expect that ')
 
             message_params = {
                 'profile_name': profile_name.title(),
-                'decrease_or_increase': increase_or_decrease
+                'increase_or_decrease': increase_or_decrease
             }
 
             # messages.append(random.choice(answers) + random.choice(verbs) + profile_name.title() + '\'s portfolio will ' + increase_or_decrease + ' next month')
@@ -1481,7 +1480,7 @@ class ShouldIFollowAdvice(Action):
         #custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
         custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params)
 
-        return[]
+        return []
 
     def appendButtons(self, user, positive, followed, gender, amount_query, buttons):
         pronoun = ''
