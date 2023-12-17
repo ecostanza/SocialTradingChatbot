@@ -854,7 +854,7 @@ class Follow(Action):
                     }
 
                     # messages.append("You are now following %(profile_name)s")
-                    messages.append("I have helped you start following %(profile_name)s")
+                    messages.append("I started following %(profile_name)s for you")
                     # messages.append("You have started following " + profile_name.title())
                     # messages.append("Okay, you are now following " + profile_name.title() + "'s portfolio")
                     # messages.append("You have invested in " + profile_name.title() + "'s portfolio")
@@ -955,7 +955,7 @@ class Unfollow(Action):
             }
 
             # messages.append("You have stopped following %(profile_name)s")
-            messages.append("I have helped you stop following %(profile_name)s")
+            messages.append("I stopped following %(profile_name)s for you")
             # messages.append("Okay, you have now stopped following " + profile_name.title())
             # messages.append("Alright. You have now unfollowed " + profile_name.title())
             # messages.append("You have unfollowed " + profile_name.title())
@@ -1073,7 +1073,7 @@ class AddAmount(Action):
                         }
 
                         # messages.append("You have invested another £%(value)s in %(profile_name)s")
-                        messages.append("I have helped you invest another %(value)s in %(profile_name)s")
+                        messages.append("I invested another %(value)s in %(profile_name)s for you")
                         # messages.append("Okay. You have added £" + str(amount) + " to " + profile_name.title())
                         # messages.append("Alright. You have invested another £" + str(amount) + " in " + profile_name.title() + "'s portfolio")
                         # messages.append("You have put another £" + str(amount) + " in " + profile_name.title() + "'s portfolio")
@@ -1123,36 +1123,119 @@ class WithdrawAmount(Action):
         return "action_withdraw_amount"
 
     def run(self, dispatcher, tracker, domain):
-        user = get_user(tracker)
-        profile_name = tracker.get_slot('name')
+        try:
+            user = get_user(tracker)
+            profile_name = tracker.get_slot('name')
 
-        messages = []
-        buttons = []
+            messages = []
+            buttons = []
 
-        message_params = {}
+            message_params = {}
 
-        if profile_name is None:
-            messages.append("Sorry, I can't find that portfolio. Have you spelt the name correctly?")
-            # messages.append("Sorry, have you spelt the name correctly? I can't find that portfolio")
-            # messages.append("I'm sorry, I can't find that portfolio. Have you spelt the name right?")
-            # messages.append("I can't seem to find that portfolio. Have you spelt it correctly?")
-            # messages.append("Sorry, have you spelt the name right? I can't seem to find that portfolio")
-            # messages.append("Sorry, I can't find that one. Have you spelt the name right?")
-            # messages.append("Have you spelt the name right? I can't find that portfolio!")
-            # messages.append("My bad. I can't find that portfolio, have you spelt it right?")
-            # messages.append("Hmm, I can't find that portfolio. Have you spelt the name correctly?")
-            # messages.append("Have you spelt the name correctly? I can't seem to find that portfolio")
-        else:
-            profile_object = Profile.objects.get(name__icontains=profile_name)
-            portfolio = Portfolio.objects.get(user=user, profile=profile_object.id)
+            if profile_name is None:
+                messages.append("Sorry, I can't find that portfolio. Have you spelt the name correctly?")
+                # messages.append("Sorry, have you spelt the name correctly? I can't find that portfolio")
+                # messages.append("I'm sorry, I can't find that portfolio. Have you spelt the name right?")
+                # messages.append("I can't seem to find that portfolio. Have you spelt it correctly?")
+                # messages.append("Sorry, have you spelt the name right? I can't seem to find that portfolio")
+                # messages.append("Sorry, I can't find that one. Have you spelt the name right?")
+                # messages.append("Have you spelt the name right? I can't find that portfolio!")
+                # messages.append("My bad. I can't find that portfolio, have you spelt it right?")
+                # messages.append("Hmm, I can't find that portfolio. Have you spelt the name correctly?")
+                # messages.append("Have you spelt the name correctly? I can't seem to find that portfolio")
+            else:
+                profile_object = Profile.objects.get(name__icontains=profile_name)
+                portfolio = Portfolio.objects.get(user=user, profile=profile_object.id)
 
-            amount = tracker.get_slot('amount')
+                amount = tracker.get_slot('amount')
 
-            if amount is None:
-                try:
-                    amount = tracker.latest_message['entities'][0]['value'].replace('£','')
+                if amount is None:
+                    try:
+                        amount = tracker.latest_message['entities'][0]['value'].replace('£','')
 
-                except IndexError:
+                    except IndexError:
+                        # messages.append("That's not a valid amount")
+                        messages.append("I'm afraid that's not a valid amount")
+                        # messages.append("That amount is not valid")
+                        # messages.append("That's an invalid amount, I'm afraid")
+                        # messages.append("That amount doesn't look right")
+                        # messages.append("I'm afraid that amount doesn't look right")
+                        # messages.append("That amount doesn't look valid to me")
+                        # messages.append("I don't think that's a valid amount")
+                        # messages.append("That's not a right amount!")
+                        # messages.append("I don't think that's a right amount")
+
+                if amount is not None:
+                    amount = str(amount).replace('£','')
+                    amount = round(Decimal(amount), 2)
+
+                    message_params = {
+                        'profile_name': profile_name.title(),
+                        'value': amount
+                    }
+
+                    portfolio.invested -= amount
+
+                    if portfolio.invested < 0:
+                        messages.append("That's not a valid amount")
+                        # messages.append("I'm afraid that's not a valid amount")
+                        # messages.append("That amount is not valid")
+                        # messages.append("That's an invalid amount, I'm afraid")
+                        # messages.append("That amount doesn't look right")
+                        # messages.append("I'm afraid that amount doesn't look right")
+                        # messages.append("That amount doesn't look valid to me")
+                        # messages.append("I don't think that's a valid amount")
+                        # messages.append("That's not a right amount!")
+                        # messages.append("I don't think that's a right amount")
+                    else:
+                        balance = Balance.objects.get(user=user)
+                        available_before = balance.available
+                        invested_before = balance.invested
+                        balance.available += amount
+                        balance.save()
+
+                        if portfolio.invested == 0:
+                            portfolio.followed = False
+                            # messages.append("You have stopped following " + profile_name.title())
+                            messages.append("You have stopped following %(profile_name)s")
+
+                            # messages.append("Okay, you have now stopped following " + profile_name.title())
+                            # messages.append("Alright. You have now unfollowed " + profile_name.title())
+                            # messages.append("You have unfollowed " + profile_name.title())
+                            # messages.append("Ok. You are not following " + profile_name.title() + " anymore")
+                            # messages.append("Got it. You have stopped following " + profile_name.title())
+                            # messages.append("Ok, you have just unfollowed " + profile_name.title())
+                            # messages.append("Got it. You're not following " + profile_name.title() + "\'s portfolio anymore")
+                            # messages.append("You have stopped following " + profile_name.title())
+                            # messages.append("OK. You have unfollowed " + profile_name.title())
+                        else:
+                            messages.append("I withdrew %(value)s from %(profile_name)s for you")
+                            # messages.append("You have withdrawn £%(value)s from %(profile_name)s")
+                            # messages.append("Ok, you have withdrawn £" + str(amount) + " from " + profile_name.title() + "'s portfolio")
+                            # messages.append("Got it. You have withdrawn £" + str(amount) + " from " + profile_name.title())
+                            # messages.append("Alright. You have withdrawn £" + str(amount) + " from " + profile_name.title() + "'s portfolio")
+                            # messages.append("You have withdrawn £" + str(amount) + " from " + profile_name.title() + "'s portfolio")
+                            # messages.append("£" + str(amount) + " was withdrawn from " + profile_name.title() + "\'s portfolio")
+                            # messages.append("£" + str(amount) + " was withdrawn from " + profile_name.title())
+                            # messages.append("Okay, you have just withdrawn £" + str(amount) + " from " + profile_name.title())
+                            # messages.append("Understood. You have withdrawn £" + str(amount) + " from " + profile_name.title() + "\'s portfolio")
+                            # messages.append("Got it. Withdrew £" + str(amount) + " from " + profile_name.title())
+
+                        portfolio.save()
+
+                        month_no = Month.objects.filter(user=user).order_by('number').last().number
+
+                        user_action = UserAction(user=user,
+                        month=month_no,
+                        available=available_before,
+                        invested=invested_before,
+                        portfolio=profile_name.title(),
+                        chatbot_change=portfolio.chatbotNextChange,
+                        newspost_change=portfolio.newspostNextChange,
+                        action="Withdraw",
+                        amount=amount)
+                        user_action.save()
+                else:
                     # messages.append("That's not a valid amount")
                     messages.append("I'm afraid that's not a valid amount")
                     # messages.append("That amount is not valid")
@@ -1164,97 +1247,17 @@ class WithdrawAmount(Action):
                     # messages.append("That's not a right amount!")
                     # messages.append("I don't think that's a right amount")
 
-            if amount is not None:
-                amount = str(amount).replace('£','')
-                amount = round(Decimal(amount), 2)
+            buttons.append({"title": "Give me some advice", "payload": "Give me some advice"})
+            if Portfolio.objects.filter(user=user, followed=False):
+                buttons.append({"title": "Who should I follow?", "payload": "Who should i follow?"})
+            if Portfolio.objects.filter(user=user, followed=True):
+                buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
-                message_params = {
-                    'profile_name': profile_name.title(),
-                    'value': amount
-                }
-
-                portfolio.invested -= amount
-
-                if portfolio.invested < 0:
-                    messages.append("That's not a valid amount")
-                    # messages.append("I'm afraid that's not a valid amount")
-                    # messages.append("That amount is not valid")
-                    # messages.append("That's an invalid amount, I'm afraid")
-                    # messages.append("That amount doesn't look right")
-                    # messages.append("I'm afraid that amount doesn't look right")
-                    # messages.append("That amount doesn't look valid to me")
-                    # messages.append("I don't think that's a valid amount")
-                    # messages.append("That's not a right amount!")
-                    # messages.append("I don't think that's a right amount")
-                else:
-                    balance = Balance.objects.get(user=user)
-                    available_before = balance.available
-                    invested_before = balance.invested
-                    balance.available += amount
-                    balance.save()
-
-                    if portfolio.invested == 0:
-                        portfolio.followed = False
-                        # messages.append("You have stopped following " + profile_name.title())
-                        messages.append("You have stopped following %(profile_name)s")
-
-                        # messages.append("Okay, you have now stopped following " + profile_name.title())
-                        # messages.append("Alright. You have now unfollowed " + profile_name.title())
-                        # messages.append("You have unfollowed " + profile_name.title())
-                        # messages.append("Ok. You are not following " + profile_name.title() + " anymore")
-                        # messages.append("Got it. You have stopped following " + profile_name.title())
-                        # messages.append("Ok, you have just unfollowed " + profile_name.title())
-                        # messages.append("Got it. You're not following " + profile_name.title() + "\'s portfolio anymore")
-                        # messages.append("You have stopped following " + profile_name.title())
-                        # messages.append("OK. You have unfollowed " + profile_name.title())
-                    else:
-                        messages.append("I already helped you withdrawn £%(value)s from %(profile_name)s")
-                        # messages.append("You have withdrawn £%(value)s from %(profile_name)s")
-                        # messages.append("Ok, you have withdrawn £" + str(amount) + " from " + profile_name.title() + "'s portfolio")
-                        # messages.append("Got it. You have withdrawn £" + str(amount) + " from " + profile_name.title())
-                        # messages.append("Alright. You have withdrawn £" + str(amount) + " from " + profile_name.title() + "'s portfolio")
-                        # messages.append("You have withdrawn £" + str(amount) + " from " + profile_name.title() + "'s portfolio")
-                        # messages.append("£" + str(amount) + " was withdrawn from " + profile_name.title() + "\'s portfolio")
-                        # messages.append("£" + str(amount) + " was withdrawn from " + profile_name.title())
-                        # messages.append("Okay, you have just withdrawn £" + str(amount) + " from " + profile_name.title())
-                        # messages.append("Understood. You have withdrawn £" + str(amount) + " from " + profile_name.title() + "\'s portfolio")
-                        # messages.append("Got it. Withdrew £" + str(amount) + " from " + profile_name.title())
-
-                    portfolio.save()
-
-                    month_no = Month.objects.filter(user=user).order_by('number').last().number
-
-                    user_action = UserAction(user=user,
-                     month=month_no,
-                     available=available_before,
-                     invested=invested_before,
-                     portfolio=profile_name.title(),
-                     chatbot_change=portfolio.chatbotNextChange,
-                     newspost_change=portfolio.newspostNextChange,
-                     action="Withdraw",
-                     amount=amount)
-                    user_action.save()
-            else:
-                # messages.append("That's not a valid amount")
-                messages.append("I'm afraid that's not a valid amount")
-                # messages.append("That amount is not valid")
-                # messages.append("That's an invalid amount, I'm afraid")
-                # messages.append("That amount doesn't look right")
-                # messages.append("I'm afraid that amount doesn't look right")
-                # messages.append("That amount doesn't look valid to me")
-                # messages.append("I don't think that's a valid amount")
-                # messages.append("That's not a right amount!")
-                # messages.append("I don't think that's a right amount")
-
-        buttons.append({"title": "Give me some advice", "payload": "Give me some advice"})
-        if Portfolio.objects.filter(user=user, followed=False):
-            buttons.append({"title": "Who should I follow?", "payload": "Who should i follow?"})
-        if Portfolio.objects.filter(user=user, followed=True):
-            buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
-
-        # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
-        custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params)
-
+            # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
+            custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params)
+        except Exception as e:
+            print(e)
+        
         return []
 
 
@@ -1311,7 +1314,7 @@ class UnfollowEveryone(Action):
 
             balance.save()
 
-            messages.append("I have helped you stopped following everyone")
+            messages.append("I stopped following everyone for you")
             # messages.append("You have unfollowed everyone")
             # messages.append("Got it. You have stopped following everyone")
             # messages.append("Okay, you have now unfollowed everyone")
