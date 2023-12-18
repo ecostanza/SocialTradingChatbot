@@ -213,7 +213,7 @@ class FollowOnePortfolioAtATime(Action):
     def run(self, dispatcher, tracker, domain):
         
         custom_utter_message(
-            "Sorry, I can only follow one portfolio at the time (one message for each portfolio)",
+            "Sorry, I can only follow one portfolio at a time (one message for each portfolio)",
             tracker,
             dispatcher
         )
