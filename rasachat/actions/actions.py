@@ -25,7 +25,30 @@ from decimal import Decimal, InvalidOperation
 import random
 from django.utils import timezone
 
-# condition = '2nd'
+# def try_except(f):
+#     def applicator(dispatcher, tracker, domain, *args, **kwargs):
+#       try:
+#          return f(dispatcher, tracker, domain, *args,**kwargs)
+#       except Exception as e:
+#          print(f'Error from {f.__class__.__name__}: {e}')
+#          return []
+
+#     return applicator
+
+import functools
+
+def try_except(f):
+    @functools.wraps(f)
+    def applicator(*args, **kwargs):
+      try:
+         return f(*args,**kwargs)
+      except Exception as e:
+        #  print(f'Error from {f.__class__.__name__}: {e}')
+         print(f'Error from {args[0].__class__.__name__}: {e}')
+         
+         return []
+
+    return applicator
 
 from csv import reader
 r = reader(open('./responses_test.csv', 'r'))
@@ -96,9 +119,10 @@ def is_time_for_error(user):
         return False
     
     # TODO: tweak this and possibly make it parametric
-    if elapsed_time > 60 and month.errors_experienced == 0:
+    if elapsed_time > 30 and month.errors_experienced == 0:
         month.errors_experienced += 1
         month.save()
+        print("--- time for error ----")
         return True
     
     return False
@@ -111,6 +135,7 @@ class Okay(Action):
     def name(self) -> Text:
         return "action_okay"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
 
         custom_utter_message(
@@ -124,6 +149,7 @@ class NoProblem(Action):
     def name(self) -> Text:
         return "action_no_problem"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
 
         custom_utter_message(
@@ -137,6 +163,7 @@ class Cool(Action):
     def name(self) -> Text:
         return "action_cool"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
 
         custom_utter_message(
@@ -155,6 +182,7 @@ class WhatICanDo(Action):
     def name(self) -> Text:
         return "action_what_I_can_do"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
 
         custom_utter_message(
@@ -168,6 +196,7 @@ class RemindImageTagging(Action):
     def name(self) -> Text:
         return "action_remind_image_tagging"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
 
         # action_remind_image_tagging
@@ -182,6 +211,7 @@ class Newsfeed(Action):
     def name(self) -> Text:
         return "action_newsfeed"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
 
         custom_utter_message(
@@ -195,6 +225,7 @@ class ImDoingMyBest(Action):
     def name(self) -> Text:
         return "action_im_doing_my_best"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
         
         custom_utter_message(
@@ -210,6 +241,7 @@ class FollowOnePortfolioAtATime(Action):
     def name(self) -> Text:
         return "action_please_follow_one_portfolio_at_a_time"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
         
         custom_utter_message(
@@ -224,6 +256,7 @@ class UnfollowEveryone(Action):
     def name(self) -> Text:
         return "action_are_you_sure_unfollow_everyone"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
         
         custom_utter_message(
@@ -238,6 +271,7 @@ class InvalidAmount(Action):
     def name(self) -> Text:
         return "action_invalid_amount"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
         
         custom_utter_message(
@@ -253,6 +287,7 @@ class InvalidPortfolio(Action):
     def name(self) -> Text:
         return "action_invalid_portfolio"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
         
         custom_utter_message(
@@ -281,6 +316,7 @@ class AlreadyFollowedPortfolio(Action):
     def name(self) -> Text:
         return "action_already_followed_portfolio"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
         
         custom_utter_message(
@@ -295,6 +331,7 @@ class GiveGeneralAdvice(Action):
     def name(self) -> Text:
         return "action_give_general_advice"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
         user = get_user(tracker)
 
@@ -425,6 +462,7 @@ class GiveFollowingAdvice(Action):
     def name(self) -> Text:
         return "action_give_following_advice"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
         user = get_user(tracker)
 
@@ -517,7 +555,9 @@ class GiveUnfollowingAdvice(Action):
     def name(self) -> Text:
         return "action_give_unfollowing_advice"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
+        print("\n", self.name())
         user = get_user(tracker)
 
         followed_portfolios = Portfolio.objects.filter(user=user, followed=True)
@@ -615,7 +655,9 @@ class FetchPortfolio(Action):
     def name(self) -> Text:
         return "action_fetch_portfolio"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
+        print("\n", self.name())
         user = get_user(tracker)
 
         # TODO: check this
@@ -666,6 +708,7 @@ class AskAddAmount(Action):
     def name(self) -> Text:
         return "action_ask_add_amount"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
         print("\n", self.name())
         user = get_user(tracker)
@@ -711,6 +754,7 @@ class AskWithdrawAmount(Action):
     def name(self) -> Text:
         return "action_ask_withdraw_amount"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
         user = get_user(tracker)
 
@@ -756,6 +800,7 @@ class Follow(Action):
     def name(self) -> Text:
         return "action_follow"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
         print("\n", self.name())
 
@@ -905,6 +950,7 @@ class Unfollow(Action):
     def name(self) -> Text:
         return "action_unfollow"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
         user = get_user(tracker)
         
@@ -987,6 +1033,7 @@ class AddAmount(Action):
     def name(self) -> Text:
         return "action_add_amount"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
         user = get_user(tracker)
 
@@ -1125,6 +1172,7 @@ class WithdrawAmount(Action):
     def name(self):
         return "action_withdraw_amount"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
         try:
             user = get_user(tracker)
@@ -1268,6 +1316,7 @@ class UnfollowEveryone(Action):
     def name(self):
         return "action_unfollow_everyone"
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
         user = get_user(tracker)
         followed_portfolios = Portfolio.objects.filter(user=user, followed=True)
@@ -1347,6 +1396,7 @@ class ShouldIFollowAdvice(Action):
     def name(self):
         return 'action_should_i_follow_advice'
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
         print("\n", self.name())
         user = get_user(tracker)
@@ -1536,6 +1586,7 @@ class ShouldIUnfollowAdvice(Action):
     def name(self):
         return 'action_should_i_unfollow_advice'
 
+    @try_except
     def run(self, dispatcher, tracker, domain):
         user = get_user(tracker)
         messages = []
