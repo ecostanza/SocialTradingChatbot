@@ -44,7 +44,7 @@ def try_except(f):
          return f(*args,**kwargs)
       except Exception as e:
         #  print(f'Error from {f.__class__.__name__}: {e}')
-         print(f'Error from {args[0].__class__.__name__}: {e}')
+         print(f'{e.__class__.__name__} from {args[0].__class__.__name__}: {e}')
          
          return []
 
@@ -972,7 +972,13 @@ class Unfollow(Action):
             # messages.append("Hmm, I can't find that portfolio. Have you spelt the name correctly?")
             # messages.append("Have you spelt the name correctly? I can't seem to find that portfolio")
         else:
-            profile_object = Profile.objects.get(name__icontains=profile_name)
+            try:
+                profile_object = Profile.objects.get(name__icontains=profile_name)
+            except MultipleObjectsReturned:
+                messages.append("Sorry, I can't find that portfolio. Have you spelt the name correctly?")
+                custom_utter_message(random.choice(messages), tracker, dispatcher, message_params=message_params)
+
+                return[]
             portfolio = Portfolio.objects.get(user=user, profile=profile_object.id)
 
             balance = Balance.objects.get(user=user)
