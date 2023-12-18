@@ -6,7 +6,7 @@ first_person,second_person,passive
 "I don't think there is anyone you should start following right now","You can stay with the status quo.","No portfolio is recommended to be followed for now"
 "I'm afraid you're not following any portfolios right now","You are not following anyone at the moment","No portfolio is followed right now"
 "I think you should stop following %(portfolio_name)s . I believe %(pronoun)s portfolio will decrease by %(value)s%% next month","You should consider stopping following %(portfolio_name)s. %(pronoun)s portfolio will decrease by %(value)s%% next month","It is predicted that there will be a decrease in the portfolio of %(portfolio_name)s by approximately %(value)s% next month"
-"I don't think there is anyone you should stop following right now","You should not stop following anyone for now.","At the moment, there is no one that should be stopped from being followed."
+"I don't think there is anyone you should stop following right now","You should not stop following anyone for now.","No one that should be stopped from being followed now."
 "How much would you like to invest?","How much would you like to invest?","How much should be invested?"
 "How much should I withdraw for you?","How much would you like to withdraw?","How much should be withdrawn?"
 "Sorry, I can't find that portfolio. Have you spelt the name correctly?","Sorry, the portfolio cannot be found. Have you spelt the name correctly?","Sorry, that portfolio can't be found. Has the name been spelled correctly?"
