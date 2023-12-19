@@ -281,7 +281,10 @@ class InvalidAmount(Action):
             dispatcher
         )
 
-        return []
+        return [
+            SlotSet("amount_query", None), 
+            SlotSet("amount", None)
+        ]
 
 class InvalidPortfolio(Action):
     def name(self) -> Text:
@@ -296,7 +299,10 @@ class InvalidPortfolio(Action):
             dispatcher
         )
 
-        return []
+        return [
+            SlotSet("portfolio_query", None), 
+            SlotSet("name", None), 
+            ]
 
 class AlreadyNotFollowedPortfolio(Action):
     def name(self) -> Text:
@@ -310,7 +316,10 @@ class AlreadyNotFollowedPortfolio(Action):
             dispatcher
         )
 
-        return []
+        return [
+            SlotSet("portfolio_query", None), 
+            SlotSet("name", None), 
+            ]
 
 class AlreadyFollowedPortfolio(Action):
     def name(self) -> Text:
@@ -823,7 +832,7 @@ class Follow(Action):
         
         message_params = {}
 
-        if profile_name is None:
+        if profile_name is None or profile_name == '':
             messages.append("Sorry, I can't find that portfolio. Have you spelt the name correctly?")
             # messages.append("Sorry, I'm having trouble finding that portfolio. Have you spelt the name correctly?")
             # messages.append("I can't seem to find that portfolio. Have you spelt the name right?")
@@ -893,9 +902,8 @@ class Follow(Action):
                     balance.save()
 
                     portfolio.followed = True
-                    portfolio.invested = round(Decimal(amount), 2)
+                    portfolio.invested += round(Decimal(amount), 2)
                     portfolio.save()
-
 
                     message_params = {
                         'profile_name': profile_name.title()
@@ -943,7 +951,13 @@ class Follow(Action):
         # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
         custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params)
 
-        return []
+        # return []
+        return [
+            SlotSet("portfolio_query", None), 
+            SlotSet("name", None), 
+            SlotSet("amount_query", None), 
+            SlotSet("amount", None)
+            ]
 
 
 class Unfollow(Action):
@@ -1032,7 +1046,13 @@ class Unfollow(Action):
         # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
         custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params)
 
-        return[]
+        # return[]
+        return [
+            SlotSet("portfolio_query", None), 
+            SlotSet("name", None), 
+            SlotSet("amount_query", None), 
+            SlotSet("amount", None)
+            ]
 
 
 class AddAmount(Action):
@@ -1171,7 +1191,13 @@ class AddAmount(Action):
         # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
         custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params)
 
-        return []
+        # return []
+        return [
+            SlotSet("portfolio_query", None), 
+            SlotSet("name", None), 
+            SlotSet("amount_query", None), 
+            SlotSet("amount", None)
+            ]
 
 
 class WithdrawAmount(Action):
@@ -1315,7 +1341,13 @@ class WithdrawAmount(Action):
         except Exception as e:
             print(e)
         
-        return []
+        # return []
+        return [
+            SlotSet("portfolio_query", None), 
+            SlotSet("name", None), 
+            SlotSet("amount_query", None), 
+            SlotSet("amount", None)
+            ]
 
 
 class UnfollowEveryone(Action):
@@ -1395,7 +1427,13 @@ class UnfollowEveryone(Action):
         # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
         custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons)
 
-        return []
+        # return []
+        return [
+            SlotSet("portfolio_query", None), 
+            SlotSet("name", None), 
+            SlotSet("amount_query", None), 
+            SlotSet("amount", None)
+            ]
 
 
 class ShouldIFollowAdvice(Action):
