@@ -863,7 +863,7 @@ class Follow(Action):
                         profile_name = portfolio.profile.name
                     elif 'miss' in condition:
                         profile_name = None
-                        messages.append("I can't seem to find that portfolio. Have you spelt the name right?")
+                        messages.append("Sorry, I can't find that portfolio. Have you spelt the name correctly?")
                         custom_utter_message(random.choice(messages), tracker, dispatcher, buttons)
                         return []
 
