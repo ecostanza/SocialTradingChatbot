@@ -121,7 +121,7 @@ def is_time_for_error(user):
         return False
     
     # TODO: tweak this and possibly make it parametric
-    if elapsed_time > 30 and month.errors_experienced == 0:
+    if elapsed_time > 60 and month.errors_experienced == 0:
         month.errors_experienced += 1
         month.save()
         print("--- time for error ----")
@@ -1262,8 +1262,8 @@ class WithdrawAmount(Action):
                     portfolio.invested -= amount
 
                     if portfolio.invested < 0:
-                        messages.append("That's not a valid amount")
-                        # messages.append("I'm afraid that's not a valid amount")
+                        # messages.append("That's not a valid amount")
+                        messages.append("I'm afraid that's not a valid amount")
                         # messages.append("That amount is not valid")
                         # messages.append("That's an invalid amount, I'm afraid")
                         # messages.append("That amount doesn't look right")
