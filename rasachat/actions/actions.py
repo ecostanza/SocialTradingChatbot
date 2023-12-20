@@ -60,6 +60,7 @@ for line in r:
     first, second, passive = line
     second_lut[first] = second
     passive_lut[first] = passive
+    # print(f'{first}\n{second}\n{passive}\n')
 
 def custom_utter_message(message, tracker, dispatcher, buttons=None, message_params=None):
     user = get_user(tracker)
@@ -88,6 +89,7 @@ def custom_utter_message(message, tracker, dispatcher, buttons=None, message_par
         dispatcher.utter_message(new_message, buttons=buttons)
     except KeyError:
         dispatcher.utter_message('LUT error for: ' + message, buttons=buttons)
+        print(f'LUT error for: {repr(message)}')
     except Exception as e:
         dispatcher.utter_message('Error: ' + str(e), buttons=buttons)
         print(e)
@@ -260,7 +262,7 @@ class UnfollowEveryone(Action):
     def run(self, dispatcher, tracker, domain):
         
         custom_utter_message(
-            "Are you sure you want to unfollow everyone?",
+            "I want to confirm: shall I unfollow everyone?",
             tracker,
             dispatcher
         )

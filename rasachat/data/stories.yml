@@ -529,7 +529,11 @@ stories:
   - intent: amount
   - action: action_withdraw_amount
 
-
+# this is to avoid that affirm triggers unfollow everyone 
+- story: just_yes
+  steps:
+  - intent: affirm
+  - action: action_okay
 
 - story: unfollow_everyone_affirmed
   steps:
