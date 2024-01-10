@@ -88,7 +88,8 @@ def tags(request):
         response['complete'] = True
         response['balance'] = str(balance.available)
 
-        month = Month.objects.get(user=tag.user)
+        # month = Month.objects.get(user=tag.user)
+        month = Month.objects.filter(user=tag.user).last()
 
         result = Result.objects.get(user=tag.user, month=month.number)
         result.images_tagged += 1
