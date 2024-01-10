@@ -54,7 +54,7 @@ class ResultResource(resources.ModelResource):
 
 class ResultAdmin(ExportActionModelAdmin):
     #list_display = ['participant', 'participant__user__username', 'task', 'task__task_list__name']
-    list_display = ['__str__', 'user']
+    list_display = ['month', 'profit', 'images_tagged', 'user', 'total']
     resource_class = ResultResource
 
 
