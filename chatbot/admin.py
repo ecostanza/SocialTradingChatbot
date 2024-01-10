@@ -49,7 +49,7 @@ class ResultResource(resources.ModelResource):
     class Meta:
         model = Result
         fields = ['month', 'profit', 'images_tagged', 'total',
-                    'user_username', 'user__participant__condition__name']
+                    'user__username', 'user__participant__condition__name']
 
 
 class ResultAdmin(ExportActionModelAdmin):
