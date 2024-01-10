@@ -73,19 +73,19 @@ def results_page(request):
     context = {
         'month_1_total': result1.total,
         'month_1_profit': result1.profit,
-        'month_1_images_tagged': float(result1.images_tagged*10),
+        'month_1_images_tagged': float(result1.images_tagged*20),
         'month_2_total': result2.total,
         'month_2_profit': result2.profit,
-        'month_2_images_tagged': float(result2.images_tagged*10),
+        'month_2_images_tagged': float(result2.images_tagged*20),
         'month_3_total': result3.total,
         'month_3_profit': result3.profit,
-        'month_3_images_tagged': float(result3.images_tagged*10),
+        'month_3_images_tagged': float(result3.images_tagged*20),
         'month_4_total': result4.total,
         'month_4_profit': result4.profit,
-        'month_4_images_tagged': float(result4.images_tagged*10),
+        'month_4_images_tagged': float(result4.images_tagged*20),
         'month_5_total': result5.total,
         'month_5_profit': result5.profit,
-        'month_5_images_tagged': float(result5.images_tagged*10),
+        'month_5_images_tagged': float(result5.images_tagged*20),
         'final_score': result5.total - 1000
         }
 
