@@ -47,6 +47,7 @@ $(document).ready(function () {
     });
 
     $("#investment-button").click(function () {
+      $('.input-tag').popover('hide');
       $("#imagetagging-button").removeClass("active");
       $(this).addClass("active");
       // $("#image-tagging-area").css('display', 'none');
