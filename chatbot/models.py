@@ -188,4 +188,32 @@ class BotButtonClick(models.Model):
     
 #clicktype = models.CharField(max_length=128, null=False)
 
+# ---
+    
+class Question(models.Model): 
+    text = models.TextField()
+
+class Choice(models.Model):
+    text = models.TextField()
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, null=True)
+    correct = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.text} ({self.question.text} | {self.correct})'
+
+class ChoiceSelection(models.Model):
+    participant = models.ForeignKey(Participant, on_delete=models.CASCADE, null=True)
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE, null=True)
+    attempt = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['participant', 'choice', 'attempt'],
+                name='unique_choice_attempt'
+                )
+        ]
+
+
 

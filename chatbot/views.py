@@ -7,7 +7,7 @@ import os
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import get_template
-from django.views.decorators.http import require_POST, require_http_methods
+from django.views.decorators.http import require_POST, require_http_methods, require_GET
 from django.views.decorators.csrf import csrf_exempt
 
 from django.contrib.auth.models import User
@@ -16,7 +16,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.timezone import datetime
 from django.core import serializers
 from django.db import IntegrityError
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Max
 from django.utils import timezone
 
 #from rest_framework.response import Response
@@ -27,7 +27,9 @@ from django.utils import timezone
 from .djutils import to_dict
 
 from .models import Profile, Portfolio, Balance, Month, Message, Participant, \
-    Condition, Result, QuestionnaireResponse, FallbackCount, NewsfeedButtonClick, BotButtonClick
+    Condition, Result, QuestionnaireResponse, FallbackCount, \
+        NewsfeedButtonClick, BotButtonClick, \
+            Question, Choice, ChoiceSelection
 
     
 
@@ -44,6 +46,80 @@ from .models import Profile, Portfolio, Balance, Month, Message, Participant, \
 #        serializer.save()
 #    return Response(serializer.data)
 
+
+@require_GET
+@login_required
+def all_questions(request):
+    # check whether the participant already did two attempts
+    participant = get_object_or_404(Participant, user=request.user)
+    prev_selections = ChoiceSelection.objects.filter(
+        participant=participant
+    )
+    attempts = prev_selections.aggregate(Max('attempt'))['attempt__max']
+    if attempts and attempts >= 2:
+        data = json.dumps({'error': 'too many attempts', 'attempts': attempts})
+        return HttpResponse(data, content_type='application/json')
+
+
+    questions = Question.objects.all()
+    questions_list = []
+    for q in questions:
+        choices = [{
+            'text': x.text,
+            'id': x.id
+            } for x in q.choice_set.all()]
+        questions_list.append({
+            'question': q.text,
+            'id': q.id,
+            'choices': choices
+        })
+
+    data = json.dumps({'questions': questions_list})
+    return HttpResponse(data, content_type='application/json')
+
+@csrf_exempt
+@login_required
+@require_POST
+def answers(request):
+    participant = get_object_or_404(Participant, user=request.user)
+    # get data as JSON
+    post_data = json.loads(request.body.decode('utf-8'))
+    # print(post_data)
+    # the data should contain a list of answers
+    for a in post_data['answers']:
+        # each answer should point to the choice ID
+        choice = get_object_or_404(Choice, id=a['choice_id'])
+        a['choice'] = choice
+        # get any previous attempts
+        prev_selections = ChoiceSelection.objects.filter(
+            participant=participant,
+            choice=choice
+        )
+        attempt = prev_selections.count() + 1
+        choice_selection = ChoiceSelection(
+            participant=participant,
+            choice=choice,
+            attempt=attempt
+        )
+        choice_selection.save()
+
+        a['choice_selection'] = choice_selection
+
+    # check if any answer was incorrect
+    correct_choices = [a['choice'].correct for a in post_data['answers']]
+    outcome = True
+    if False in correct_choices:
+        # 
+        outcome = False
+        
+    attempt = max([a['choice_selection'].attempt for a in post_data['answers']])
+    result = {
+        'correct': outcome,
+        'attempt': attempt
+    }
+    result_data = json.dumps(result)
+    return HttpResponse(result_data, content_type='application/json')
+    
 
 def welcome_page(request):
     return render(request, 'welcome.html')

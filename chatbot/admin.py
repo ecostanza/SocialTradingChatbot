@@ -16,6 +16,9 @@ from .models import (
     FallbackCount,
     NewsfeedButtonClick,
     BotButtonClick,
+    Question,
+    Choice,
+    ChoiceSelection
     )
 
 
@@ -125,6 +128,19 @@ class ConditionAdmin(admin.ModelAdmin):
     list_editable = ['active']
 
 
+class ChoiceInline(admin.StackedInline):
+    model = Choice
+    extra = 3
+
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ['id', 'text']
+    # list_editable = ['text']
+    inlines = [ChoiceInline]
+    
+class ChoiceSelectionAdmin(admin.ModelAdmin):
+    list_display = ['participant', 'choice','attempt','created_at']
+
+
 admin.site.register(Balance, BalanceAdmin)
 admin.site.register(Message, MessageAdmin)
 admin.site.register(Result, ResultAdmin)
@@ -138,3 +154,7 @@ admin.site.register(Participant, ParticipantAdmin)
 admin.site.register(Condition, ConditionAdmin)
 admin.site.register(NewsfeedButtonClick)
 admin.site.register(BotButtonClick)
+
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(ChoiceSelection, ChoiceSelectionAdmin)
+

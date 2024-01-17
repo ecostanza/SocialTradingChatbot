@@ -47,4 +47,7 @@ urlpatterns = [
     path('newsfeedbuttonclick/', getNewsfeedButtonClick, name='newsfeed_button_click'),
     path('botbuttonclick/', getBotButtonClick, name='bot_button_click'),
 
+    path(r'questions/', views.all_questions, name='all_questions'),
+    path(r'answers/', views.answers, name='answers'),
+
 ]
