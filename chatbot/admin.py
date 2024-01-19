@@ -26,7 +26,7 @@ class BalanceResource(resources.ModelResource):
     class Meta:
         model = Balance
         fields = ['user', 'available', 'invested',
-                    'user_username', 'user__participant__condition__name']
+                    'user__username', 'user__participant__condition__name']
 
 
 class BalanceAdmin(ExportActionModelAdmin):
@@ -38,7 +38,7 @@ class MessageResource(resources.ModelResource):
     class Meta:
         model = Message
         fields = ['user', 'month', 'from_participant',
-                    'from_button', 'created_at', 'text', 'user_username', 'user__participant__condition__name']
+                    'from_button', 'created_at', 'text', 'user__username', 'user__participant__condition__name']
 
 
 class MessageAdmin(ExportActionModelAdmin):
@@ -66,7 +66,7 @@ class QuestionnaireResponseResource(resources.ModelResource):
         model = QuestionnaireResponse
         fields = ['user', 'answer', 'completion_time', 'subtask_time',
                     'created_at', 'updated_at',
-                    'user_username', 'user__participant__condition__name']
+                    'user__username', 'user__participant__condition__name']
 
 
 class QuestionnaireResponseAdmin(ExportActionModelAdmin):
@@ -92,7 +92,7 @@ class UserActionResource(resources.ModelResource):
         fields = ['user', 'month', 'available', 'invested',
                     'portfolio', 'chatbot_change', 'newspost_change',
                     'action', 'amount',
-                    'user_username', 'user__participant__condition__name']
+                    'user__username', 'user__participant__condition__name']
 
 
 class UserActionAdmin(ExportActionModelAdmin):
