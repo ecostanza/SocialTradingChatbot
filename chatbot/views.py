@@ -536,6 +536,8 @@ def questionnaire_view(request):
     {'question': '27. From 1 to 5 (where 1 is the least and 5 is the most), when someone is having difficulty learning something new, I will be able to help them without getting frustrated or annoyed.', choices: ['1', '2', '3', '4', '5']},
     {'question': '28. From 1 to 5 (where 1 is the least and 5 is the most), I get very annoyed at red lights.', choices: ['1', '2', '3', '4', '5']},
     {'question': '29. From 1 to 5 (where 1 is the least and 5 is the most), I find it easy to be patient with people.', choices: ['1', '2', '3', '4', '5']},
+    {'question': '<hr>How would you describe the way the chatbot in this study speaks?'},
+    {'question': '<hr>Did you encounter any technical problems during the study?'},
     {'question': '<hr>Please leave your comments about the overall experience about this study, or your suggestions for improvement.'}
         ]
         '''
