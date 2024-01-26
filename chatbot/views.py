@@ -506,7 +506,7 @@ def generate_next_portfolio_changes(request):
 def questionnaire_view(request):
     if request.method == 'GET':
         questionnaire = '''[
-    {'label': '<hr><h5>Please answer the following questions <u>based on your overall experience</u> completing the study</h5><hr>'},
+    {'label': '<br><h5>Please answer the following questions <u>based on your overall experience</u> completing the study. <br><br>Please indicate to what extent you agree with each statement.</h5><br>'},
     {'question': '1. From 1 to 5 (where 1 is the least and 5 is the most), I am in full control of what I do', choices: ['1', '2', '3', '4', '5']},
     {'question': '2. From 1 to 5 (where 1 is the least and 5 is the most), I am just an instrument in the hands of somebody or something else', choices: ['1', '2', '3', '4', '5']},
     {'question': '3. From 1 to 5 (where 1 is the least and 5 is the most), my actions just happen without my intention', choices: ['1', '2', '3', '4', '5']},
