@@ -98,26 +98,45 @@ nlu:
   examples: |
     - who should I follow?
     - who should I start following?
+    - who should I invest on?
+    - who should I invest in?
+    - who should I invest with?
     - which profile should I follow?
+    - which profile should I invest on?
+    - which profile should I invest in?
+    - which profile should I invest with?
     - which portfolio should I follow
+    - which portfolio should I invest on?
+    - which portfolio should I invest in?
+    - which portfolio should I invest like?
     - which profile should i start following
     - which portfolio should i start following
     - should i follow someone?
+    - should i invest on someone?
+    - should i invest in someone?
     - do you think I should follow anyone
     - should I follow some portfolios?
     - should I start following anyone
     - is there anyone I should follow
+    - is there anyone I should invest on?
+    - is there anyone I should invest in?
+    - is there anyone I should invest with?
     - Is there anyone I should start following?
 
 - intent: ask_unfollow_advice
   examples: |
     - who should I unfollow?
     - who should I stop following?
+    - who should I divest from?
+    - who should I divest?
     - which profile should I unfollow
+    - which profile should I divest from
     - which portfolio should i unfollow?
+    - which portfolio should I divest from
     - which profile should I stop following
     - which portfolio should i stop following?
     - should I unfollow anyone?
+    - should I divest from anyone?
     - do you think I should unfollow someone
     - do you think I should stop following anyone?
     - should I unfollow someone
@@ -498,23 +517,38 @@ nlu:
     - I would like to unfollow [William](portfolio_name)
     - I want to stop following [alois reiter](portfolio_name)
     - I want to stop following [Kraviec](portfolio_name)
+    - I want to divest from [Florianne Paget](portfolio_name)
+    - I want to divest from [parker](portfolio_name)
+    - I would like to divest from [Florianne Paget](portfolio_name)
+    - I would like to divest from [parker](portfolio_name)
+    - divest from [Florianne Paget](portfolio_name)
+    - divest from [parker](portfolio_name)
 
 - intent: unfollow_him_her
   examples: |
     - unfollow
+    - divest
     - unfollow him
     - unfollow her
+    - divest from him
+    - divest from her
     - stop following him
     - stop following her
     - ok unfollow
     - ok unfollow him
     - ok unfollow her
+    - ok divest
+    - ok divest from him
+    - ok divest from her
     - ok stop following
     - ok stop following him
     - ok stop following her
     - okay unfollow
     - okay, unfollow him
     - okay, unfollow her
+    - okay, divest
+    - okay, divest from him
+    - okay, divest from her
 
 - intent: unfollow_everyone
   examples: |
