@@ -178,8 +178,6 @@ def participants_view(request):
         is_test_user = True
     try:
         user = User.objects.create_user(username=username)
-        month = Month(user=user, number=1)
-        month.save()
 
         for profile in Profile.objects.all():
             risk = randrange(9)+1
@@ -319,7 +317,13 @@ def chatbot_page(request):
     total_months = 5
 
     # get the last month of current user
-    month = Month.objects.filter(user=user).order_by('number').last()
+    # month = Month.objects.filter(user=user).order_by('number').last()
+    user_months = Month.objects.filter(user=user).order_by('number')
+    if user_months.count() == 0:
+        month = Month(user=user, errors_experienced=0, number=1)
+        month.save()
+    month = user_months.last()
+    
     now = timezone.now()
     elapsed_seconds = int((now - month.created_at).total_seconds())
     seconds_left = month_total_seconds - elapsed_seconds
@@ -427,15 +431,17 @@ def update_balances(request):
 @login_required
 def update_month(request):
     user = request.user
-    old_month = Month.objects.filter(user=user).order_by('number').last()
+
+    # old_month = Month.objects.filter(user=user).order_by('number').last()
+    months_elapsed = Month.objects.filter(user=user).count()
 
     response = {}
 
-    if old_month.number < 5:
+    if months_elapsed < 5:
         new_month = Month(
             user=user, 
             errors_experienced=0,
-            number=old_month.number+1
+            number=months_elapsed+1
             )
         new_month.save()
 
@@ -530,9 +536,9 @@ def questionnaire_view(request):
     {'question': '<br>Did you encounter any technical problems during the study?'},
     {'question': '<br>Please leave your comments about the overall experience about this study, or your suggestions for improvement.'},
     {'label': '<hr><h5 class="title">D. The following questions are about <u>your personality in general (not just about the study)</u>. From 1 to 5 (where 1 is the least and 5 is the most), please indicate to what extent you agree with each statement.</h5><br>'},
-    {'question': '1. My friends would say I\\’m a very patient friend.', choices: ['1', '2', '3', '4', '5']},
+    {'question': '1. My friends would say I\\'m a very patient friend.', choices: ['1', '2', '3', '4', '5']},
     {'question': '2. I am able to wait-out tough times.', choices: ['1', '2', '3', '4', '5']},
-    {'question': '3. Although they\\’re annoying, I don\\’t get too upset when stuck in traffic jams.', choices: ['1', '2', '3', '4', '5']},
+    {'question': '3. Although they\\'re annoying, I don\\'t get too upset when stuck in traffic jams.', choices: ['1', '2', '3', '4', '5']},
     {'question': '4. I am patient with other people.', choices: ['1', '2', '3', '4', '5']},
     {'question': '5. I find it pretty easy to be patient with a difficult life problem or illness.', choices: ['1', '2', '3', '4', '5']},
     {'question': '6. In general waiting in lines does not bother me.', choices: ['1', '2', '3', '4', '5']},
