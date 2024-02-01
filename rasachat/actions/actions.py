@@ -1818,7 +1818,7 @@ class FallbackAction(Action):
 
         messages = []
 
-        messages.append("Sorry, I didn't quite catch that")
+        messages.append("Sorry, I didn't understand that, or it's something I cannot help with")
         # messages.append("Sorry, could you rephrase that?")
         # messages.append("I'm sorry, I didn't quite get that")
         # messages.append("Sorry, I'm afraid I didn't catch that")

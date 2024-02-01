@@ -24,6 +24,12 @@ rules:
   - intent: follow_everyone
   - action: action_please_follow_one_portfolio_at_a_time
 
+
+- rule: deal with the fallback intent anytime it is triggered
+  steps:
+  - intent: nlu_fallback
+  - action: action_fallback
+
 # - rule: inform user of bots' capacity anytime user asks
 #   steps: 
 #   - intent: what_can_you_do

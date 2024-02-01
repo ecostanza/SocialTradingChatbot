@@ -1265,8 +1265,8 @@ slots:
       - followed
       - not_followed
     mappings:
-      - type: from_entity
-        entity: attribute
+      - type: custom
+#        entity: attribute
 
   name:
     type: text
@@ -1286,5 +1286,5 @@ slots:
       - valid
       - invalid
     mappings:
-      - type: from_entity
-        entity: attribute
+      - type: custom
+#        entity: attribute
