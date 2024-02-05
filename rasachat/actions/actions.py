@@ -91,6 +91,8 @@ def custom_utter_message(message, tracker, dispatcher, buttons=None, message_par
         dispatcher.utter_message('LUT error for: ' + message, buttons=buttons)
         print(f'LUT error for: {repr(message)}')
     except Exception as e:
+        print(f'new_message: {new_message}')
+        print(f'message_params: {message_params}')
         dispatcher.utter_message('Error: ' + str(e), buttons=buttons)
         print(e)
 
@@ -458,7 +460,7 @@ class GiveGeneralAdvice(Action):
 
             message_params = {
                 'portfolio_name': lowest_changing_portfolio_name, 
-                'value': str(round(lowest_change)),
+                'value': str(round(abs(lowest_change))),
                 'pronoun': lowest_pronoun,
                 'him_her': lowest_him_her
             }
@@ -626,7 +628,7 @@ class GiveUnfollowingAdvice(Action):
 
             if lowest_changing_portfolio_name is not None:
                 # messages.append("I think you should stop following " + lowest_changing_portfolio_name + ". I believe " + pronoun + " portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month")
-                messages.append("I think you should stop following %(portfolio_name)s . I believe %(pronoun)s portfolio will decrease by %(value)s%% next month")
+                messages.append("I think you should stop following %(portfolio_name)s. I believe %(pronoun)s portfolio will decrease by %(value)s%% next month")
                 # messages.append("I believe " + lowest_changing_portfolio_name + "'s portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month. You should probably stop following " + him_her)
                 # messages.append("Well, I would stop following " + lowest_changing_portfolio_name + " if I were you. I think " + pronoun + " portfolio will decrease by " + str(round(abs(lowest_change))) + "% next month")
                 # messages.append("You should unfollow " + lowest_changing_portfolio_name + "'s portfolio. I think its value will decrease by " + str(round(abs(lowest_change))) + "% next month")
