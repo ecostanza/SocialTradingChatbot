@@ -1,5 +1,5 @@
 from django.contrib import admin
-from import_export import resources
+from import_export import resources, fields
 from import_export.admin import ExportActionModelAdmin
 
 from .models import (
@@ -78,11 +78,10 @@ class QuestionnaireResponseAdmin(ExportActionModelAdmin):
 class FallbackCountResource(resources.ModelResource):
     class Meta:
         model = FallbackCount
-        fields = ['user', 'count']
-
+        fields = ['user__username', 'user__participant__condition__name', 'count']
 
 class FallbackCountAdmin(ExportActionModelAdmin):
-    list_display = ['__str__', 'user']
+    list_display = ['__str__', 'condition', 'count']
     resource_class = FallbackCountResource
 
 
@@ -114,13 +113,24 @@ class UserActionAdmin(ExportActionModelAdmin):
 #     resource_class = DismissNotificationCountResource
 
 class ParticipantResource(resources.ModelResource):
+    reward = fields.Field(attribute='reward')
+    total_score = fields.Field(attribute='total_score')
+    n_messages_sent = fields.Field(attribute='n_messages_sent')
+    fallback_count = fields.Field(attribute='fallback_count')
+    fallback_rate = fields.Field(attribute='fallback_rate')
     class Meta:
         model = Participant
-        fields = ['user', 'condition__name']
+        fields = ['user__username', 'reward', 'condition__name', 'total_score', 'n_messages_sent', 'fallback_count', 'fallback_rate']
+        export_order = ['user__username', 'reward', 'condition__name', 'total_score', 'n_messages_sent', 'fallback_count', 'fallback_rate']
 
 
 class ParticipantAdmin(ExportActionModelAdmin):
-    list_display = ['user', 'condition']
+    def rounded_fallback_rate(self, obj):
+        return round(obj.fallback_rate, 2)
+    def rounded_reward(self, obj):
+        return round(obj.reward, 2)
+    
+    list_display = ['user', 'rounded_reward', 'total_score', 'condition', 'n_messages_sent', 'n_fallback', 'rounded_fallback_rate']
     resource_class = ParticipantResource
 
 class ConditionAdmin(admin.ModelAdmin):

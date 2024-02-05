@@ -2,7 +2,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
-
+from decimal import Decimal #, getcontext
+# getcontext().prec = 3
 
 class Condition(models.Model):
     active = models.BooleanField(default=True, null=False)
@@ -18,6 +19,39 @@ class Participant(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     # condition_active = models.BooleanField(default=True, null=False)
     condition = models.ForeignKey(Condition, null=True, on_delete=models.CASCADE)
+
+    @property
+    def total_score(self):
+        try:
+            result5 = Result.objects.get(user=self.user, month=5)
+            return result5.total - 1000
+        except Result.DoesNotExist:
+            return 0
+    
+    @property
+    def reward(self):
+        raw_reward = self.total_score / Decimal(200.0)
+        if raw_reward < Decimal(0.00):
+            return Decimal(0.00)
+        elif raw_reward > Decimal(3.00):
+            return Decimal(3.00)
+        else:
+            return raw_reward
+
+    @property
+    def n_messages_sent(self):
+        return Message.objects.filter(user=self.user,from_participant=True).count()
+
+    @property
+    def n_fallback(self):
+        return FallbackCount.objects.get(user=self.user).count
+
+    @property
+    def fallback_rate(self):
+        try:
+            return self.n_fallback / self.n_messages_sent
+        except ZeroDivisionError:
+            return 0
 
     class Meta:
         verbose_name = 'Participant'
@@ -174,6 +208,9 @@ class FallbackCount(models.Model):
     class Meta:
         verbose_name = 'Fallback Count'
         verbose_name_plural = 'Fallback Counts'
+
+    def condition(self):
+        return self.user.participant.condition.name
 
     def __str__(self):
         return self.user.username
