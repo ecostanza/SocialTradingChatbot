@@ -122,6 +122,14 @@ nlu:
     - is there anyone I should invest in?
     - is there anyone I should invest with?
     - Is there anyone I should start following?
+    - which portfolio will rise?
+    - which profile will rise?
+    - which portfolio will increase?
+    - which profile will increase?
+    - which portfolio will rise the most?
+    - which profile will rise the most?
+    - which portfolio will increase the most?
+    - which profile will increase the most?
 
 - intent: ask_unfollow_advice
   examples: |
@@ -143,6 +151,14 @@ nlu:
     - should i stop following someone?
     - is there anyone i should unfollow
     - is there anyone I should stop following?
+    - which portfolio will fall?
+    - which profile will fall?
+    - which portfolio will decrease?
+    - which profile will decrease?
+    - which portfolio will fall the most?
+    - which profile will fall the most?
+    - which portfolio will decrease the most?
+    - which profile will decrease the most?
 
 - intent: should_i_follow
   examples: |
@@ -523,6 +539,17 @@ nlu:
     - I would like to divest from [parker](portfolio_name)
     - divest from [Florianne Paget](portfolio_name)
     - divest from [parker](portfolio_name)
+    - [andrzej kraviec](portfolio_name) unfollow
+    - [Masami](portfolio_name) unfollow
+    - [Ralph Axelsen](portfolio_name) unfollow
+    - [kanya](portfolio_name) unfollow
+    - [alois reiter](portfolio_name) unfollow
+    - [William](portfolio_name) unfollow
+    - [aricka lewis](portfolio_name) unfollow
+    - [Florianne](portfolio_name) unfollow
+    - [benjamin parker](portfolio_name) unfollow
+    - [Paulinho Simoes](portfolio_name) unfollow
+
 
 - intent: unfollow_him_her
   examples: |
