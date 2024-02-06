@@ -134,7 +134,7 @@ class ParticipantAdmin(ExportActionModelAdmin):
     resource_class = ParticipantResource
 
 class ConditionAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'active'] #, 'n_participants', 'n_test_participants']
+    list_display = ['id', 'name', 'active', 'n_participants', 'n_test_participants']
     list_editable = ['active']
 
 
