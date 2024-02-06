@@ -1284,7 +1284,8 @@ class WithdrawAmount(Action):
                         if portfolio.invested == 0:
                             portfolio.followed = False
                             # messages.append("You have stopped following " + profile_name.title())
-                            messages.append("You have stopped following %(profile_name)s")
+                            messages.append("I stopped following %(profile_name)s for you")
+                            # messages.append("You have stopped following %(profile_name)s")
 
                             # messages.append("Okay, you have now stopped following " + profile_name.title())
                             # messages.append("Alright. You have now unfollowed " + profile_name.title())
