@@ -123,7 +123,7 @@ def is_time_for_error(user):
     #     return False
 
     # no errors for the first month
-    if month.number > 1:
+    if month.number <= 1:
         return False
     
     # TODO: tweak this and possibly make it parametric
