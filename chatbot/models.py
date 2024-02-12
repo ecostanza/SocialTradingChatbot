@@ -13,17 +13,29 @@ class Condition(models.Model):
         return self.name
 
     def n_participants(self):
-        n_participants = Participant.objects.filter(
+        participants = Participant.objects.filter(
             condition=self
         ).exclude(
-            user__username__startswith='TEST_USER__').count()
+            user__username__startswith='TEST_USER__')
+        # n_participants = participants.count()
+        
+        responses = QuestionnaireResponse.objects.filter(user__participant__condition=self)
+        users = responses.values_list('user', flat=True)
+        completed_participants = participants.filter(user__in=users)
+        n_participants = completed_participants.count()
         return n_participants
 
     def n_test_participants(self):
-        n_participants = Participant.objects.filter(
+        participants = Participant.objects.filter(
             condition=self
         ).filter(
-            user__username__startswith='TEST_USER__').count()
+            user__username__startswith='TEST_USER__')
+        # n_participants = participants.count()
+
+        responses = QuestionnaireResponse.objects.filter(user__participant__condition=self)
+        users = responses.values_list('user', flat=True)
+        completed_participants = participants.filter(user__in=users)
+        n_participants = completed_participants.count()
         return n_participants
 
 
