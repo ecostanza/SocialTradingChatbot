@@ -45,6 +45,8 @@ class MessageAdmin(ExportActionModelAdmin):
     #list_display = ['participant', 'participant__user__username', 'task', 'task__task_list__name']
     #list_display = ['__str__', 'user__participant__condition__name']
     list_display = ['__str__', 'user']
+    search_fields = ['user__username']
+
     resource_class = MessageResource
 
 
@@ -58,6 +60,7 @@ class ResultResource(resources.ModelResource):
 class ResultAdmin(ExportActionModelAdmin):
     #list_display = ['participant', 'participant__user__username', 'task', 'task__task_list__name']
     list_display = ['month', 'profit', 'images_tagged', 'user', 'total']
+    search_fields = ['user__username']
     resource_class = ResultResource
 
 
@@ -123,6 +126,44 @@ class ParticipantResource(resources.ModelResource):
         fields = ['user__username', 'reward', 'condition__name', 'total_score', 'n_messages_sent', 'fallback_count', 'fallback_rate']
         export_order = ['user__username', 'reward', 'condition__name', 'total_score', 'n_messages_sent', 'fallback_count', 'fallback_rate']
 
+
+class TestParticipantListFilter(admin.SimpleListFilter):
+    # Human-readable title which will be displayed in the
+    # right admin sidebar just above the filter options.
+    title = "is a test participant"
+
+    # Parameter for the filter that will be used in the URL query.
+    parameter_name = "test_participant"
+
+    def lookups(self, request, model_admin):
+        """
+        Returns a list of tuples. The first element in each
+        tuple is the coded value for the option that will
+        appear in the URL query. The second element is the
+        human-readable name for the option that will appear
+        in the right sidebar.
+        """
+        return [
+            ("yes", "Yes"),
+            ("no", "No"),
+        ]
+
+    def queryset(self, request, queryset):
+        """
+        Returns the filtered queryset based on the value
+        provided in the query string and retrievable via
+        `self.value()`.
+        """
+        # Compare the requested value (either '80s' or '90s')
+        # to decide how to filter the queryset.
+        if self.value() == "yes":
+            return queryset.filter(
+                user__username__startswith='TEST_USER__'
+            )
+        if self.value() == "90s":
+            return queryset.exclude(
+                user__username__startswith='TEST_USER__'
+            )
 
 class ParticipantAdmin(ExportActionModelAdmin):
     def rounded_fallback_rate(self, obj):
