@@ -118,12 +118,18 @@ def is_time_for_error(user):
     print('month.errors_experienced:', month.errors_experienced)
     print('total months:', Month.objects.filter(user=user).count()) 
     
-    # no errors for odd numbered months
-    if month.number % 2 == 1:
+    # # no errors for odd numbered months
+    # if month.number % 2 == 1:
+    #     return False
+
+    # no errors for the first month
+    if month.number > 1:
         return False
     
     # TODO: tweak this and possibly make it parametric
-    if elapsed_time > 60 and month.errors_experienced == 0:
+    ERRORS_PER_MONTH = 1
+    time_threshold = 60 + month.errors_experienced * int(180.0 / (ERRORS_PER_MONTH + 1))
+    if elapsed_time > time_threshold and month.errors_experienced < ERRORS_PER_MONTH:
         month.errors_experienced += 1
         month.save()
         print("--- time for error ----")
