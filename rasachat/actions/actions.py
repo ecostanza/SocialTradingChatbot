@@ -127,7 +127,7 @@ def is_time_for_error(user):
         return False
     
     # TODO: tweak this and possibly make it parametric
-    ERRORS_PER_MONTH = 1
+    ERRORS_PER_MONTH = 3
     time_threshold = 60 + month.errors_experienced * int(180.0 / (ERRORS_PER_MONTH + 1))
     if elapsed_time > time_threshold and month.errors_experienced < ERRORS_PER_MONTH:
         month.errors_experienced += 1
