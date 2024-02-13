@@ -680,11 +680,11 @@ class FetchPortfolio(Action):
         user = get_user(tracker)
 
         # TODO: check this
-        # profile_name = tracker.get_slot('name')
-        profile_name = ''
-        for e in tracker.latest_message['entities']:
-            if e['entity'] == 'portfolio_name':
-                profile_name = e['value']
+        profile_name = tracker.get_slot('name')
+        # profile_name = ''
+        # for e in tracker.latest_message['entities']:
+        #     if e['entity'] == 'portfolio_name':
+        #         profile_name = e['value']
 
         amount = None
         amount_query = None
@@ -694,12 +694,12 @@ class FetchPortfolio(Action):
         else:
             portfolio_query = None
 
-            for e in tracker.latest_message['entities']:
-                if e['entity'] == 'amount':
-                    try:
-                        amount = round(Decimal(e['value'].replace('£','')), 2)
-                    except (IndexError, InvalidOperation):
-                        amount_query = 'invalid'
+            # for e in tracker.latest_message['entities']:
+            #     if e['entity'] == 'amount':
+            #         try:
+            #             amount = round(Decimal(e['value'].replace('£','')), 2)
+            #         except (IndexError, InvalidOperation):
+            #             amount_query = 'invalid'
 
             try:
                 profile_object = Profile.objects.get(name__icontains=profile_name)
@@ -826,9 +826,9 @@ class Follow(Action):
         user = get_user(tracker)
 
         profile_name = tracker.get_slot('name')
-        for e in tracker.latest_message['entities']:
-            if e['entity'] == 'portfolio_name':
-                profile_name = e['value']
+        # for e in tracker.latest_message['entities']:
+        #     if e['entity'] == 'portfolio_name':
+        #         profile_name = e['value']
 
         buttons = []
 
@@ -878,20 +878,20 @@ class Follow(Action):
             amount_query = tracker.get_slot('amount_query')
             amount = tracker.get_slot('amount')
 
-            if amount is None:
-                try:
-                    amount = round(Decimal(tracker.latest_message['entities'][0]['value'].replace('£','')), 2)
-                    if amount > 0:
-                        amount_query = 'valid'
-                    else:
-                        amount_query = 'invalid'
-                except IndexError:
-                    amount_query = 'invalid'
-            else:
-                amount_query = 'valid'
+            # if amount is None:
+            #     try:
+            #         # amount = round(Decimal(tracker.latest_message['entities'][0]['value'].replace('£','')), 2)
+            #         if amount > 0:
+            #             amount_query = 'valid'
+            #         else:
+            #             amount_query = 'invalid'
+            #     except IndexError:
+            #         amount_query = 'invalid'
+            # else:
+            amount_query = 'valid'
 
             if amount_query == 'valid':
-                amount = str(amount).replace('£','')
+                # amount = str(amount).replace('£','')
                 balance = Balance.objects.get(user=user)
                 available_before = balance.available
                 invested_before = balance.invested
@@ -1097,24 +1097,24 @@ class AddAmount(Action):
 
             amount = tracker.get_slot('amount')
 
-            if amount is None:
-                try:
-                    amount = tracker.latest_message['entities'][0]['value'].replace('£','')
+            # if amount is None:
+            #     try:
+            #         amount = tracker.latest_message['entities'][0]['value'].replace('£','')
 
-                except IndexError:
-                    # messages.append("That's not a valid amount")
-                    messages.append("I'm afraid that's not a valid amount")
-                    # messages.append("That amount is not valid")
-                    # messages.append("That's an invalid amount, I'm afraid")
-                    # messages.append("That amount doesn't look right")
-                    # messages.append("I'm afraid that amount doesn't look right")
-                    # messages.append("That amount doesn't look valid to me")
-                    # messages.append("I don't think that's a valid amount")
-                    # messages.append("That's not a right amount!")
-                    # messages.append("I don't think that's a right amount")
+            #     except IndexError:
+            #         # messages.append("That's not a valid amount")
+            #         messages.append("I'm afraid that's not a valid amount")
+            #         # messages.append("That amount is not valid")
+            #         # messages.append("That's an invalid amount, I'm afraid")
+            #         # messages.append("That amount doesn't look right")
+            #         # messages.append("I'm afraid that amount doesn't look right")
+            #         # messages.append("That amount doesn't look valid to me")
+            #         # messages.append("I don't think that's a valid amount")
+            #         # messages.append("That's not a right amount!")
+            #         # messages.append("I don't think that's a right amount")
 
             if amount is not None:
-                amount = str(amount).replace('£','')
+                # amount = str(amount).replace('£','')
                 amount = round(Decimal(amount), 2)
 
                 if amount > 0:
@@ -1242,24 +1242,24 @@ class WithdrawAmount(Action):
 
                 amount = tracker.get_slot('amount')
 
-                if amount is None:
-                    try:
-                        amount = tracker.latest_message['entities'][0]['value'].replace('£','')
+                # if amount is None:
+                #     try:
+                #         amount = tracker.latest_message['entities'][0]['value'].replace('£','')
 
-                    except IndexError:
-                        # messages.append("That's not a valid amount")
-                        messages.append("I'm afraid that's not a valid amount")
-                        # messages.append("That amount is not valid")
-                        # messages.append("That's an invalid amount, I'm afraid")
-                        # messages.append("That amount doesn't look right")
-                        # messages.append("I'm afraid that amount doesn't look right")
-                        # messages.append("That amount doesn't look valid to me")
-                        # messages.append("I don't think that's a valid amount")
-                        # messages.append("That's not a right amount!")
-                        # messages.append("I don't think that's a right amount")
+                #     except IndexError:
+                #         # messages.append("That's not a valid amount")
+                #         messages.append("I'm afraid that's not a valid amount")
+                #         # messages.append("That amount is not valid")
+                #         # messages.append("That's an invalid amount, I'm afraid")
+                #         # messages.append("That amount doesn't look right")
+                #         # messages.append("I'm afraid that amount doesn't look right")
+                #         # messages.append("That amount doesn't look valid to me")
+                #         # messages.append("I don't think that's a valid amount")
+                #         # messages.append("That's not a right amount!")
+                #         # messages.append("I don't think that's a right amount")
 
                 if amount is not None:
-                    amount = str(amount).replace('£','')
+                    # amount = str(amount).replace('£','')
                     amount = round(Decimal(amount), 2)
 
                     message_params = {
@@ -1465,8 +1465,8 @@ class ShouldIFollowAdvice(Action):
 
         message_params = {}
 
-        if profile_name is None:
-            profile_name = tracker.latest_message['entities'][0]['value']
+        # if profile_name is None:
+        #     profile_name = tracker.latest_message['entities'][0]['value']
 
         if profile_name is None:
             messages.append("Sorry, I can't find that portfolio. Have you spelt the name correctly?")
@@ -1653,8 +1653,8 @@ class ShouldIUnfollowAdvice(Action):
 
         message_params = {}
 
-        if profile_name is None:
-            profile_name = tracker.latest_message['entities'][0]['value']
+        # if profile_name is None:
+        #     profile_name = tracker.latest_message['entities'][0]['value']
 
         if profile_name is None:
             messages.append("Sorry, I can't find that portfolio. Have you spelt the name correctly?")
@@ -1808,9 +1808,9 @@ class ResetSlots(Action):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         return [
             SlotSet("portfolio_query", None), 
-            SlotSet("name", None), 
+            # SlotSet("name", None), 
             SlotSet("amount_query", None), 
-            SlotSet("amount", None)
+            # SlotSet("amount", None)
             ]
 
 

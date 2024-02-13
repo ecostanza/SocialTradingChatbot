@@ -163,57 +163,57 @@ nlu:
 - intent: should_i_follow
   examples: |
     - should i follow
-    - should i follow [Aricka Lewis](portfolio_name)?
-    - should I follow [ralph axelsen](portfolio_name)
+    - should i follow [Aricka Lewis](name)?
+    - should I follow [ralph axelsen](name)
     - should i start following
-    - should i start following [William Shore](portfolio_name)?
-    - should I start following [andrzej kraviec](portfolio_name)
-    - should I keep following [Masami Nishimura](portfolio_name)?
-    - should i keep following [alois](portfolio_name)
+    - should i start following [William Shore](name)?
+    - should I start following [andrzej kraviec](name)
+    - should I keep following [Masami Nishimura](name)?
+    - should i keep following [alois](name)
     - would you follow
-    - would you follow [Florianne Paget](portfolio_name)?
-    - do you think I should follow [paulinho simoes](portfolio_name)
-    - do you think I should keep following [Kanya Bunnag](portfolio_name)?
-    - do I want to follow [william](portfolio_name)?
-    - do I want to keep following [Paulinho Simoes](portfolio_name)?
-    - do you think following [alois reiter](portfolio_name) is a good idea?
-    - would you recommend following [Andrzej](portfolio_name)
-    - will [benjamin parker](portfolio_name)'s portfolio increase?
-    - do you think [Kanya](portfolio_name) will increase
-    - will [alois reiter](portfolio_name)'s value increase next month
-    - is [Paulinho Simoes](portfolio_name) going to increase?
+    - would you follow [Florianne Paget](name)?
+    - do you think I should follow [paulinho simoes](name)
+    - do you think I should keep following [Kanya Bunnag](name)?
+    - do I want to follow [william](name)?
+    - do I want to keep following [Paulinho Simoes](name)?
+    - do you think following [alois reiter](name) is a good idea?
+    - would you recommend following [Andrzej](name)
+    - will [benjamin parker](name)'s portfolio increase?
+    - do you think [Kanya](name) will increase
+    - will [alois reiter](name)'s value increase next month
+    - is [Paulinho Simoes](name) going to increase?
 
 - intent: follow
   examples: |
-    - follow [andrzej kraviec](portfolio_name)
-    - follow [Masami](portfolio_name)
-    - follow [ralph axelsen](portfolio_name)
-    - follow [Bunnag](portfolio_name)
-    - follow [alois reiter](portfolio_name)
-    - follow [William](portfolio_name)
-    - follow [nishimura](portfolio_name)
-    - follow [Florianne Paget](portfolio_name)
-    - follow [benjamin](portfolio_name)
-    - follow [Simoes](portfolio_name)
-    - start following [andrzej](portfolio_name)
-    - start following [Masami Nishimura](portfolio_name)
-    - start following [axelsen](portfolio_name)
-    - start following [kanya bunnag](portfolio_name)
-    - start following [Alois](portfolio_name)
-    - start following [masami nishimura](portfolio_name)
-    - start following [shore](portfolio_name)
-    - start following [Florianne paget](portfolio_name)
-    - start following [Benjamin](portfolio_name)
-    - start following [paulinho](portfolio_name)
-    - I want to follow [Florianne Paget](portfolio_name)
-    - I want to follow [benjamin parker](portfolio_name)
-    - I would like to follow [Paulinho Simoes](portfolio_name)
-    - I would like to follow [william](portfolio_name)
-    - I want to start following [alois reiter](portfolio_name)
-    - I want to start following [kraviec](portfolio_name)
-    - invest in [ralph](portfolio_name)
-    - invest in [Masami](portfolio_name)
-    - invest in [Florianne Paget](portfolio_name)
+    - follow [andrzej kraviec](name)
+    - follow [Masami](name)
+    - follow [ralph axelsen](name)
+    - follow [Bunnag](name)
+    - follow [alois reiter](name)
+    - follow [William](name)
+    - follow [nishimura](name)
+    - follow [Florianne Paget](name)
+    - follow [benjamin](name)
+    - follow [Simoes](name)
+    - start following [andrzej](name)
+    - start following [Masami Nishimura](name)
+    - start following [axelsen](name)
+    - start following [kanya bunnag](name)
+    - start following [Alois](name)
+    - start following [masami nishimura](name)
+    - start following [shore](name)
+    - start following [Florianne paget](name)
+    - start following [Benjamin](name)
+    - start following [paulinho](name)
+    - I want to follow [Florianne Paget](name)
+    - I want to follow [benjamin parker](name)
+    - I would like to follow [Paulinho Simoes](name)
+    - I would like to follow [william](name)
+    - I want to start following [alois reiter](name)
+    - I want to start following [kraviec](name)
+    - invest in [ralph](name)
+    - invest in [Masami](name)
+    - invest in [Florianne Paget](name)
 
 - intent: follow_him_her
   examples: |
@@ -250,58 +250,58 @@ nlu:
   examples: |
     - should i add
     - should i put
-    - should i add [50](amount) to [aricka lewis](portfolio_name)?
-    - should I add [124.54](amount) on [ralph axelsen](portfolio_name)
+    - should i add [50](amount) to [aricka lewis](name)?
+    - should I add [124.54](amount) on [ralph axelsen](name)
     - should i increase
-    - should i add [20](amount) to [florianne](portfolio_name)?
-    - should I increase [Kanya](portfolio_name)?
-    - should i increase [william shore](portfolio_name) by [5](amount)?
-    - should I increase [Andrzej kraviec](portfolio_name) by another [75](amount)
-    - should I put [34.59](amount) on [masami nishimura](portfolio_name)?
-    - should i put money on [alois](portfolio_name)
+    - should i add [20](amount) to [florianne](name)?
+    - should I increase [Kanya](name)?
+    - should i increase [william shore](name) by [5](amount)?
+    - should I increase [Andrzej kraviec](name) by another [75](amount)
+    - should I put [34.59](amount) on [masami nishimura](name)?
+    - should i put money on [alois](name)
     - would you put
     - would you increase
-    - would you add to [florianne paget](portfolio_name)?
-    - do you think I should put more money on [paulinho](portfolio_name)
-    - do you think I should increase [kanya bunnag](portfolio_name) by [159](amount)?
-    - do I want to add [5](amount) to [William](portfolio_name)?
-    - do I want to invest in [paulinho](portfolio_name)?
-    - do you think investing [315.00](amount) in [alois reiter](portfolio_name) is a good idea?
-    - would you recommend adding to [andrzej](portfolio_name)
+    - would you add to [florianne paget](name)?
+    - do you think I should put more money on [paulinho](name)
+    - do you think I should increase [kanya bunnag](name) by [159](amount)?
+    - do I want to add [5](amount) to [William](name)?
+    - do I want to invest in [paulinho](name)?
+    - do you think investing [315.00](amount) in [alois reiter](name) is a good idea?
+    - would you recommend adding to [andrzej](name)
 
 - intent: add_amount
   examples: |
-    - put [10.00](amount) on [andrzej kraviec](portfolio_name)
-    - put [603](amount) on [andrzej](portfolio_name)
-    - invest [£343](amount) on [aricka](portfolio_name)
-    - invest [23.54](amount) on [alois reiter](portfolio_name)
-    - I want to add [30](amount) to [Florianne Paget](portfolio_name)
-    - I'd like to add [£129.72](amount) to [paulinho simoes](portfolio_name)
-    - increase [72.80](amount) on [Benjamin Parker](portfolio_name)
-    - increase by [43](amount) [benjamin](portfolio_name)'s portfolio
-    - add [£3](amount) to [paulinho](portfolio_name)'s portfolio
-    - add [13.16](amount) to [benjamin parker](portfolio_name)'s portfolio
-    - add [50](amount) to [William Shore](portfolio_name)
-    - add [£10](amount) to [florianne](portfolio_name)
-    - add another [2.39](amount) to [ralph axelsen](portfolio_name)
-    - add another [£75](amount) to [Kanya Bunnag](portfolio_name)
-    - I'd like to put [134](amount) on [william](portfolio_name)
-    - I'd like to put [63.24](amount) on [Florianne](portfolio_name)
-    - I want to invest another [£200.34](amount) on [masami nishimura](portfolio_name)
-    - I want to invest another [12](amount) on [Ralph](portfolio_name)
-    - I'd like to increase by [159.16](amount) [alois](portfolio_name)
-    - I'd like to increase by [£65](amount) [Kanya Bunnag](portfolio_name)
-    - put another [25](amount) on [kanya bunnag](portfolio_name)
-    - put another [178.39](amount) on [Aricka Lewis](portfolio_name)
-    - add to [ralph](portfolio_name)
-    - add to [Aricka Lewis](portfolio_name)
-    - put more on [Florianne](portfolio_name)
-    - put more on [alois](portfolio_name)
-    - increase [paulinho Simoes](portfolio_name)
-    - invest more on [Kanya](portfolio_name)
-    - invest more on [Benjamin parker](portfolio_name)
-    - add more on [william](portfolio_name)
-    - add more to [andrzej](portfolio_name)
+    - put [10.00](amount) on [andrzej kraviec](name)
+    - put [603](amount) on [andrzej](name)
+    - invest [£343](amount) on [aricka](name)
+    - invest [23.54](amount) on [alois reiter](name)
+    - I want to add [30](amount) to [Florianne Paget](name)
+    - I'd like to add [£129.72](amount) to [paulinho simoes](name)
+    - increase [72.80](amount) on [Benjamin Parker](name)
+    - increase by [43](amount) [benjamin](name)'s portfolio
+    - add [£3](amount) to [paulinho](name)'s portfolio
+    - add [13.16](amount) to [benjamin parker](name)'s portfolio
+    - add [50](amount) to [William Shore](name)
+    - add [£10](amount) to [florianne](name)
+    - add another [2.39](amount) to [ralph axelsen](name)
+    - add another [£75](amount) to [Kanya Bunnag](name)
+    - I'd like to put [134](amount) on [william](name)
+    - I'd like to put [63.24](amount) on [Florianne](name)
+    - I want to invest another [£200.34](amount) on [masami nishimura](name)
+    - I want to invest another [12](amount) on [Ralph](name)
+    - I'd like to increase by [159.16](amount) [alois](name)
+    - I'd like to increase by [£65](amount) [Kanya Bunnag](name)
+    - put another [25](amount) on [kanya bunnag](name)
+    - put another [178.39](amount) on [Aricka Lewis](name)
+    - add to [ralph](name)
+    - add to [Aricka Lewis](name)
+    - put more on [Florianne](name)
+    - put more on [alois](name)
+    - increase [paulinho Simoes](name)
+    - invest more on [Kanya](name)
+    - invest more on [Benjamin parker](name)
+    - add more on [william](name)
+    - add more to [andrzej](name)
 
 - intent: add_amount_to_him_her
   examples: |
@@ -360,71 +360,71 @@ nlu:
   examples: |
     - should i withdraw
     - should i withdraw
-    - should i withdraw [50](amount) from [aricka lewis](portfolio_name)?
-    - should I withdraw [£124.54](amount) from [Ralph Axelsen](portfolio_name)
+    - should i withdraw [50](amount) from [aricka lewis](name)?
+    - should I withdraw [£124.54](amount) from [Ralph Axelsen](name)
     - should i decrease
-    - should I decrease [kanya](portfolio_name)?
-    - should i decrease [William Shore](portfolio_name) by [5](amount)?
-    - should I decrease [andrzej kraviec](portfolio_name) by another [75](amount)
-    - should I get [34.59](amount) from [masami nishimura](portfolio_name)?
-    - should i get money from [Alois](portfolio_name)
+    - should I decrease [kanya](name)?
+    - should i decrease [William Shore](name) by [5](amount)?
+    - should I decrease [andrzej kraviec](name) by another [75](amount)
+    - should I get [34.59](amount) from [masami nishimura](name)?
+    - should i get money from [Alois](name)
     - would you get
     - would you withdraw
-    - would you withdraw from [florianne paget](portfolio_name)?
-    - do you think I should withdraw more money from [Paulinho Simoes](portfolio_name)
-    - do you think I should decrease [Kanya Bunnag](portfolio_name) by [159](amount)?
-    - do I want to withdraw [5](amount) from [william](portfolio_name)?
-    - do I want to decrease [paulinho simoes](portfolio_name)?
-    - do you think withdrawing [315.00](amount) from [Alois Reiter](portfolio_name) is a good idea?
-    - would you recommend getting from [andrzej](portfolio_name)
+    - would you withdraw from [florianne paget](name)?
+    - do you think I should withdraw more money from [Paulinho Simoes](name)
+    - do you think I should decrease [Kanya Bunnag](name) by [159](amount)?
+    - do I want to withdraw [5](amount) from [william](name)?
+    - do I want to decrease [paulinho simoes](name)?
+    - do you think withdrawing [315.00](amount) from [Alois Reiter](name) is a good idea?
+    - would you recommend getting from [andrzej](name)
 
 - intent: withdraw_amount
   examples: |
-    - withdraw [57.00](amount) from [andrzej kraviec](portfolio_name)
-    - withdraw [486](amount) from [Florianne](portfolio_name)
-    - get [100](amount) from [Nishimura](portfolio_name)
-    - get [63.34](amount) from [aricka lewis](portfolio_name)
-    - I want to withdraw [80](amount) from [alois](portfolio_name)
-    - I'd like to withdraw [283.58](amount) from [Paulinho Simoes](portfolio_name)
-    - remove [£47.30](amount) from [benjamin](portfolio_name)
-    - decrease by [85](amount) [ralph](portfolio_name)'s portfolio
-    - remove [5](amount) from [Shore](portfolio_name)'s portfolio
-    - subtract [13.50](amount) from [Kanya Bunnag](portfolio_name)'s portfolio
-    - decrease [70](amount) [andrzej](portfolio_name)
-    - get [2.39](amount) from [Masami Nishimura](portfolio_name)
-    - withdraw another [59](amount) from [reiter](portfolio_name)
-    - I'd like to get [120](amount) from [William Shore](portfolio_name)
-    - I'd like to withdraw [£98.00](amount) from [Benjamin Parker](portfolio_name)
-    - I want to withdraw [200](amount) from [aricka](portfolio_name)
-    - I want to remove another [25.32](amount) from [ralph axelsen](portfolio_name)
-    - I'd like to decrease by [160.50](amount) [Florianne Paget](portfolio_name)'s portfolio
-    - I'd like to remove [55](amount) from [Alois Reiter](portfolio_name)
-    - get another [25](amount) on [andrzej kraviec](portfolio_name)
-    - remove another [£178.39](amount) on [Paget](portfolio_name)
+    - withdraw [57.00](amount) from [andrzej kraviec](name)
+    - withdraw [486](amount) from [Florianne](name)
+    - get [100](amount) from [Nishimura](name)
+    - get [63.34](amount) from [aricka lewis](name)
+    - I want to withdraw [80](amount) from [alois](name)
+    - I'd like to withdraw [283.58](amount) from [Paulinho Simoes](name)
+    - remove [£47.30](amount) from [benjamin](name)
+    - decrease by [85](amount) [ralph](name)'s portfolio
+    - remove [5](amount) from [Shore](name)'s portfolio
+    - subtract [13.50](amount) from [Kanya Bunnag](name)'s portfolio
+    - decrease [70](amount) [andrzej](name)
+    - get [2.39](amount) from [Masami Nishimura](name)
+    - withdraw another [59](amount) from [reiter](name)
+    - I'd like to get [120](amount) from [William Shore](name)
+    - I'd like to withdraw [£98.00](amount) from [Benjamin Parker](name)
+    - I want to withdraw [200](amount) from [aricka](name)
+    - I want to remove another [25.32](amount) from [ralph axelsen](name)
+    - I'd like to decrease by [160.50](amount) [Florianne Paget](name)'s portfolio
+    - I'd like to remove [55](amount) from [Alois Reiter](name)
+    - get another [25](amount) on [andrzej kraviec](name)
+    - remove another [£178.39](amount) on [Paget](name)
 
 - intent: withdraw_from
   examples: |
-    - withdraw from [andrzej kraviec](portfolio_name)
-    - withdraw from [Florianne](portfolio_name)
-    - get from [Nishimura](portfolio_name)
-    - get from [aricka lewis](portfolio_name)
-    - I want to withdraw from [alois](portfolio_name)
-    - I'd like to withdraw from [Paulinho Simoes](portfolio_name)
-    - remove from [benjamin](portfolio_name)
-    - decrease [ralph](portfolio_name)'s portfolio
-    - remove from [Shore](portfolio_name)'s portfolio
-    - subtract from [Kanya Bunnag](portfolio_name)'s portfolio
-    - decrease [andrzej](portfolio_name)
-    - get from [Masami Nishimura](portfolio_name)
-    - withdraw another from [reiter](portfolio_name)
-    - I'd like to get from [William Shore](portfolio_name)
-    - I'd like to withdraw from [Benjamin Parker](portfolio_name)
-    - I want to withdraw from [aricka](portfolio_name)
-    - I want to remove more from [ralph axelsen](portfolio_name)
-    - I'd like to decrease [Florianne Paget](portfolio_name)'s portfolio
-    - I'd like to remove from [Alois Reiter](portfolio_name)
-    - get more from [andrzej kraviec](portfolio_name)
-    - remove more from [Paget](portfolio_name)
+    - withdraw from [andrzej kraviec](name)
+    - withdraw from [Florianne](name)
+    - get from [Nishimura](name)
+    - get from [aricka lewis](name)
+    - I want to withdraw from [alois](name)
+    - I'd like to withdraw from [Paulinho Simoes](name)
+    - remove from [benjamin](name)
+    - decrease [ralph](name)'s portfolio
+    - remove from [Shore](name)'s portfolio
+    - subtract from [Kanya Bunnag](name)'s portfolio
+    - decrease [andrzej](name)
+    - get from [Masami Nishimura](name)
+    - withdraw another from [reiter](name)
+    - I'd like to get from [William Shore](name)
+    - I'd like to withdraw from [Benjamin Parker](name)
+    - I want to withdraw from [aricka](name)
+    - I want to remove more from [ralph axelsen](name)
+    - I'd like to decrease [Florianne Paget](name)'s portfolio
+    - I'd like to remove from [Alois Reiter](name)
+    - get more from [andrzej kraviec](name)
+    - remove more from [Paget](name)
 
 - intent: withdraw_amount_from_him_her
   examples: |
@@ -483,72 +483,72 @@ nlu:
 - intent: should_i_unfollow
   examples: |
     - should i unfollow
-    - should i unfollow [aricka lewis](portfolio_name)?
-    - should I unfollow [Ralph Axelsen](portfolio_name)
+    - should i unfollow [aricka lewis](name)?
+    - should I unfollow [Ralph Axelsen](name)
     - should i stop following
-    - should i stop following [william shore](portfolio_name)?
-    - should I stop following [Andrzej Kraviec](portfolio_name)
-    - should I stop following [masami nishimura](portfolio_name)?
-    - should i stop following [alois](portfolio_name)
+    - should i stop following [william shore](name)?
+    - should I stop following [Andrzej Kraviec](name)
+    - should I stop following [masami nishimura](name)?
+    - should i stop following [alois](name)
     - would you unfollow
-    - would you unfollow [Florianne Paget](portfolio_name)?
-    - do you think I should unfollow [paulinho](portfolio_name)
-    - do you think I should stop following [Kanya Bunnag](portfolio_name)?
-    - do I want to unfollow [william](portfolio_name)?
-    - do I want to stop following [Paulinho Simoes](portfolio_name)?
-    - do you think unfollowing [alois reiter](portfolio_name) is a good idea?
-    - would you recommend unfollowing [Andrzej](portfolio_name)
-    - will [benjamin parker](portfolio_name)'s portfolio decrease?
-    - will [florianne](portfolio_name)'s portfolio drop?
-    - do you think [william](portfolio_name) will drop
-    - will [Alois Reiter](portfolio_name)'s value decrease next month
-    - is [paulinho simoes](portfolio_name) going to decrease?
+    - would you unfollow [Florianne Paget](name)?
+    - do you think I should unfollow [paulinho](name)
+    - do you think I should stop following [Kanya Bunnag](name)?
+    - do I want to unfollow [william](name)?
+    - do I want to stop following [Paulinho Simoes](name)?
+    - do you think unfollowing [alois reiter](name) is a good idea?
+    - would you recommend unfollowing [Andrzej](name)
+    - will [benjamin parker](name)'s portfolio decrease?
+    - will [florianne](name)'s portfolio drop?
+    - do you think [william](name) will drop
+    - will [Alois Reiter](name)'s value decrease next month
+    - is [paulinho simoes](name) going to decrease?
 
 
 - intent: unfollow
   examples: |
-    - unfollow [andrzej kraviec](portfolio_name)
-    - unfollow [Masami](portfolio_name)
-    - unfollow [Ralph Axelsen](portfolio_name)
-    - unfollow [kanya](portfolio_name)
-    - unfollow [alois reiter](portfolio_name)
-    - unfollow [William](portfolio_name)
-    - unfollow [aricka lewis](portfolio_name)
-    - unfollow [Florianne](portfolio_name)
-    - unfollow [benjamin parker](portfolio_name)
-    - unfollow [Paulinho Simoes](portfolio_name)
-    - stop following [andrzej](portfolio_name)
-    - stop following [Masami Nishimura](portfolio_name)
-    - stop following [ralph](portfolio_name)
-    - stop following [kanya bunnag](portfolio_name)
-    - stop following [Aricka](portfolio_name)
-    - stop following [alois](portfolio_name)
-    - stop following [William Shore](portfolio_name)
-    - stop following [florianne paget](portfolio_name)
-    - stop following [Benjamin Parker](portfolio_name)
-    - stop following [paulinho](portfolio_name)
-    - I want to unfollow [Florianne Paget](portfolio_name)
-    - I want to unfollow [parker](portfolio_name)
-    - I would like to unfollow [paulinho simoes](portfolio_name)
-    - I would like to unfollow [William](portfolio_name)
-    - I want to stop following [alois reiter](portfolio_name)
-    - I want to stop following [Kraviec](portfolio_name)
-    - I want to divest from [Florianne Paget](portfolio_name)
-    - I want to divest from [parker](portfolio_name)
-    - I would like to divest from [Florianne Paget](portfolio_name)
-    - I would like to divest from [parker](portfolio_name)
-    - divest from [Florianne Paget](portfolio_name)
-    - divest from [parker](portfolio_name)
-    - [andrzej kraviec](portfolio_name) unfollow
-    - [Masami](portfolio_name) unfollow
-    - [Ralph Axelsen](portfolio_name) unfollow
-    - [kanya](portfolio_name) unfollow
-    - [alois reiter](portfolio_name) unfollow
-    - [William](portfolio_name) unfollow
-    - [aricka lewis](portfolio_name) unfollow
-    - [Florianne](portfolio_name) unfollow
-    - [benjamin parker](portfolio_name) unfollow
-    - [Paulinho Simoes](portfolio_name) unfollow
+    - unfollow [andrzej kraviec](name)
+    - unfollow [Masami](name)
+    - unfollow [Ralph Axelsen](name)
+    - unfollow [kanya](name)
+    - unfollow [alois reiter](name)
+    - unfollow [William](name)
+    - unfollow [aricka lewis](name)
+    - unfollow [Florianne](name)
+    - unfollow [benjamin parker](name)
+    - unfollow [Paulinho Simoes](name)
+    - stop following [andrzej](name)
+    - stop following [Masami Nishimura](name)
+    - stop following [ralph](name)
+    - stop following [kanya bunnag](name)
+    - stop following [Aricka](name)
+    - stop following [alois](name)
+    - stop following [William Shore](name)
+    - stop following [florianne paget](name)
+    - stop following [Benjamin Parker](name)
+    - stop following [paulinho](name)
+    - I want to unfollow [Florianne Paget](name)
+    - I want to unfollow [parker](name)
+    - I would like to unfollow [paulinho simoes](name)
+    - I would like to unfollow [William](name)
+    - I want to stop following [alois reiter](name)
+    - I want to stop following [Kraviec](name)
+    - I want to divest from [Florianne Paget](name)
+    - I want to divest from [parker](name)
+    - I would like to divest from [Florianne Paget](name)
+    - I would like to divest from [parker](name)
+    - divest from [Florianne Paget](name)
+    - divest from [parker](name)
+    - [andrzej kraviec](name) unfollow
+    - [Masami](name) unfollow
+    - [Ralph Axelsen](name) unfollow
+    - [kanya](name) unfollow
+    - [alois reiter](name) unfollow
+    - [William](name) unfollow
+    - [aricka lewis](name) unfollow
+    - [Florianne](name) unfollow
+    - [benjamin parker](name) unfollow
+    - [Paulinho Simoes](name) unfollow
 
 
 - intent: unfollow_him_her
@@ -648,7 +648,7 @@ nlu:
     - [£180](amount)
     - [730](amount)
 
-- lookup: portfolio_name
+- lookup: name
   examples: |
     - Andrzej
     - Kraviec
@@ -713,5 +713,5 @@ nlu:
 
 - regex: amount
   examples: |
-    - ^£?(\d{1,5}|\d{0,5}\.\d{1,2})$
+    - ^(\d{1,5}|\d{0,5}\.\d{1,2})$
 

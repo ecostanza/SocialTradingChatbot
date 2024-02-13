@@ -1272,13 +1272,14 @@ slots:
     type: text
     mappings:
       - type: from_entity
-        entity: attribute
+        entity: name
+        not_intent: unfollow_everyone
 
   amount:
-    type: text
+    type: float
     mappings:
       - type: from_entity
-        entity: attribute
+        entity: amount
 
   amount_query:
     type: categorical
