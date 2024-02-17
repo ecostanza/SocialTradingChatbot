@@ -518,7 +518,7 @@ def questionnaire_view(request):
     {'question': '2. I was just an instrument in the hands of somebody or something else.', choices: ['1', '2', '3', '4', '5']},
     {'question': '3. My actions just happened without my intention.', choices: ['1', '2', '3', '4', '5']},
     {'question': '4. I was the author of my actions.', choices: ['1', '2', '3', '4', '5']},
-    {"question": "5. The consequences of my actions felt like they did't logically follow my actions.", "choices": ["1", "2", "3", "4", "5"]},
+    {"question": "5. The consequences of my actions felt like they didn't logically follow my actions.", "choices": ["1", "2", "3", "4", "5"]},
     {'question': '6. The outcomes of my actions generally surprised me.', choices: ['1', '2', '3', '4', '5']},
     {'question': '7. Things I did were subject only to my free will.', choices: ['1', '2', '3', '4', '5']},
     {'question': '8. The decision whether and when to act was within my hands.', choices: ['1', '2', '3', '4', '5']},
