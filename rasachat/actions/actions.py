@@ -685,6 +685,7 @@ class FetchPortfolio(Action):
         # for e in tracker.latest_message['entities']:
         #     if e['entity'] == 'portfolio_name':
         #         profile_name = e['value']
+        print('profile_name: ', profile_name)
 
         amount = None
         amount_query = None
@@ -694,12 +695,17 @@ class FetchPortfolio(Action):
         else:
             portfolio_query = None
 
+            amount = tracker.get_slot('amount')
+            print('amount: ', amount)
             # for e in tracker.latest_message['entities']:
             #     if e['entity'] == 'amount':
-            #         try:
-            #             amount = round(Decimal(e['value'].replace('£','')), 2)
-            #         except (IndexError, InvalidOperation):
-            #             amount_query = 'invalid'
+            if amount:
+                try:
+                    # amount = round(Decimal(amount), 2)
+                    amount = round(float(amount), 2)
+                except (IndexError, InvalidOperation):
+                    print('exception from amount')
+                    amount_query = 'invalid'
 
             try:
                 profile_object = Profile.objects.get(name__icontains=profile_name)
@@ -719,6 +725,11 @@ class FetchPortfolio(Action):
 
             except (IndexError, MultipleObjectsReturned) as e:
                 portfolio_query = "invalid"
+
+            print('amount:', amount)
+            print('amount_query:', amount_query)
+            print('portfolio:', portfolio)
+            print('portfolio_query:', portfolio_query)
 
         return [SlotSet("portfolio_query", portfolio_query), SlotSet("name", profile_name), SlotSet("amount_query", amount_query), SlotSet("amount", amount)]
 
@@ -1071,9 +1082,11 @@ class AddAmount(Action):
 
     @try_except
     def run(self, dispatcher, tracker, domain):
+        print("\n", self.name())
         user = get_user(tracker)
 
         profile_name = tracker.get_slot('name')
+        print("profile_name:", profile_name)
 
         messages = []
         buttons = []
@@ -1096,6 +1109,7 @@ class AddAmount(Action):
             portfolio = Portfolio.objects.get(user=user, profile=profile_object.id)
 
             amount = tracker.get_slot('amount')
+            print('amount:', amount)
 
             # if amount is None:
             #     try:
@@ -1198,8 +1212,10 @@ class AddAmount(Action):
         if Portfolio.objects.filter(user=user, followed=True):
             buttons.append({"title": "Who should I stop following?", "payload": "Who should I stop following?"})
 
+        print('before custom_utter_message')
         # custom_utter_message(random.choice(messages), tracker, dispatcher, buttons, message_params)
         custom_utter_message(random.choice(messages), tracker, dispatcher, buttons=buttons, message_params=message_params)
+        print('after custom_utter_message')
 
         # return []
         return [
@@ -1817,6 +1833,35 @@ class ResetSlots(Action):
 class FallbackAction(Action):
     def name(self) -> Text:
         return "action_fallback"
+
+    # def run(self, dispatcher, tracker, domain):
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        user = get_user(tracker)
+        fallback_count = FallbackCount.objects.get(user=user)
+        fallback_count.count += 1
+        fallback_count.save()
+
+        messages = []
+
+        messages.append("Sorry, I didn't understand that, or it's something I cannot help with")
+        # messages.append("Sorry, could you rephrase that?")
+        # messages.append("I'm sorry, I didn't quite get that")
+        # messages.append("Sorry, I'm afraid I didn't catch that")
+        # messages.append("Could you rephrase that please?")
+        # messages.append("Apologies, I don't understand")
+        # messages.append("Sorry, can you rephrase that please?")
+        # messages.append("Hmm, not sure about that. Could you rephrase?")
+        # messages.append("I'm not sure I understand. Can you rephrase that please?")
+        # messages.append("Please rephrase that. I'm not sure I understand")
+
+        # dispatcher.utter_message(random.choice(messages))
+        custom_utter_message(random.choice(messages), tracker, dispatcher)
+
+        return [UserUtteranceReverted()]
+
+class DefaultFallbackAction(Action):
+    def name(self) -> Text:
+        return "action_default_fallback"
 
     # def run(self, dispatcher, tracker, domain):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:

@@ -2,7 +2,7 @@ version: "3.1"
 
 entities:
   - name
-  - amount
+  - value
   - portfolio_query
   - amount_query
   - attribute
@@ -25,7 +25,7 @@ intents:
   - should_i_unfollow
   - unfollow
   - unfollow_him_her
-  - amount
+  - specify_amount
   - should_i_add_amount
   - add_amount
   - add_amount_to_him_her
@@ -1266,7 +1266,6 @@ slots:
       - not_followed
     mappings:
       - type: custom
-#        entity: attribute
 
   name:
     type: text
@@ -1279,7 +1278,7 @@ slots:
     type: float
     mappings:
       - type: from_entity
-        entity: amount
+        entity: value
 
   amount_query:
     type: categorical
@@ -1288,4 +1287,3 @@ slots:
       - invalid
     mappings:
       - type: custom
-#        entity: attribute
