@@ -2,5 +2,5 @@
 
 export PYTHONPATH=${PWD}
 export DJANGO_SETTINGS_MODULE=investment_bot.settings
-(cd rasachat && rasa run --enable-api --cors "*" --debug -p 5057)
+(cd rasachat && rasa run --debug --enable-api --cors "*" -p 5057)
 
