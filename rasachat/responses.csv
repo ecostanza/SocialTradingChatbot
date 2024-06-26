@@ -1,254 +1,255 @@
-first_person,second_person,passive,,,
-I don't think you should follow or unfollow anyone else at the moment,You are doing great! You don't need to follow anyone else this month.,No change is recommended for this month,,,
-I think you should stop following %(portfolio_name)s. I believe %(pronoun)s porfolio will decrease by %(amount)s% next month, %(pronoun)s porfolio will decrease by ,%(portfolio_name)s is expect to decrease by %(amount)s% next month," "" + highest_pronoun + "" portfolio will increase by "" + str(round(highest_change""",,
-"I think %{portfolio_name)s's portfolio will decrease by "" + str(round(abs(lowest_change""",You'd better to stop following %{portfolio_name)s," since "" + lowest_pronoun + "" portfolio is likely to decrease by "" + str(round(abs(lowest_change""","It's better to stop following %{portfolio_name)s. Prediction shows that "" + lowest_pronoun + "" portfolio will decrease by "" + str(round(abs(lowest_change""",,
-"I'm afraid there's no one left to follow!""""","You are following everyone currently!""""","All portfolios are being followed at the moment.""""",,,
-"I predict a positive change of "" + str(round(abs(highest_change""","You should invest on "" + highest_changing_portfolio_name + "". "" highest_pronoun + "" portfolio will increase by "" + str(round(highest_change""",highest_changing_portfolio_name +  is recommended. As prediction," "" + highest_pronoun + "" portfolio will increase by "" + str(round(highest_change""",,
-"I believe no one else is worth following for now""""","Looks good! You can stay with the status quo.""""","No portfolio is recommended to be followed for now""""",,,
-"I am not following anyone at the moment.""""","You are not following anyone at the moment.""""",At the moment," no one is being followed by you.""""",,
-"There is no one for me to unfollow.""""","There is no one you should unfollow.""""",At the moment," there is no one to unfollow.""""",,
-"I'm not following any portfolio currently.""""","You're not following any portfolio currently.""""",At the moment," no portfolio is being followed.""""",,
-"No portfolio is being followed by me right now.""""","No portfolio is being followed right now.""""",At the moment," no portfolio is being followed.""""",,
-"I'm not following any portfolio for now.""""","You're not following anyone for now.""""",At the moment," no one is being followed.""""",,
-"But I'm not following anyone at the moment!""""","But you're not following anyone at the moment!""""",At the moment," no one is being followed by you!""""",,
-"But there is no one for me to unfollow!""""","But there is no one to unfollow!""""",At the moment," there is no one to unfollow!""""",,
-"I'm afraid I'm not following any portfolios right now.""""","You're not following any portfolios right now.""""",At the moment," no portfolios are being followed.""""",,
-"No portfolios are being followed by me right now!""""","No portfolios are being followed right now!""""",At the moment," no portfolios are being followed.""""",,
-"I'm not following anyone for now.""""","You're not following any portfolio for now.""""",At the moment," no portfolio is being followed.""""",,
-"I think you should stop following %(portfolio_name)s. I believe %{pronoun)s portfolio will decrease by "" + str(round(abs(lowest_change""","You should consider stopping following %{portfolio_name)s. Your portfolio will decrease by "" + str(round(abs(lowest_change""""","It is recommended that %{pronoun)s stop following %{portfolio_name)s. A decrease in the portfolio value by approximately "" + str(round(abs(lowest_change))) + "" is anticipated.""""",,,
-"I believe %{portfolio_name)s's portfolio will decrease by "" + str(round(abs(lowest_change""","Your portfolio of %{portfolio_name)s will decrease by "" + str(round(abs(lowest_change)""""","It is believed that there will be a decrease in the portfolio of %{portfolio_name)s by approximately "" + str(round(abs(lowest_change))).""""",,,
-Well," I would stop following %{portfolio_name)s if I were you. I think %{pronoun)s portfolio will decrease by "" + str(round(abs(lowest_change""",Well," you should stop following "" + lowest_changing_portfolio_name + pronoun + "" portfolio will decrease by "" + str(round(abs(lowest_change"""," it is advisable to stop following %{portfolio_name)s. A decrease in the portfolio value by approximately "" + str(round(abs(lowest_change))) + "" is expected.""""",
-"I think you should unfollow %{portfolio_name)s's portfolio. I think its value will decrease by "" + str(round(abs(lowest_change""","You should unfollow %{portfolio_name)s's portfolio. Its value will decrease by "" + str(round(abs(lowest_change""","The portfolio of %{portfolio_name)s should be unfollowed. It is anticipated that its value will decrease by approximately "" + str(round(abs(lowest_change))) + "".""""",,,
-"I predict a negative change of "" + str(round(abs(lowest_change""","A negative change of "" + str(round(abs(lowest_change + ""is predicted.""""","A negative change of approximately "" + str(round(abs(lowest_change))) + "" is predicted.""""",,,
-"lowest_changing_portfolio_name + . I think %{pronoun)s portfolio will decreasy by "" + str(round(abs(lowest_change""","lowest_changing_portfolio_name + pronoun +  portfolio will decrease by "" + str(round(abs(lowest_change""","Portfolio of %{portfolio_name)s is expected to decrease by approximately "" + str(round(abs(lowest_change))) + "".""""",,,
-"lowest_changing_portfolio_name + . I predict a negative change of "" + str(round(abs(lowest_change""","lowest_changing_portfolio_name + A negative change of "" + str(round(abs(lowest_change + ""is predicted.""""","A negative change of approximately "" + str(round(abs(lowest_change))) + "" is predicted for the portfolio of %{portfolio_name)s.""""",,,
-"lowest_changing_portfolio_name + . I believe the value of %{pronoun)s portfolio will decrease by "" + str(round(abs(lowest_change""","lowest_changing_portfolio_name + . The value of %{pronoun)s portfolio will decrease by "" + str(round(abs(lowest_change""","The value of the portfolio of %{portfolio_name)s is believed to decrease by approximately "" + str(round(abs(lowest_change))) +.""""",,,
-"I think that%{portfolio_name)s's portfolio should decrease by "" + str(round(abs(lowest_change""","lowest_changing_portfolio_name + 's portfolio should decrease by "" + str(round(abs(lowest_change""","The portfolio of %{portfolio_name)s should be expected to decrease by approximately "" + str(round(abs(lowest_change))) +.""""",,,
-"I would stop following %{portfolio_name)s. I believe %{pronoun)s portfolio will decrease by "" + str(round(abs(lowest_change""","You should stop following "" + lowest_changing_portfolio_name + pronoun + "" portfolio will decrease by "" + str(round(abs(lowest_change""","It is recommended to stop following the portfolio of %{portfolio_name)s. The portfolio is believed to decrease by approximately "" + str(round(abs(lowest_change))) +.""""",,,
-"I don't think there is anyone you should stop following right now""""","There is no one you should stop following right now.""""",At the moment," there is no one that should be stopped from being followed.""""",,
-"I don't think you should stop following anyone for now""""","You should not stop following anyone for now.""""",At the moment," it is not advisable to stop following anyone.""""",,
-"I don't think anyone is currently worth unfollowing""""","No one is currently worth unfollowing.""""",At present," there is no one considered worth unfollowing.""""",,
-"I wouldn't unfollow anyone at the moment""""","No one should be unfollowed at the moment.""""","No one would be unfollowed by me at the moment.""""",,,
-"I wouldn't stop following any portfolio for now""""","You shouldn't stop following any portfolio for now.""""","Following any portfolio wouldn't be stopped by me for now.""""",,,
-"There isn't anyone I think you should stop following right now""""","There isn't anyone you should stop following right now.""""","No one is thought to be should be stopped from being followed by you right now.""""",,,
-Right now," I don't think there is anyone you should stop following""""",Right now," there is no one you should stop following.""""",Right now," it is not thought that anyone should be stopped from being followed by you."""""
-"Hmm. I can't think of anyone you should stop following""""","Hmm. There is no one you should stop following.""""","Hmm. No one can be thought of that you should stop following.""""",,,
-"Hmm. There isn't anyone you should stop following in my opinion""""","Hmm. There isn't anyone you should stop following.""""",Hmm. In my opinion," no one is thought to be should be stopped from being followed by you.""""",,
-In my opinion," you shouldn't unfollow anyone at the moment""""","You shouldn't unfollow anyone at the moment.""""",In my opinion," no one should be unfollowed by you at the moment.""""",
-"How much should I invest?""""","How much would you like to invest?""""","How much is wanted to be invested by you?""""",,,
-"Got it. How much should I invest?""""","Got it. How much do you want to invest?""""","Got it. How much is wanted to be invested by you?""""",,,
-Okay," how much should I invest?""""",Okay," how much do you want to invest?""""",Okay," how much is wanted to be invested by you?"""""
-Great," how much should I invest?""""",Great," how much would you like to invest?""""",Great," how much is wanted to be invested by you?"""""
-"Alright. How should I invest?""""","Alright. How much do you want to invest?""""",Alright," how much is wanted to be invested by you?""""",,
-"Great. How much should I invest?""""","Great. How much should you invest?""""","Great. How much is supposed to be invested by you?""""",,,
-"Ok. How much should I invest in this portfolio?""""","Ok. How much do you want to invest in this portfolio?""""","Ok. How much is wanted to be invested by you in this portfolio?""""",,,
-"How much should I invest in this portfolio?""""","How much would you like to invest in this portfolio?""""","How much is wanted to be invested by you in this portfolio?""""",,,
-"What is the amount that I should invest?""""","What is the amount you would like to invest?""""","What is the amount that is wanted to be invested by you?""""",,,
-"Got it. How much should I invest?""""","Got it. How much to invest?""""","Got it. How much is wanted to be invested?""""",,,
-"How much should I withdraw?""""","How much would you like to withdraw?""""","How much is wanted to be withdrawn by you?""""",,,
-Okay," how much should I want to withdraw?""""",Okay," how much do you want to withdraw?""""",Okay," how much is wanted to be withdrawn by you?"""""
-"Alright. How much should I withdraw?""""","Alright. How much would you like to withdraw?""""",Alright," how much is wanted to be withdrawn by you?""""",,
-Great," how much should I withdraw?""""",Great," how much do you want to withdraw?""""",Great," how much is wanted to be withdrawn by you?"""""
-"Got it. How much should I withdraw?""""","Got it. How much would you like to withdraw?""""","Got it. How much is wanted to be withdrawn by you?""""",,,
-"Great. How much should I invest?""""","Great. How much should you invest?""""","Great. How much is supposed to be withdrawn by you?""""",,,
-"Ok. How much should I invest in this portfolio?""""","Ok. How much do you want to invest in this portfolio?""""","Ok. How much is wanted to be withdrawn by you in this portfolio?""""",,,
-"How much should I invest in this portfolio?""""","How much would you like to invest in this portfolio?""""","How much is wanted to be withdrawn by you in this portfolio?""""",,,
-Sorry," I can't find that portfolio. Have you spelt the name correctly?""""",Sorry," the portfolio cannot be found. Have you spelt the name correctly?""""",Sorry," that portfolio can't be found. Has the name been spelled correctly?"""""
-Sorry," I'm having trouble finding that portfolio. Have you spelt the name correctly?""""",Sorry," there is a trouble finding that portfolio. Have you spelt the name correctly?""""",Sorry," trouble is being had finding that portfolio. Has the name been spelled correctly?"""""
-"I can't seem to find that portfolio. Have you spelt the name right?""""","The portfolio cannot be found. Have you spelt the name right?""""","That portfolio can't seem to be found. Has the name been spelled right?""""",,,
-I'm sorry," I can't find that portfolio. Have you spelt it correctly?""""",Sorry," the portfolio cannot be found. Have you spelt it correctly?""""","That portfolio can't be found. Has it been spelled correctly?""""",
-Apologies," I can't seem to find that portfolio. Have you spelt the name right?""""",Apologies," the portfolio cannot be found. Have you spelt the name right?""""",Apologies," that portfolio can't seem to be found. Has the name been spelled right?"""""
-Sorry," I can't find that one. Have you spelt the name right?""""",Sorry," that one cannot be found. Have you spelt the name right?""""",Sorry," that one can't be found. Has the name been spelled right?"""""
-"Have you spelt the name right? I can't find that portfolio!""""","Have you spelt the name right? The portfolio cannot be found!""""","Has the name been spelled right? That portfolio can't be found!""""",,,
-My bad. I can't find that portfolio," have you spelt it right?""""","The portfolio cannot be found; have you spelt it right?""""","That portfolio can't be found. Has it been spelled right?""""",,
-Hmm," I can't find that portfolio. Have you spelt the name correctly?""""",Hmm," the portfolio cannot be found. Have you spelt the name correctly?""""",Hmm," that portfolio can't be found. Has the name been spelled correctly?"""""
-"Have you spelt the name correctly? I can't seem to find that portfolio""""","Have you spelt the name correctly? The portfolio cannot be found.""""","Has the name been spelled correctly? That portfolio can't seem to be found.""""",,,
-"I'm afraid your current balance is not sufficient""""","Your current balance is not sufficient""""","Your current balance is not sufficient""""",,,
-"I'm afraid your current balance is insufficient""""","Your current balance is insufficient""""","Your current balance is insufficient""""",,,
-"I don't think your available balance is sufficient!""""","Your available balance is sufficient!""""","Your available balance is not sufficient!""""",,,
-"I don't think you have enough in your available balance""""","You don't have enough in your available balance""""","Your available balance is not enough""""",,,
-"I think that's more than your available balance!""""","You don't have enough in your available balance""""","That's more than your available balance!""""",,,
-"I don't think your available balance is enough!""""","Your available balance is not enough!""""","Your available balance is not enough!""""",,,
-"I'm afraid that amount is more than your available balance""""","Your available balance is less than that amount!""""","That amount is more than your available balance""""",,,
-"I don't think your balance is enough!""""","Your balance is not enough!""""","Your balance is not enough!""""",,,
-"I think that amount is too large for your available balance""""","Your available balance is too small for that amount""""","That amount is too large for your available balance""""",,,
-"Your available balance isn't enough!""""","Your available balance isn't enough!""""","Your available balance isn't enough!""""",,,
-"I helped you to follow "" + profile_name.title(""","You start following "" + profile_name.title(""","profile_name.title( + is now followed by you""""",,,
-"I've successfully help you start following "" + profile_name.title(""","You start following "" + profile_name.title(""","profile_name.title( + starts to be followed by you""""",,,
-Okay," I've helped you follow "" + profile_name.title(""",Okay," you've followed "" + profile_name.title(""","profile_name.title( + is now followed by you""""",
-"I've invested in "" + profile_name.title( + ""for you""""","You've invested in "" + profile_name.title(""","profile_name.title( + have been invested in""""",,,
-Ok," I've helped you follow "" + profile_name.title(""",Ok," you've followed "" + profile_name.title(""","profile_name.title( + starts to be followed by you"")""",
-"Alright. Now I've helped you now follow "" + profile_name.title(""","Alright. Now you're now following "" + profile_name.title(""","profile_name.title( + is now followed by you""""",,,
-"Cool. I've helped you follow "" + profile_name.title(""","Cool. you've followed "" + profile_name.title(""","profile_name.title( + starts to be followed by you""""",,,
-"Okay. I've invested for you in "" + profile_name.title(""","Okay. you've invested in "" + profile_name.title(""","profile_name.title( + have been invested in""""",,,
-Alright," I've started following "" + profile_name.title(""",Alright," you've started following "" + profile_name.title(""",Alright," you have started following "" + profile_name.title( + ""starts to be followed by you"""""
-"Got it. I've helped you follow "" + profile_name.title(""","Got it. I've helped you follow "" + profile_name.title(""","Got it. You are now following "" + profile_name.title( + ""is followed by you""""",,,
-"I don't think that's not a valid amount""""","Your amount is not valid""""","That's not a valid amount""""",,,
-"I'm afraid that's not a valid amount""""","Your amount is not valid""""","That's not a valid amount""""",,,
-"I think that amount is not valid""""","Your amount is not valid""""","That amount is not valid""""",,,
-That's an invalid amount," I'm afraid""""","Your amount is not valid""""","That's an invalid amount""""",,
-"I don't think that amount looks right!""""","Your amount doesn't look right!""""","That amount doesn't look right!""""",,,
-"I'm afraid that amount doesn't look right""""","Your amount doesn't look right!""""","That amount doesn't look right""""",,,
-"I don't think that amount looks valid to me""""","Your amount doesn't look right!""""","That amount doesn't look valid""""",,,
-"I don't think that's a valid amount""""","Your amount doesn't look right!""""","I don't think that's a valid amount""""",,,
-"I don't think it's a right amount!""""","Your amount is not valid""""","That's not a right amount!""""",,,
-"I don't think that's a right amount""""","Your amount is not valid""""","That's not a right amount""""",,,
-Sorry," I can't find that portfolio. Have you spelt the name correctly?""""",Sorry," I can't find that portfolio. Have you spelt the name correctly?""""","That portfolio cannot be found. Have you spelt the name correctly?""""",
-Sorry," have you spelt the name correctly? I can't find that portfolio""""",Sorry," have you spelt the name correctly? I can't find that portfolio""""",Sorry," have you spelt the name correctly? That portfolio cannot be found"""""
-I'm sorry," I can't find that portfolio. Have you spelt the name right?""""",I'm sorry," I can't find that portfolio. Have you spelt the name right?""""","That portfolio cannot be found. Have you spelt the name right?""""",
-"I can't seem to find that portfolio. Have you spelt it correctly?""""","I can't seem to find that portfolio. Have you spelt it correctly?""""","That portfolio cannot seem to be found. Have you spelt it correctly?""""",,,
-Sorry," have you spelt the name right? I can't seem to find that portfolio""""",Sorry," have you spelt the name right? I can't seem to find that portfolio""""",Sorry," have you spelt the name right? That portfolio cannot be found"""""
-Sorry," I can't find that one. Have you spelt the name right?""""",Sorry," I can't find that one. Have you spelt the name right?""""",Sorry," that one cannot be found. Have you spelt the name right?"""""
-"Have you spelt the name right? I can't find that portfolio!""""","Have you spelt the name right? I can't find that portfolio!""""","Have you spelt the name right? That portfolio cannot be found!""""",,,
-My bad. I can't find that portfolio," have you spelt it right?""""",My bad. I can't find that portfolio," have you spelt it right?""""",That portfolio cannot be found," have you spelt it right?"""""
-Hmm," I can't find that portfolio. Have you spelt the name correctly?""""",Hmm," I can't find that portfolio. Have you spelt the name correctly?""""",Hmm," that portfolio cannot be found. Have you spelt the name correctly?"""""
-"Have you spelt the name correctly? I can't seem to find that portfolio""""","Have you spelt the name correctly? I can't seem to find that portfolio""""","Have you spelt the name correctly? That portfolio cannot seem to be found""""",,,
-"I've helped you stop following "" + profile_name.title(""","You've stopped following "" + profile_name.title(""","profile_name.title( + is stopped to be followed""""",,,
-"Alright. I've helped you unfollow "" + profile_name.title(""","Alright. You've unfollowed "" + profile_name.title(""","profile_name.title( + has been unfollowed now""""",,,
-"I've successfully to unfollow "" + profile_name.title( + ""for you""""","You've successfully to unfollow "" + profile_name.title( + ""for you""""","profile_name.title( + has been unfollowed""""",,,
-"Ok. I've helped you stop following "" + profile_name.title(""","Ok. You've stopped following "" + profile_name.title(""","profile_name.title( + is not followed""""",,,
-"Got it. I've helped you stop following "" + profile_name.title(""","Got it. You've stopped following "" + profile_name.title(""","profile_name.title( + has now stopped to be followed""""",,,
-"Alright. I helped you stop following "" + profile_name.title(""","Alright. You've stopped following "" + profile_name.title(""","profile_name.title( + is not followed""""",,,
-"Got it. I've helped you unfollow "" + profile_name.title(""","Got it. You've unfollowed "" + profile_name.title(""","profile_name.title( + has been unfollowed now""""",,,
-"I've helped you unfollow "" + profile_name.title(""","You've unfollowed "" + profile_name.title(""","profile_name.title( + is not followed""""",,,
-"Okay. I've helped you unfollow "" + profile_name.title(""","Okay. You've unfollowed "" + profile_name.title(""","profile_name.title( + have been unfollowed""""",,,
-Sorry," I can't find that portfolio. Have you spelt the name correctly?""""","No such portfolio been found.Have you spelt the name correctly? """"",Sorry," that portfolio cannot be found. Have you spelt the name correctly?""""",
-Sorry," have you spelt the name correctly? I can't find that portfolio""""","No such portfolio been found.Have you spelt the name correctly? """"",Sorry," have you spelt the name correctly? I can't find that portfolio""""",
-I'm sorry," I can't find that portfolio. Have you spelt the name right?""""","No such portfolio been found.Have you spelt the name correctly? """"",I'm sorry," I can't find that portfolio. Have you spelt the name right?""""",
-"I can't seem to find that portfolio. Have you spelt it correctly?""""","No such portfolio been found.Have you spelt the name correctly? """"","That portfolio can't seem to be found. Have you spelt it correctly?""""",,,
-Sorry," have you spelt the name right? I can't seem to find that portfolio""""","No such portfolio been found.Have you spelt the name correctly? """"",Sorry," have you spelt the name right? That portfolio can't seem to be found""""",
-Sorry," I can't find that one. Have you spelt the name right?""""","No such portfolio been found.Have you spelt the name correctly? """"",Sorry," that one cannot be found. Have you spelt the name right?""""",
-"Have you spelt the name right? I can't find that portfolio!""""","No such portfolio been found.Have you spelt the name correctly? """"","Have you spelt the name right? That portfolio cannot be found!""""",,,
-My bad. I can't find that portfolio," have you spelt it right?""""","No such portfolio been found.Have you spelt the name correctly? """"",My bad. That portfolio cannot be found," have you spelt it right?""""",
-Hmm," I can't find that portfolio. Have you spelt the name correctly?""""","No such portfolio been found.Have you spelt the name correctly? """"",Hmm," that portfolio cannot be found. Have you spelt the name correctly?""""",
-"Have you spelt the name correctly? I can't seem to find that portfolio""""","No such portfolio been found.Have you spelt the name correctly? """"","Have you spelt the name correctly? That portfolio cannot seem to be found""""",,,
-"That's not a valid amount.""""","Your amount is not valid""""","That's not a valid amount""""",,,
-"I'm afraid this is not a valid amount.""""","Your amount is not valid""""",/,,,
-"I think this amount is not valid.""""","Your amount is not valid""""","That amount is not valid""""",,,
-"I'm afraid this is an invalid amount.""""","Your amount is not valid""""",That's an invalid amount," I'm afraid""""",,
-"I think this amount doesn't look right.""""","Your amount is not valid""""","That amount doesn't look right""""",,,
-"I'm afraid this amount doesn't look right.""""","Your amount is not valid""""",/,,,
-"I think this amount doesn't look valid to me.""""","Your amount is not valid""""","That amount doesn't look valid to me""""",,,
-"I don't think this is a valid amount.""""","Your amount is not valid""""","That's not a valid amount""""",,,
-"I believe that this is not the right amount!""""","Your amount is not valid""""","That's not a right amount!""""",,,
-"I don't think this is the right amount.""""","Your amount is not valid""""","That's not a right amount""""",,,
-"I'm afraid your current balance is not sufficient.""""","Your amount is not sufficient""""","There isn't enough in your available balance.""""",,,
-"I'm afraid my current balance is insufficient.""""","Your amount is insufficient""""","The current balance is insufficient for you""""",,,
-"I don't think my available balance is sufficient!""""","Your amount is insufficient""""","The available balance for you is sufficient!""""",,,
-"I don't think I have enough in my available balance.""""","Your balance is not enough""""","I don't think you have enough in your available balance""""",,,
-"I think this is more than my available balance!""""","Your balance is not enough""""","That's more than your available balance!""""",,,
-"I don't think my available balance is enough!""""","Your balance is not enough""""","There isn't enough in your available balance.""""",,,
-"I'm afraid this amount is more than my available balance.""""","Your balance is less than the amount""""",That amount is more than your available balance," I'm afraid""""",,
-"I don't think my balance is enough!""""","Your balance is less than the amount""""","There isn't enough in your balance.""""",,,
-"This amount is too large for my available balance.""""","Your balance is less than the amount""""","That amount is too large for your available balance""""",,,
-"My available balance isn't enough!""""","Your available balance isn't enough!""""","There isn't enough in your available balance.""""",,,
-"I have invested another"" + str(amount) + ""for you"".""","You have invested another ?"" + str(amount""","Another "" + str(amount) + "" has been invested for you.""""",,,
-"Okay. I have added ?"" + str(amount) for you.""""","Okay. You have added ?"" + str(amount""",Okay," "" + str(amount) + "" has been added for you.""""",,
-"Alright. I have invested another ?"" + str(amount) for you.""""","Alright. You have invested another ?"" + str(amount""",Alright," another "" + str(amount) + "" has been invested for you.""""",,
-"I have put another ?"" + str(amount) for you.""""","You have put another ?"" + str(amount""","Another "" + str(amount) + "" has been put for you.""""",,,
-"I have added ?"" + str(amount) for you.""""","You have added ?"" + str(amount""","str(amount) +  has been added for you.""""",,,
-"Got it. I have now invested another ?"" + str(amount).""""","Got it. You have now invested another ?"" + str(amount""",Got it," another "" + str(amount) + "" has been invested for you.""""",,
-Ok," I have put another ?"" + str(amount).""""",Ok," you have put another ?"" + str(amount""",Ok," another "" + str(amount) + "" has been put for you."""""
-"Another ?"" + str(amount).""""",/,/,,,
-"I have increased the amount invested in "" + profile_name.title().""","You have increased the amount invested in "" + profile_name.title(""","The amount invested in "" + profile_name.title() + "" has been increased by you.""""",,,
-"OK. I have helped you invest ?"" + str(amount).""""","OK. You have invested ?"" + str(amount""","Ok. "" + str(amount) + ""have been invested for you.""""",,,
-"I think this is not a valid amount.""""","Your amount is invalid""""","That's not a valid amount""""",,,
-"I'm afraid this is not a valid amount.""""","Your amount is invalid""""","That's not a valid amount""""",,,
-"I think this amount is not valid.""""","Your amount is invalid""""","That amount is not valid""""",,,
-"I'm afraid this is an invalid amount.""""","Your amount is invalid""""",That's an invalid amount," I'm afraid""""",,
-"I think this amount doesn't look right.""""","Your amount doesn't look right""""","That amount doesn't look right""""",,,
-"I'm afraid this amount doesn't look right.""""","Your amount is not right""""","That amount doesn't look right""""",,,
-"This amount doesn't look valid to me.""""","Your amount is not right""""","That amount doesn't look valid to me""""",,,
-"I don't think this is a valid amount.""""","Your amount is not right""""","That amount is not valid""""",,,
-"This is not the right amount!""""","Your amount is not right""""","That's not a right amount!""""",,,
-"I don't think this is the right amount.""""","Your amount is not right""""","That's not a right amount!""""",,,
-"This is not a valid amount.""""","Your amount is not right""""","That's not a valid amount""""",,,
-"I'm afraid this is not a valid amount.""""","Your amount doesn't look right""""","That's not a valid amount""""",,,
-"I'm afriad that this amount is not valid.""""","Your amount doesn't look right""""","That amount is not valid""""",,,
-"I'm afraid this is an invalid amount.""""","Your amount doesn't look right""""",That's an invalid amount," I'm afraid""""",,
-"I'm afraid this amount doesn't look right.""""","Your amount doesn't look right""""","That amount doesn't look right""""",,,
-"I think this amount doesn't look valid to me.""""","Your amount doesn't look right""""","That amount doesn't look valid to me""""",,,
-"I don't think this is a valid amount.""""","Your amount doesn't look right""""","That amount doesn't look valid to me""""",,,
-"I don't think this is not the right amount!""""","Your amount doesn't look right""""","That's not a right amount!""""",,,
-"I don't think this is the right amount.""""","Your amount doesn't look right""""",That's not a right amount," I think.""""",,
-Sorry," I can't find that portfolio. Have you spelt the name correctly?""""","No such portfolio been found.Have you spelt the name correctly? """"",Sorry," the portfolio could not be found. Have you spelt the name correctly?""""",
-Sorry," have you spelt the name correctly? I can't find that portfolio.""""","No such portfolio been found.Have you spelt the name correctly? """"",Sorry," have you spelt the name correctly? I can't find that portfolio""""",
-I'm sorry," I can't find that portfolio. Have you spelt the name right?""""","No such portfolio been found.Have you spelt the name correctly? """"",I'm sorry," the portfolio cannot be found. Has the name been spelled correctly?""""",
-"I can't seem to find that portfolio. Have I spelt it correctly?""""","No such portfolio been found.Have you spelt the name correctly? """"","It seems that the portfolio cannot be found. Has it been spelled correctly?""""",,,
-Sorry," have I spelt the name right? I can't seem to find that portfolio.""""","No such portfolio been found.Have you spelt the name correctly? """"",Sorry," has the name been spelled correctly? The portfolio seems to elude me.""""",
-Sorry," I can't find that one. Have I spelt the name right?""""","No such portfolio been found.Have you spelt the name correctly? """"",Sorry," that one cannot be found. Has the name been spelled correctly?""""",
-"Have I spelt the name right? I can't find that portfolio!""""","No such portfolio been found.Have you spelt the name correctly? """"","Has the name been spelled correctly? The portfolio cannot be found.""""",,,
-"My bad. I can't find that portfolio; have I spelt it right?""""","No such portfolio been found.Have you spelt the name correctly? """"","My apologies. The portfolio cannot be found; has it been spelled correctly?""""",,,
-Hmm," I can't find that portfolio. Have I spelt the name correctly?""""","No such portfolio been found.Have you spelt the name correctly? """"",Hmm," the portfolio cannot be found. Has the name been spelled correctly?""""",
-"Have I spelt the name correctly? I can't seem to find that portfolio.""""","No such portfolio been found.Have you spelt the name correctly? """"","Has the name been spelled correctly? The portfolio cannot seem to be found.""""",,,
-"Have I spelt the name correctly? I can't seem to find that portfolio.""""","Has the name been spelled correctly? The portfolio cannot seem to be found.""""","Has the name been spelled correctly? The portfolio cannot seem to be found.""""",,,
-"I'm afraid that's not a valid amount""""",Second Personal,"The current amount is not valid""""",,,
-"I think this amount is not valid""""","You entered a invaild amount""""","That amount is not valid""""",,,
-That's an invalid amount," I'm afraid""""","You entered a invaild amount""""","That's an invalid amount""""",,
-"I don't think the amount looks right""""","You entered a invaild amount""""","That amount doesn't look right""""",,,
-"I'm afraid that amount doesn't look right""""","You entered a invaild amount""""","This amount looks incorrect""""",,,
-"That amount doesn't look valid to me""""","You entered a invaild amount""""","That amount doesn't look valid""""",,,
-"I don't think that's a valid amount""""","You entered a invaild amount""""","That's not a valid amount""""",,,
-"I don't think that's a right amount""""","You entered a invaild amount""""","That's not a right amount!""""",,,
-"I think that's a incorrect amount""""","You entered a invaild amount""""","That's a incorrect amount""""",,,
-"I think that's a invaild amount""""","You entered a incorrect amount""""","That's a invalid amount""""",,,
-"I'm afraid that's not a valid amount""""","You entered a incorrect amount""""","That's not a valid amount""""",,,
-"I'm afraid that's a invalid amount""""","You entered a incorrect amount""""","That amount is not valid""""",,,
-That's an invalid amount," I'm afraid""""","You entered a incorrect amount""""","That's an invalid amount""""",,
-"I'm afraid that amount doesn't look right""""","You entered a incorrect amount""""","That amount doesn't look right""""",,,
-"I'm afraid that amount doesn't look right""""","You entered a incorrect amount""""","I'm afraid that amount doesn't look right""""",,,
-"That amount doesn't look valid to me""""","The amount you entered doesn't look right""""","That amount doesn't look valid""""",,,
-"I'm afraid that's a invalid amount""""","The amount you entered doesn't look right""""","I don't think that's a valid amount""""",,,
-"I'm afraid that's a invalid amount""""","The amount you entered doesn't look right""""","That's not a right amount!""""",,,
-"I'm afraid that's a invalid amount""""","The amount you entered doesn't look right""""","I don't think that's a right amount""""",,,
-"I have stopped you following "" + profile_name.title(""","The amount you entered doesn't look right""""","Stopped following"" + profile_name.title(""",,,
-"I have stopped you following "" + profile_name.title(""","You have stopped following "" + profile_name.title(""","Stopped following"" + profile_name.title(""",,,
-"I have stopped you following "" + profile_name.title(""",Okay," you have now stopped following "" + profile_name.title(""","Stopped following"" + profile_name.title(""",,
-"I have stopped you following "" + profile_name.title(""","Alright. You have now unfollowed "" + profile_name.title(""","Stopped following"" + profile_name.title(""",,,
-"I have stopped you following "" + profile_name.title(""","You have unfollowed "" + profile_name.title(""","Stopped following"" + profile_name.title(""",,,
-"I have stopped you following "" + profile_name.title(""","Ok. You are not following "" + profile_name.title(""","Stopped following"" + profile_name.title(""",,,
-"I have stopped you following "" + profile_name.title(""","Got it. You have stopped following "" + profile_name.title(""","Stopped following"" + profile_name.title(""",,,
-"I have stopped you following "" + profile_name.title(""",Ok," you have just unfollowed "" + profile_name.title(""","Stopped following"" + profile_name.title(""",,
-"I have stopped you following "" + profile_name.title(""","Got it. You're not following "" + profile_name.title(""","Stopped following"" + profile_name.title(""",,,
-"I already helped you withdrawn ?"" + str(amount""","OK. You have unfollowed "" + profile_name.title(""","You have withdrawn ?"" + str(amount""",,,
-"I already helped you withdrawn ?"" + str(amount""","You have withdrawn ?"" + str(amount""","You have withdrawn ?"" + str(amount""",,,
-"I already helped you withdrawn ?"" + str(amount""",Ok," you have withdrawn ?"" + str(amount""","You have withdrawn ?"" + str(amount""",,
-"I already helped you withdrawn ?"" + str(amount""","Got it. You have withdrawn ?"" + str(amount""","You have withdrawn ?"" + str(amount""",,,
-"I already helped you withdrawn ?"" + str(amount""","Alright. You have withdrawn ?"" + str(amount""","You have withdrawn ?"" + str(amount""",,,
-That's an invalid amount," I'm afraid""""","Alright. You have withdrawn ?"" + str(amount""","That's not a valid amount""""",,
-"I don't think the amount looks right""""","You entered a invaild amount""""","I'm afraid that's not a valid amount""""",,,
-"I'm afraid that amount doesn't look right""""","You entered a invaild amount""""","That amount is not valid""""",,,
-"That amount doesn't look valid to me""""","You entered a invaild amount""""","That's an invalid amount""""",,,
-"I don't think that's a valid amount""""","You entered a incorrect amount""""","That's an invalid amount""""",,,
-"I don't think that's a right amount""""","You entered a incorrect amount""""","That's an invalid amount""""",,,
-"I think that's a incorrect amount""""","You entered a incorrect amount""""","That amount doesn't look valid""""",,,
-"I think that's a invaild amount""""","You entered a incorrect amount""""","That amount is not valid""""",,,
-"I'm afraid that's not a valid amount""""","You entered a incorrect amount""""","That's not a right amount!""""",,,
-"I'm afraid that's a invalid amount""""","The amount you entered doesn't look right""""","That's not a right amount""""",,,
-"Got it. I helped you stopped following everyone""""","The amount you entered doesn't look right""""","There is no one to unfollow""""",,,
-"Got it. I helped you stopped following everyone""""","You're not following any portfolio currently""""","There is no one to unfollow""""",,,
-"Got it. I helped you stopped following everyone""""","You are not following anyone at the moment""""","Every portfolio was unfollowed""""",,,
-"Got it. I helped you stopped following everyone""""","You're not following any portfolio currently""""","Every portfolio was unfollowed""""",,,
-"Got it. I helped you stopped following everyone""""","I believe you're not following any portfolio currently""""","Every portfolio was unfollowed""""",,,
-"Got it. I helped you stopped following everyone""""","There isn't anyone you can unfollow right now""""","Every portfolio was unfollowed""""",,,
-"Got it. You have stopped following everyone""""","You can't unfollow anyone at the moment""""","Every portfolio was unfollowed""""",,,
-"Got it. I helped you stopped following everyone""""","But you're not following anyone currently!""""","Every portfolio was unfollowed""""",,,
-"Got it. I helped you stopped following everyone""""","Got it. You have stopped following everyone""""","Every portfolio was unfollowed""""",,,
-Okay," you have now unfollowed everyone""""","You have unfollowed everyone""""","Every portfolio was unfollowed""""",,
-"Got it. I helped you stopped following everyone""""",Okay," you have now unfollowed everyone""""","Every portfolio was unfollowed""""",,
-"Got it. I helped you stopped following everyone""""","Alright. You have unfollowed everyone""""","Every portfolio was unfollowed""""",,,
-"Got it. I helped you stopped following everyone""""","Ok. You have just unfollowed every portfolio""""","Every portfolio was unfollowed""""",,,
-"Got it. I helped you stopped following everyone""""","You have unfollowed everyone""""","Every portfolio was unfollowed""""",,,
-"I believe you're not following any portfolio currently""""",Okay," you have now unfollowed everyone""""","Every portfolio was unfollowed""""",,
-"I believe you're not following any portfolio currently""""","You have unfollowed everyone""""","Every portfolio was unfollowed""""",,,
-"I believe you're not following any portfolio currently""""","Got it. You have stopped following everyone""""","Every portfolio was unfollowed""""",,,
-Sorry," I can't find that portfolio. please check if the name spelt correctly""""",Okay," you have now unfollowed everyone""""","No such portfolio found. Please check the spelling of the name''""",
-Sorry," I can't find that portfolio. please check if the name spelt correctly""""","No such portfolio been found.Have you spelt the name correctly? """"","No such portfolio found. Please check the spelling of the name''""",,
-random.choice(answers,"No such portfolio been found.Have you spelt the name correctly? """"",random.choice(answers,,,
-I'm sorry," I can't find that portfolio. Have you spelt the name right?""""","No such portfolio been found.Have you spelt the name correctly? """"","No such portfolio found. Please check the spelling of the name''""",,
-Sorry," I can't find that one. Have you spelt the name right?""""","No such portfolio been found.Have you spelt the name correctly? """"","No such portfolio found. Please check the spelling of the name''""",,
-random.choice(answers,,random.choice(answers,,,
-Sorry," I didn't quite catch that""""",random.choice(answers,"Please rephrase the request""""",,
-I'm sorry," I didn't quite get that""""",Sorry," could you rephrase that?""""","Please rephrase the request""""",
-Sorry," I'm afraid I didn't catch that""""","Could you rephrase that for me?""""","Please rephrase the request""""",,
-Sorry," I'm afraid I didn't catch that""""","Can you rephrase the request for me?""""","Please rephrase the request""""",,
+﻿first_person,second_person,passive
+I don't recommend following or unfollowing anyone at this moment,You might not want to follow or unfollow anyone just now,blank
+I wouldn't advise to follow or unfollow anyone just now,You might not want to follow or unfollow anyone at this moment,blank
+I don't think there is anyone else worth following or unfollowing at the moment,You might not find anyone else worth following or unfollowing at the moment,blank
+I would not follow or unfollow anyone else at the moment,You might not want to follow or unfollow anyone else at the moment,blank
+I don't think there is any other portfolio that is worth following or unfollowing this month,You might not find any other portfolio worth following or unfollowing this month,blank
+"At the moment, I would not make any alterations to your follow list","At the moment, you might not want to make any alterations to your follow list",blank
+I can't think of anyone else I should follow or unfollow at the moment,There doesn't seem to be anyone else you should follow or unfollow at the moment,blank
+I don't think there is anyone else I should start or stop following at the moment,It seems there isn't anyone else you should start or stop following at the moment,blank
+I can't think of anyone else to follow or unfollow,It appears you might not have anyone else to follow or unfollow,blank
+"At this point, I don't see any pressing need to follow or unfollow anyone","At this point, it doesn't seem necessary for you to follow or unfollow anyone",blank
+I would follow %(portfolio_name)s. I believe %(pronoun)s portfolio will increase by %(value)s%% next month,"You might consider following %(portfolio_name)s, as it seems %(pronoun)s portfolio could increase by %(value)s%% next month",blank
+I would consider to follow %(portfolio_name)s. I think %(pronoun)s portfolio will increase by %(value)s%% next month,"You might consider to start following %(portfolio_name)s's portfolio, the prediction shows a increase of %(value)s%% in %(pronoun)s portfolio",blank
+"I think %(portfolio_name)s's portfolio will increase by %(value)s%% next month, so I would follow %(him_her)s",You might consider to start following %(portfolio_name)s. The prediction shows %(pronoun)s portfolio increasing by %(value)s%% next month,blank
+I believe %(portfolio_name)s's portfolio will see an increase of %(value)s%% next month. I would start to follow %(him_her)s,"It might be a good idea for you to consider following %(portfolio_name)s, as it appears that %(him_her)s portfolio could see an increase of %(value)s%% next month",blank
+I predict a positive change of %(value)s%% in %(portfolio_name)s's portfolio next month. I think starting to follow %(him_her)s is a good choice,You might consider to start following %(portfolio_name)s. A positive change of %(value)s%% in %(him_her)s portfolio next month is predicted,blank
+I would following %(portfolio_name)s. I predict a growth of %(value)s%% in %(pronoun)s portfolio next month,"You might consider following %(portfolio_name)s, as it is predicted that %(pronoun)s portfolio could grow by %(value)s%% next month",blank
+I'd start following %(portfolio_name)s. I think %(pronoun)s portfolio will go up by %(value)s%%,"You might consider starting to follow %(portfolio_name)s, as it's predicted that %(pronoun)s portfolio will go up by %(value)s%%",blank
+I would start following %(portfolio_name)s. I believe %(pronoun)s portfolio will increase by %(value)s%% next month,You might want to start following %(portfolio_name)s as the prediction indicates that %(pronoun)s portfolio will increase by %(value)s%% next month,blank
+I would consider starting to follow %(portfolio_name)s. I think it will increase by %(value)s%% next month,You might consider following %(portfolio_name)s as it is predicted to increase by %(value)s%% next month,blank
+I predict a positive change of %(value)s%% in %(portfolio_name)s's portfolio. I'd start following %(him_her)s,"You might want to start following %(portfolio_name)s, as there seems to be a predicted positive change of %(value)s%% in %(him_her)s portfolio",blank
+I would stop follow %(portfolio_name)s. I believe %(pronoun)s portfolio will decrease by %(value)s%% next month,"You might want to stop following %(portfolio_name)s, as %(pronoun)s portfolio will decrease by %(value)s%% next month",blank
+I think %(portfolio_name)s's portfolio will decrease by %(value)s%% next month. I would stop following %(him_her)s,"You might want to consider stopping following %(portfolio_name)s's portfolio, as the prediction indicates it could decrease by %(value)s%% next month",blank
+I would unfollow %(portfolio_name)s. I predict %(pronoun)s portfolio will decrease by %(value)s%% next month,You might want to unfollow %(portfolio_name)s. The prediction shows%(him_her)s portfolio will decrease by %(value)s%% next month,blank
+I'd stop following %(portfolio_name)s. I predict a negative change of %(value)s%% in %(him_her)s portfolio next month,"You might want to stop following %(portfolio_name)s's portfolio, it will see a negative change of %(value)s%% next month",blank
+I would stop following %(portfolio_name)s. I think %(pronoun)s portfolio will decrease by %(value)s%% next month,You might want to consider stopping following %(portfolio_name)s. A decrease of %(value)s%% in %(him_her)s portfolio next month is predicted,blank
+I think it's time to stop following %(portfolio_name)s. I believe %(pronoun)s portfolio will decrease by %(value)s%%,You might consider stopping following %(portfolio_name)s as a prediction suggests a decrease of %(value)s%% in %(pronoun)s portfolio next month,blank
+I predict %(portfolio_name)s's portfolio will decrease by %(value)s%% next month. I'd consider stopping following %(him_her)s,"You might want to stop following %(portfolio_name)s. It's predicted that %(pronoun)s portfolio will decrease by %(value)s%%",blank
+My predictions indicate that %(portfolio_name)s's portfolio will decrease by %(value)s%%. I would end my following of %(him_her)s,"You might want to consider stopping following %(portfolio_name)s, as the prediction suggests that %(pronoun)s portfolio may decrease by %(value)s%% next month",blank
+I predict the value of %(portfolio_name)s's portfolio will decrease by %(value)s%% next month. I would unfollow %(him_her)s,"You might consider unfollowing %(portfolio_name)s, as it is predicted to decrease by %(value)s%% next month",blank
+I would unfollow %(portfolio_name)s. I believe %(pronoun)s portfolio will decrease by %(value)s%%,"You might consider stopping following %(portfolio_name)s, as a decrease of %(value)s%% in %(him_her)s portfolio is predicted next month",blank
+I am following everyone now!,You are following everyone now!,blank
+I'm currently following everyone!,You are currently following everyone!,blank
+"At the moment, I'm following all!","At the moment, you are following all!",blank
+I'm following everyone at the moment!,You are following everyone now!,blank
+"As of now, I'm following everyone!","As of now, you are following everyone!",blank
+I'm afraid there's no one left to follow!,There's no one left for you to follow!,blank
+I believe there's no one left to follow!,You might find there's no one left to follow,blank
+I'm sure there's no portfolio left to follow!,There's no portfolio left for you to follow!,blank
+I'm following everyone already!,You are following everyone already!,blank
+I'm already following everyone!,You're already following everyone!,blank
+I would not follow anyone right now,You might consider not following anyone right now,blank
+I can't think of any other portfolio I would follow this month,You might find there are no other portfolios you would consider following this month,blank
+"For now, I'm not going to follow anyone",You might want to consider not following anyone,blank
+I believe no one else is worth following for now,You might feel that no one else is worth following for now,blank
+I don't think I should follow anyone else this month,You might consider not following anyone else this month,blank
+I'd advise against following anyone currently,You might want to consider not following anyone currently,blank
+I don't think there is anyone else I would start following for now,There is no one else you might want to start following at the moment,blank
+I wouldn't start following anyone else right now,You might not want to start following anyone else right now,blank
+I wouldn't start following any other portfolio this month,You might not want to start following any other portfolio this month,blank
+I am not following any portfolios right now,You are not following anyone at the moment,blank
+I'm not following any portfolios at the moment,You're not following any portfolios at the moment,blank
+I haven't been following any portfolios,You haven't been following any portfolios,blank
+I'm not following any portfolio currently,You're not following any portfolio currently,blank
+I'm not following anyone for now,You're not following anyone for now,blank
+I am not following any portfolios now,You are not following any portfolios now,blank
+I'm not following any anyone right now,You're not following anyone right now,blank
+I am not keeping tabs on any portfolios now,You are not keeping tabs on any portfolios now,blank
+I would not stop following anyone right now,You might not want to stop following anyone right now,blank
+I'd advise against unfollowing anyone currently,You might want to consider keeping your current follow list for now,blank
+I am not planning to unfollow anyone right now,You might not want to unfollow anyone at the moment,blank
+I wouldn't unfollow anyone at the moment,You might not want to unfollow anyone right now,blank
+I wouldn't stop following any portfolio for now,You might not want to unfollow any portfolio for now,blank
+I wouldn't unfollow anyone at the moment,You might not consider unfollowing anyone at the moment,blank
+I would not stop following anyone right now,You might want to keep your current follow list,blank
+I would keep following everyone at the moment,You might want to keep following everyone at the moment,blank
+I would keep following everyone right now,You might want to consider keeping everyone followed right now,blank
+How much should I invest?,How much would you like to invest?,blank
+Got it. How much should I put in?,Got it. How much would you like to put in?,blank
+"Okay, what amount should I invest?","Okay, what amount would you like to invest?",blank
+Great. How much should I invest?,Great. How much would you like to invest?,blank
+Got it. How much can I invest?,Got it. How much do you want to invest?,blank
+Ok. How much should I invest in this portfolio?,Ok. How much would you like to invest in this portfolio?,blank
+Alright. How much should I allocate to this portfolio?,Alright. How much would you like to allocate to this portfolio?,blank
+Got it. What amount should I invest in this portfolio?,Got it. What amount would you like to invest in this portfolio?,blank
+"Okay, what amount should I invest in this portfolio?","Okay, what amount would you like to invest in this portfolio?",blank
+Great. How much should I invest in this portfolio?,Great. How much would you like to invest in this portfolio?,blank
+How much should I withdraw?,How much would you like to withdraw?,blank
+Got it. How much should I withdraw?,Got it. How much would you like to withdraw?,blank
+"Okay, what amount should I withdraw?","Okay, what amount would you like to withdraw?",blank
+Great. How much should I withdraw?,Great. How much would you like to withdraw?,blank
+Got it. How much can I withdraw?,Got it. How much do you want to withdraw?,blank
+Ok. How much should I withdraw from this portfolio?,Ok. How much would you like to withdraw from this portfolio?,blank
+Alright. How much money should I pull out?,Alright. How much money would you like to pull out?,blank
+Got it. What amount should I withdraw from this portfolio?,Got it. What amount would you like to withdraw from this portfolio?,blank
+I see. What amount should should I withdraw?,I see. What amount would you like to withdraw?,blank
+Okay. What amount should I withdraw from this portfolio?,Okay. What amount would you like to withdraw from this portfolio?,blank
+"Sorry, I can't find that portfolio. Could you please check the spelling of the name for me?","Sorry, the portfolio was not found. Have you spelt the name correctly?",blank
+"Sorry, I'm having trouble finding that portfolio. Have you spelt the name correctly?","Sorry, the portfolio was not found. Have you spelt the name correctly?",blank
+"Apologies, I can't find that portfolio. Have you spelt the name right?","Apologies, the portfolio could not be found. Have you spelt the name right?",blank
+"I'm sorry, I can't find that portfolio. Have you spelt it correctly?",The portfolio has not been found. Have you spelt it correctly?,blank
+"Apologies, I can't seem to find that portfolio. Have you spelt the name right?","Apologies, the portfolio seems to be missing. Have you spelt the name right?",blank
+"Sorry, I can't find that one. Have you spelt the name right?","Sorry, that one was not found. Have you spelt the name right?",blank
+"Sorry, have you spelt the name right? I can't find that portfolio","Sorry, the portfolio was not found. Have you spelt the name right?",blank
+"My bad. I can't find that portfolio, have you spelt it right?",This portfolio could not be found. Have you spelt it right?,blank
+"Hmm, I can't find that portfolio. Could you check if the name is spelled correctly?","Hmm, the portfolio was not found. Could you check if the name is spelt correctly?",blank
+"Unfortunately, I can't find that portfolio. Have you spelt the name correctly?","Unfortunately, the portfolio could not be located. Have you spelt the name correctly?",blank
+My current balance is not sufficient,Your current balance is not sufficient,blank
+My balance is not enough right now,Your balance is not enough right now,blank
+"At the moment, my balance is insufficient","At the moment, your balance is insufficient",blank
+I don't have enough in my current balance,You don't have enough in your current balance,blank
+My balance at present does not cover the amount,Your balance at present does not cover the amount,blank
+I don't think my available balance is enough,Your available balance is not enough,blank
+That amount is more than my available balance,That amount is more than your available balance,blank
+I don't think my balance is sufficient,Your remaining balance seems insufficient,blank
+That amount is too large for my available balance,That amount is too large for your available balance,blank
+"Well, my existing balance is not enough","Well, your existing balance is not enough",blank
+I started following %(profile_name)s,You are now following %(profile_name)s,blank
+I've started to follow %(profile_name)s,You've started to follow %(profile_name)s,blank
+"Okay, I'm now following %(profile_name)s","Okay, you're now following %(profile_name)s",blank
+I have invested in %(profile_name)s 's portfolio,You have invested in %(profile_name)s's portfolio,blank
+I am now following %(profile_name)s,You are now following %(profile_name)s,blank
+Alright. I've added %(profile_name)s to my follow list,Alright. You've added %(profile_name)s to your follow list,blank
+Cool. I am now following %(profile_name)s,Cool. You are now following %(profile_name)s,blank
+Okay. I've put %(profile_name)s on my follow list,Okay. You've put %(profile_name)s on your follow list,blank
+"Alright, I have started following %(profile_name)s","Alright, you have started following %(profile_name)s",blank
+Got it. I began following %(profile_name)s,Got it. You're now following %(profile_name)s,blank
+I think that's not a valid amount,You might find your amount isn't valid,blank
+I'm afraid that's not a valid amount,You might notice your message is not a valid amount,blank
+I don't think that's a valid amount,You might realize that's not a valid amount,blank
+I reckon that's not a valid amount,You might see your response as an invalid amount,blank
+I don't believe that's a valid amount,You might think your amount isn't valid,blank
+I'm afraid that amount doesn't look right,You might feel the amount you provided doesn't seem right,blank
+I need to say that amount isn't valid,You might find that your amount isn't valid,blank
+I believe that amount isn't valid,You might find that the amount you entered isn't valid,blank
+I feel that amount might not be valid,You might observe your amount seems invalid,blank
+I don't think that's a right amount,You might find your message is not a right amount,blank
+I stopped following %(profile_name)s,You have stopped following %(profile_name)s,blank
+I ended my follow of %(profile_name)s,You have ended your follow of %(profile_name)s,blank
+Alright. I have now unfollowed %(profile_name)s,Alright. You have now unfollowed %(profile_name)s,blank
+I have unfollowed %(profile_name)s,You have unfollowed %(profile_name)s,blank
+Ok. I'm not following %(profile_name)s anymore,Ok. You're not following %(profile_name)s anymore,blank
+Got it. I have now stopped following %(profile_name)s,Got it. You have now stopped following %(profile_name)s,blank
+Alright. I'm not following %(profile_name)s anymore,Alright. You're not following %(profile_name)s anymore,blank
+Got it. I've removed %(profile_name)s from my follow list,Got it. You've removed %(profile_name)s from your follow list,blank
+Okay. I no longer follow %(profile_name)s,Okay. You no longer follow %(profile_name)s,blank
+Okay. I have unfollowed %(profile_name)s now,Okay. You have unfollowed %(profile_name)s now,blank
+I invested another %(value)s in %(profile_name)s,You have invested another %(value)s in %(profile_name)s,blank
+Okay. I've put an additional %(value)s into %(profile_name)s,Okay. You've put an additional %(value)s into %(profile_name)s,blank
+Alright. I have invested another %(value)s into %(profile_name)s 's portfolio,Alright. You have invested another £%(value)s into %(profile_name)s's portfolio,blank
+Got it. I've allocated another %(value)s towards %(profile_name)s,Got it. You've allocated another %(value)s towards %(profile_name)s,blank
+Ok. I have added %(value)s into %(profile_name)s 's portfolio,Ok. You have added £%(value)s into %(profile_name)s's portfolio,blank
+Got it. I have now invested another %(value)s into %(profile_name)s,Got it. You have now invested another £%(value)s into %(profile_name)s,blank
+"Ok, I have put another %(value)s into %(profile_name)s","Ok, you have put another £%(value)s into %(profile_name)s",blank
+Alright. I've further invested %(value)s in %(profile_name)s,Alright. You've further invested %(value)s in %(profile_name)s,blank
+I have increased my investment in %(profile_name)s by %(value)s,You have increased your investment in %(profile_name)s by £%(value)s,blank
+OK. I have invested %(value)s more in %(profile_name)s 's portfolio,OK. You have invested £%(value)s more in %(profile_name)s's portfolio,blank
+I withdrew %(value)s from %(profile_name)s,You withdrew %(value)s from %(profile_name)s,blank
+I have withdrawn %(value)s from %(profile_name)s,You have withdrawn £%(value)s from %(profile_name)s,blank
+"Ok, I have withdrawn %(value)s from %(profile_name)s's portfolio","Ok, you have withdrawn £%(value)s from %(profile_name)s's portfolio",blank
+Got it. I've taken out %(value)s from %(profile_name)s,Got it. You've taken out £%(value)s from %(profile_name)s,blank
+Alright. I've withdrawn %(value)s from %(profile_name)s's portfolio,Alright. You've withdrawn £%(value)s from %(profile_name)s's portfolio,blank
+I took %(value)s out of %(profile_name)s's portfolio,You took £%(value)s out of %(profile_name)s's portfolio,blank
+I got it. A total of %(value)s was withdrawn from %(profile_name)s's portfolio,Got it. A total of £%(value)s was withdrawn from %(profile_name)s's portfolio,blank
+"Okay, I have just withdrawn %(value)s from %(profile_name)s","Okay, you have just withdrawn £%(value)s from %(profile_name)s",blank
+Understood. I have just withdrawn %(value)s from %(profile_name)s,Understood. You have just withdrawn £%(value)s from %(profile_name)s,blank
+I got it. Withdrew %(value)s from %(profile_name)s,Got it. You withdrew £%(value)s from %(profile_name)s,blank
+I stopped following everyone,You stopped following everyone,blank
+I have unfollowed everyone,You have unfollowed everyone,blank
+Got it. I have stopped following everyone,Got it. You have stopped following everyone,blank
+"Okay, I have now unfollowed everyone","Okay, you have now unfollowed everyone",blank
+Alright. I have unfollowed everyone,Alright. You have unfollowed everyone,blank
+Ok. I've just unfollowed every portfolio,Ok. You've just unfollowed every portfolio,blank
+I've removed everyone from my follow list,You've removed everyone from your follow list,blank
+Got it. I have unfollowed every portfolio,Got it. You have unfollowed every portfolio,blank
+OK. I have stopped following every portfolio,OK. You have stopped following every portfolio,blank
+Alright. I am no longer following anyone,Alright. You are no longer following anyone,blank
+"Sorry, I didn't understand that, or it's something I cannot help with","Sorry, you might need to rephrase that, or it might be something that is not supported by the chatbot",blank
+"Sorry, that was unclear to me, or it's outside my scope of assistance","Sorry, you might need to rephrase that, or it's something that is not supported by the chatbot",blank
+"I'm sorry, I didn't quite get that, or it is something I cannot help with","Apologies, you might need to clarify that, or it might be beyond what chatbot can assist with",blank
+"Sorry, I'm afraid I didn't catch that, or it is something I cannot help with","Sorry, you might need to explain that again, or it might be something that is not supported by the chatbot",blank
+"I'm sorry, that's not something I understood, or it is something I cannot help with. Could you rephrase that please?","Sorry, that might be something that the chatbot can help with. Could you please rephrase that?",blank
+"Apologies, I don't understand, or it's not something I can provide help with","Apologies, that didn't make sense. It might be beyond what this chatbot can assist with",blank
+"I'm sorry, that didn't make sense to me, or it's something beyond my help","Sorry, that didn't make sense. Could it be outside what chatbot can help with?",blank
+"Hmm, not sure about that, or it is something I cannot help with. Could you rephrase?","Hmm, could you try rephrasing? Or that might be something that the chatbot can help with",blank
+"I'm not sure I understand, or it is something I cannot help with. Can you rephrase that?","Sorry, can you rephrase it please? Note that it might be beyond what chatbot can assist with",blank
+"Please rephrase that. I'm not sure I understand, or it is something I cannot help with","Please rephrase that, or it might be something that is not supported by the chatbot",blank
+"Sorry, I'm not following that portfolio","Sorry, you're not following that portfolio",blank
+"Sorry, I think I'm not following that portfolio now","Sorry, you're not following that portfolio now",blank
+"Apologies, I am not following that portfolio","Apologies, you're not following that portfolio",blank
+I'm sorry to say that I do not follow that portfolio at the moment,"Apologies, you're not following that portfolio at the moment",blank
+"Sorry, that portfolio isn't one I'm following","Sorry, that portfolio isn't one you're following",blank
+"Sorry, I don't have that portfolio on my follow list","Sorry, you don't have that portfolio on your follow list",blank
+"Apologies, I don't have that portfolio on my follow list","Apologies, you don't have that portfolio on your follow list",blank
+"Apologies, I believe I don't have that portfolio on my follow list","Apologies, you don't have that portfolio on your follow list now",blank
+"Sorry, I do not follow that portfolio","Sorry, you does not follow that portfolio",blank
+"Apologies, I don't have that portfolio on my follow list","Apologies, you don't have that portfolio on your follow list",blank
+I'm already following that portfolio,You are already following that portfolio,blank
+I think I'm already following that portfolio,You seem to be already following that portfolio,blank
+I already follow that portfolio,You already follow that portfolio,blank
+I think that portfolio is already on my follow list,It seems like this portfolio is already on your follow list,blank
+I believe that portfolio is already among those I follow,It seems like that portfolio is already on your follow list now,blank
+That portfolio is already on my follow list,That portfolio is already on your follow list at the moment,blank
+I believe I'm already tracking that portfolio,It seems you are already tracking that portfolio,blank
+It seems I'm already following that portfolio,It seems you are already following that portfolio,blank
+It seems that portfolio is already on my follow list,It seems that portfolio is already on your follow list,blank
+I believe I'm already following that portfolio,It seems like you're already following that portfolio now,blank
+Hey! How are you?,Hey! How are you?,blank
+Great!,Great!,blank
+Bye!,Bye!,blank
+Ok,Ok,blank
+Okay,Okay,blank
+Yep,Yep,blank
+Sure,Sure,blank
+Alright,Alright,blank
+Got it,Got it,blank
+Definitely,Definitely,blank
+Absolutely,Absolutely,blank
+Of course,Of course,blank
+Yes,Yes,blank
+No problem!,No problem!,blank
+Cool,Cool,blank
+"I can follow or unfollow portfolios, add or withdraw amounts and provide advice like: ""Who should I follow?"", ""Who should I unfollow?"", ""Invest 100 on Aricka"" or ""withdraw from alois""","You can tell me to follow or unfollow portfolios, add or withdraw amounts and ask me things like:  ""Who should I follow?"", ""Who should I unfollow?"", ""Invest 100 on Aricka"" or ""withdraw from alois""",blank
+"I want to remind you that you can switch to Image Tagging by clicking the ""Task"" button in the top right corner","Remember, you can switch to Image Tagging by clicking the ""Task"" button in the top right corner",blank
+I don't know much about the newsfeed,Your chatbot does not have information about the newsfeed,blank
+I'm not familiar with the newsfeed,Your chatbot is not familiar with the newsfeed,blank
+I'm not well-versed in the newsfeed,Your chatbot is not well-versed in the newsfeed,blank
+I know very little about the newsfeed,Your chatbot knows very little about the newsfeed,blank
+I would say I don't know much about the newsfeed,Your chatbot does not know much about the newsfeed,blank
+I need to say I don't know much about the newsfeed,Your chatbot doesn't know about other sources of information,blank
+I would say I'm not well-versed about the newsfeed,Your chatbot isn't familiar with other sources of information,blank
+I actually know very little about the newsfeed,Your chatbot knows very little about other sources of information,blank
+I actually don't know much about the newsfeed,Your chatbot doesn't know much about other sources of information,blank
+I have a limited understanding of the newsfeed,Your chatbot has a limited understanding of the newsfeed,blank
+"Sorry, my predictions are meant to be as accurate as possible, but my responses might contain errors","Sorry, predictions and responses are meant to be as accurate as possible, but might contain errors",blank
+"Sorry, I try to make my predictions as accurate as possible, but sometimes my responses could be erroneous","Sorry, the chatbot tries to make my predictions as accurate as possible, but sometimes its responses could be erroneous",blank
+"Apologies, my goal is to provide accurate predictions, however my responses could be inaccurate","Apologies, your chatbot's goal is to provide accurate predictions, however its responses could be inaccurate",blank
+"I'm sorry, my predictions are intended to be as correct as possible, but my response may contain errors","Sorry, your chatbot's responses are intended to be as correct as possible, but may contain errors",blank
+"I'm sorry; although I aim for high accuracy in my predictions, errors can still appear in my responses","Sorry; although your chatbot aims for high accuracy in predictions, errors can still appear",blank
+"Apologies, although I aim for high accuracy in my predictions, errors can still appear in my responses","Apologies, although your chatbot aims for high accuracy in predictions, errors can still appear in responses",blank
+"Apologies, although I aim for high accuracy in my predictions, errors can still appear in my responses","Apologies, although your chatbot aims for high accuracy in predictions, errors can still appear",blank
+"Sorry, I try to make my predictions as accurate as possible, but sometimes my responses could be inaccurate","Sorry, your chatbot tries to make predictions as accurate as possible, but responses could be inaccurate",blank
+"Sorry, my predictions are meant to be as accurate as possible, but might contain errors"," your chatbot tries to make responses as accurate as possible, but prediction could be inaccurate",blank
+"Apologies, my predictions are meant to be as accurate as possible, but my responses might contain errors","Apologies, your chatbot tries to make predictions as accurate as possible, but responses might still contain errors",blank
+"Sorry, I can only follow one portfolio at a time (one message for each portfolio)","Sorry, you can only follow one portfolio at a time (one message for each portfolio)",blank
+"I'm sorry, I can manage following only one portfolio at a time (one message for each)","Sorry, you can manage following only one portfolio at a time (one message for each)",blank
+"Apologies, but I'm only able to follow one portfolio at a time (one message for each)","Apologies, your chatbot is only able to follow one portfolio at a time (one message for each)",blank
+"Sorry, my capacity allows me to follow just one portfolio at a time (one message for each portfolio)","Sorry, your chatbot's capacity only allows you to follow one portfolio at a time (one message for each portfolio)",blank
+"I'm sorry, but I can handle only one portfolio at a time (one message for each portfolio)","Sorry, but your chatbot can handle only one portfolio at a time (one message for each portfolio)",blank
+"Apologies, but I can handle only one portfolio at a time (one message for each portfolio)","Apologies, but your chatbot can handle only one portfolio at a time (one message for each portfolio)",blank
+"Apologies, my capacity allows me to follow just one portfolio at a time (one message for each portfolio)","Apologies, your chatbot's capacity only allows you to follow one portfolio at a time (one message for each portfolio)",blank
+"Unfortunately, I can only follow one portfolio at a time (one message for each portfolio)","Unfortunately, you can only follow one portfolio at a time (one message for each portfolio)",blank
+"Apologies, I can only follow one portfolio at a time (one message for each portfolio)","Apologies, you can only follow one portfolio at a time (one message for each portfolio)",blank
+"Sorry, my capacity allows me to follow just one portfolio at a time (one message for each portfolio)","Sorry, your chatbot's capacity only allows you to follow one portfolio at a time (one message for each portfolio)",blank
+I believe %(profile_name)s's portfolio will %(increase_or_decrease)s next month,You should know that %(profile_name)s's portfolio is expected to %(increase_or_decrease)s next month,blank
+I want to confirm: shall I unfollow everyone?,Are you sure you want to unfollow everyone?,blank
+I'd like to confirm: should I unfollow everyone?,Do you truly wish to unfollow everyone?,blank
+I need to check: shall I unfollow everyone?,Are you certain you want to unfollow everyone?,blank
+Just double-checking: should I unfollow everyone now?,Are you sure you want to unfollow everyone now?,blank
+I would like to verify: shall I unfollow everyone?,Are you certain you want to unfollow everyone at the moment?,blank
+Just double-checking: shall I stop following everyone?,Do you really want to unfollow everyone?,blank
+Just double-checking: should I unfollow everyone?,Do you really want to stop following everyone?,blank
+I'd like to confirm: should I unfollow everyone?,Are you sure you want to stop following everyone?,blank
+I want to confirm: shall I stop following everyone?,Do you truly wish to stop following everyone?,blank
+I want to check: shall I unfollow everyone?,Are you certain you want to unfollow everyone right now?,blank
