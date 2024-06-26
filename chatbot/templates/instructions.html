@@ -28,8 +28,17 @@
 
             <!-- with incentive instructions -->
             <p>The researcher may <strong>reject</strong> the compensation if the participant does not follow the instruction.</p>
+
+            {% if first %}
+            <!-- first person -->
             <iframe src="https://www.youtube.com/embed/YDFR0GKOpQQ?cc_load_policy=1" width="853" height="480" frameborder="0" allowfullscreen>
             </iframe>
+            {% else %}
+            <!-- second person -->
+            <iframe src="https://www.youtube.com/embed/vmkK-T74Ka4?cc_load_policy=1" width="853" height="480" frameborder="0" allowfullscreen>
+            </iframe>
+            {% endif %}
+            
             <!-- -->
 
             <!-- no incentive instructions

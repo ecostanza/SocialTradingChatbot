@@ -132,9 +132,24 @@ def information_page(request):
 def consent_page(request):
     return render(request, 'consent.html')
 
-
+@login_required
 def instructions_page(request):
-    return render(request, 'instructions.html')
+    participant = Participant.objects.get(user=request.user)
+    condition = participant.condition.name
+    voice = 'invalid'
+    if '1st' in condition:
+        voice = '1st'            
+    elif '2nd' in condition:
+        voice = '2nd'
+    elif 'passive' in condition:
+        voice = 'passive'
+
+    context = {
+        'voice': voice,
+        'first': '1st' in condition,
+        'second': '2nd' in condition
+    }
+    return render(request, 'instructions.html', context)
 
 
 @login_required
