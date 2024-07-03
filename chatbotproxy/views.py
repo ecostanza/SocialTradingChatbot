@@ -35,8 +35,12 @@ def webhook_view(request):
         message = Message(user=user, month=month, from_participant=True, from_button=from_button, text=text)
         message.save()
 
-    proxy_response = requests.post(url, data=json_data)
-    # print('status code:', proxy_response.status_code)
-    # print('content:', proxy_response.content)
+    try:
+        proxy_response = requests.post(url, data=json_data)
+        # print('status code:', proxy_response.status_code)
+        # print('content:', proxy_response.content)
 
-    return HttpResponse(proxy_response.content, content_type='application/json')
+        return HttpResponse(proxy_response.content, content_type='application/json')
+    except requests.exceptions.RequestException as e:
+        print('error:', e)
+        return HttpResponse(status=500, content='The chatbot is not available. Please try again later.')
