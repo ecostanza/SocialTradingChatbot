@@ -105,19 +105,19 @@ nlu:
     - which profile should I invest on?
     - which profile should I invest in?
     - which profile should I invest with?
-    - which portfolio should I follow
+    - which portfolio should I follow?
     - which portfolio should I invest on?
     - which portfolio should I invest in?
     - which portfolio should I invest like?
-    - which profile should i start following
-    - which portfolio should i start following
+    - which profile should i start following?
+    - which portfolio should i start following?
     - should i follow someone?
     - should i invest on someone?
     - should i invest in someone?
-    - do you think I should follow anyone
+    - do you think I should follow anyone?
     - should I follow some portfolios?
-    - should I start following anyone
-    - is there anyone I should follow
+    - should I start following anyone?
+    - is there anyone I should follow?
     - is there anyone I should invest on?
     - is there anyone I should invest in?
     - is there anyone I should invest with?
@@ -137,19 +137,19 @@ nlu:
     - who should I stop following?
     - who should I divest from?
     - who should I divest?
-    - which profile should I unfollow
-    - which profile should I divest from
+    - which profile should I unfollow?
+    - which profile should I divest from?
     - which portfolio should i unfollow?
-    - which portfolio should I divest from
-    - which profile should I stop following
+    - which portfolio should I divest from?
+    - which profile should I stop following?
     - which portfolio should i stop following?
     - should I unfollow anyone?
     - should I divest from anyone?
-    - do you think I should unfollow someone
+    - do you think I should unfollow someone?
     - do you think I should stop following anyone?
-    - should I unfollow someone
+    - should I unfollow someone?
     - should i stop following someone?
-    - is there anyone i should unfollow
+    - is there anyone i should unfollow?
     - is there anyone I should stop following?
     - which portfolio will fall?
     - which profile will fall?
@@ -162,25 +162,22 @@ nlu:
 
 - intent: should_i_follow
   examples: |
-    - should i follow
     - should i follow [Aricka Lewis](name)?
     - should I follow [ralph axelsen](name)
-    - should i start following
     - should i start following [William Shore](name)?
-    - should I start following [andrzej kraviec](name)
+    - should I start following [andrzej kraviec](name)?
     - should I keep following [Masami Nishimura](name)?
-    - should i keep following [alois](name)
-    - would you follow
+    - should i keep following [alois](name)?
     - would you follow [Florianne Paget](name)?
-    - do you think I should follow [paulinho simoes](name)
+    - do you think I should follow [paulinho simoes](name)?
     - do you think I should keep following [Kanya Bunnag](name)?
     - do I want to follow [william](name)?
     - do I want to keep following [Paulinho Simoes](name)?
     - do you think following [alois reiter](name) is a good idea?
-    - would you recommend following [Andrzej](name)
+    - would you recommend following [Andrzej](name)?
     - will [benjamin parker](name)'s portfolio increase?
-    - do you think [Kanya](name) will increase
-    - will [alois reiter](name)'s value increase next month
+    - do you think [Kanya](name) will increase?
+    - will [alois reiter](name)'s value increase next month?
     - is [Paulinho Simoes](name) going to increase?
 
 - intent: follow
@@ -245,29 +242,30 @@ nlu:
     - go for it anyway
     - let's do it
     - let's try
+    - go for it
+    - sure, do it
+    - sure, go for it
+    - sure, let's do it
+    - sure, let's try
+    
 
 - intent: should_i_add_amount
   examples: |
-    - should i add
-    - should i put
     - should i add [50](value) to [aricka lewis](name)?
-    - should I add [124.54](value) on [ralph axelsen](name)
-    - should i increase
+    - should I add [124.54](value) on [ralph axelsen](name)?
     - should i add [20](value) to [florianne](name)?
     - should I increase [Kanya](name)?
     - should i increase [william shore](name) by [5](value)?
-    - should I increase [Andrzej kraviec](name) by another [75](value)
+    - should I increase [Andrzej kraviec](name) by another [75](value)?
     - should I put [34.59](value) on [masami nishimura](name)?
-    - should i put money on [alois](name)
-    - would you put
-    - would you increase
+    - should i put money on [alois](name)?
     - would you add to [florianne paget](name)?
-    - do you think I should put more money on [paulinho](name)
+    - do you think I should put more money on [paulinho](name)?
     - do you think I should increase [kanya bunnag](name) by [159](value)?
     - do I want to add [5](value) to [William](name)?
     - do I want to invest in [paulinho](name)?
     - do you think investing [315.00](value) in [alois reiter](name) is a good idea?
-    - would you recommend adding to [andrzej](name)
+    - would you recommend adding to [andrzej](name)?
 
 - intent: add_amount
   examples: |
@@ -358,25 +356,20 @@ nlu:
 
 - intent: should_i_withdraw_amount
   examples: |
-    - should i withdraw
-    - should i withdraw
     - should i withdraw [50](value) from [aricka lewis](name)?
-    - should I withdraw [124.54](value) from [Ralph Axelsen](name)
-    - should i decrease
+    - should I withdraw [124.54](value) from [Ralph Axelsen](name)?
     - should I decrease [kanya](name)?
     - should i decrease [William Shore](name) by [5](value)?
-    - should I decrease [andrzej kraviec](name) by another [75](value)
+    - should I decrease [andrzej kraviec](name) by another [75](value)?
     - should I get [34.59](value) from [masami nishimura](name)?
-    - should i get money from [Alois](name)
-    - would you get
-    - would you withdraw
+    - should i get money from [Alois](name)?
     - would you withdraw from [florianne paget](name)?
-    - do you think I should withdraw more money from [Paulinho Simoes](name)
+    - do you think I should withdraw more money from [Paulinho Simoes](name)?
     - do you think I should decrease [Kanya Bunnag](name) by [159](value)?
     - do I want to withdraw [5](value) from [william](name)?
     - do I want to decrease [paulinho simoes](name)?
     - do you think withdrawing [315.00](value) from [Alois Reiter](name) is a good idea?
-    - would you recommend getting from [andrzej](name)
+    - would you recommend getting from [andrzej](name)?
 
 - intent: withdraw_amount
   examples: |
@@ -482,26 +475,23 @@ nlu:
 
 - intent: should_i_unfollow
   examples: |
-    - should i unfollow
     - should i unfollow [aricka lewis](name)?
-    - should I unfollow [Ralph Axelsen](name)
-    - should i stop following
+    - should I unfollow [Ralph Axelsen](name)?
     - should i stop following [william shore](name)?
-    - should I stop following [Andrzej Kraviec](name)
+    - should I stop following [Andrzej Kraviec](name)?
     - should I stop following [masami nishimura](name)?
-    - should i stop following [alois](name)
-    - would you unfollow
+    - should i stop following [alois](name)?
     - would you unfollow [Florianne Paget](name)?
-    - do you think I should unfollow [paulinho](name)
+    - do you think I should unfollow [paulinho](name)?
     - do you think I should stop following [Kanya Bunnag](name)?
     - do I want to unfollow [william](name)?
     - do I want to stop following [Paulinho Simoes](name)?
     - do you think unfollowing [alois reiter](name) is a good idea?
-    - would you recommend unfollowing [Andrzej](name)
+    - would you recommend unfollowing [Andrzej](name)?
     - will [benjamin parker](name)'s portfolio decrease?
     - will [florianne](name)'s portfolio drop?
-    - do you think [william](name) will drop
-    - will [Alois Reiter](name)'s value decrease next month
+    - do you think [william](name) will drop?
+    - will [Alois Reiter](name)'s value decrease next month?
     - is [paulinho simoes](name) going to decrease?
 
 
