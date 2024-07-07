@@ -38,7 +38,12 @@ class MessageResource(resources.ModelResource):
     class Meta:
         model = Message
         fields = ['user', 'month', 'from_participant',
-                    'from_button', 'created_at', 'text', 'user__username', 'user__participant__condition__name']
+                    'from_button', 'created_at', 'text', 'user__username']
+
+    def get_queryset(self):
+        qs = self._meta.model.objects.all()
+        qs = qs.select_related('user') #, 'user__participant', 'user__participant__condition')
+        return qs
 
 
 class MessageAdmin(ExportActionModelAdmin):
