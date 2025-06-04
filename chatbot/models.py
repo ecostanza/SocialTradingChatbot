@@ -5,6 +5,44 @@ from django.db.models import Sum
 from decimal import Decimal #, getcontext
 # getcontext().prec = 3
 
+class SingletonModel(models.Model):
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        pass
+
+    @classmethod
+    def load(cls):
+        obj, _ = cls.objects.get_or_create(pk=1)
+        return obj
+
+
+class StudySettings(SingletonModel):
+    prolific_study_id = models.CharField(
+        max_length=128,
+        verbose_name="only the *last* part of the completion URL",
+        default=''
+    )
+    # task_reward = models.DecimalField(decimal_places=2, max_digits=4)
+    # task_penalty = models.DecimalField(decimal_places=2, max_digits=4)
+    # gpt_call_interval = models.IntegerField(
+    #     default=5, verbose_name="Time in seconds between GPT API calls")
+
+    system_prompt = models.TextField(null=True, blank=True)
+    user_prompt = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return "Study Configuration"
+
+    class Meta:
+        verbose_name = "Study Configuration"
+        verbose_name_plural = "Study Configuration"
+
 class Condition(models.Model):
     active = models.BooleanField(default=True, null=False)
     name = models.CharField(max_length=128, null=False)
@@ -160,6 +198,9 @@ class Message(models.Model):
     from_button = models.BooleanField(null=False, default=False)
     text = models.TextField(null=False)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
+
+    portfolio_name = models.CharField(max_length=128, null=True, blank=True)
+    portfolio_amount = models.FloatField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Message'

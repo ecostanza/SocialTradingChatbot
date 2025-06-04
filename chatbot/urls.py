@@ -22,6 +22,7 @@ from .views import (
     questionnaire_view,
     getNewsfeedButtonClick,
     getBotButtonClick,
+    llm_chatbot_view,
     )
 
 urlpatterns = [
@@ -49,5 +50,8 @@ urlpatterns = [
 
     path(r'questions/', views.all_questions, name='all_questions'),
     path(r'answers/', views.answers, name='answers'),
+
+    # 
+    path(r'llm_chatbot_proxy/', llm_chatbot_view, name='llm_chatbot_proxy'),
 
 ]

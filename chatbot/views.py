@@ -3,6 +3,7 @@ import json
 from random import gauss, randrange, randint, choice as random_choice
 import decimal
 import os
+from string import Template
 
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -19,6 +20,11 @@ from django.db import IntegrityError
 from django.db.models import Count, Q, Max
 from django.utils import timezone
 
+from django.conf import settings
+
+from openai import AzureOpenAI, OpenAI
+
+
 #from rest_framework.response import Response
 #from rest_framework.decorators import api_view
 
@@ -29,9 +35,165 @@ from .djutils import to_dict
 from .models import Profile, Portfolio, Balance, Month, Message, Participant, \
     Condition, Result, QuestionnaireResponse, FallbackCount, \
         NewsfeedButtonClick, BotButtonClick, \
-            Question, Choice, ChoiceSelection
+            Question, Choice, ChoiceSelection, StudySettings
 
+# If you are using azure, set the following 3 variables in .env
+# AZURE_OPENAI_KEY = os.getenv('AZURE_OPENAI_KEY')
+AZURE_OPENAI_KEY = settings.AZURE_OPENAI_KEY
+# DEPLOYMENT_NAME = os.getenv('DEPLOYMENT_NAME')
+GPT_DEPLOYMENT_NAME = settings.GPT_DEPLOYMENT_NAME
+# AZURE_OPENAI_ENDPOINT = os.getenv('AZURE_OPENAI_ENDPOINT')
+AZURE_OPENAI_ENDPOINT = settings.AZURE_OPENAI_ENDPOINT
+# # If you are using OpenAI directly, set the following variables in .env
+# OPENAI_KEY = os.getenv('OPENAI_KEY')
+# OPENAI_ORGANISATION = os.getenv('OPENAI_ORGANISATION')
+# DEPLOYMENT_NAME = os.getenv('DEPLOYMENT_NAME')
+
+
+CLIENT = None
+if AZURE_OPENAI_KEY is not None:
+    print(
+        f"Using Azure OpenAI with {AZURE_OPENAI_ENDPOINT} and deployment {GPT_DEPLOYMENT_NAME}")
+    CLIENT = AzureOpenAI(
+        api_key=AZURE_OPENAI_KEY,
+        api_version="2024-02-15-preview",
+        azure_endpoint=AZURE_OPENAI_ENDPOINT
+    )
+
+# if OPENAI_KEY is not None:
+#     print("Using OpenAI deployment")
+#     CLIENT = OpenAI(
+#         organization=OPENAI_ORGANISATION,
+#         api_key=OPENAI_KEY
+#     )
+if CLIENT is None:
+    raise ValueError(
+        "You must specify either Azure or OpenAI credentials in the private_settings.py file")
+
+deployment_name = GPT_DEPLOYMENT_NAME
+
+
+# def handle_chatgpt_result(request, content, extracted_data, fields):
+
+#     return JsonResponse({
+#         "success": True,
+#         "data": nlp_result,
+#     })
+
+@login_required
+@csrf_exempt
+@require_POST
+def llm_chatbot_view(request):
+    client_data = json.loads(request.body.decode('utf-8'))
+    # get json data from the request
+    json_data = json.dumps(client_data)
+    # json_data = client_data
+
+    periodic_advice = client_data["periodic_advice"]
+
+    # save user message on db
+    if not periodic_advice:
+        user = User.objects.get(username=client_data["sender"])
+        month = client_data["month"]
+        from_notification = client_data["from_notification"]
+        from_button = client_data["from_button"]
+        text = client_data["message"]
+
+        message = Message(user=user, month=month, from_participant=True, from_button=from_button, text=text)
+        message.save()
     
+    user_portfolios = Portfolio.objects.filter(user=request.user)
+
+    followed_portfolios = user_portfolios.filter(followed=True)
+    not_followed_portfolios = user_portfolios.filter(followed=False)
+
+    followed_portfolios_str = ', '.join([p.profile.name for p in followed_portfolios])
+    not_followed_portfolios_str = ', '.join([p.profile.name for p in not_followed_portfolios])
+    portfolio_predictions = ', '.join([
+        f"{p.profile.name}: {p.chatbotNextChange:.2f}%" for p in user_portfolios
+    ])
+
+    prompt_context = {
+        "user_message": client_data["message"],
+        'followed_portfolios': followed_portfolios_str,
+        'not_followed_portfolios': not_followed_portfolios_str,
+        'portfolio_predictions': portfolio_predictions
+    }
+    study_settings = StudySettings.load()
+    system_prompt = Template(study_settings.system_prompt)
+    user_prompt = Template(study_settings.user_prompt)
+    # print('user_prompt before context:', user_prompt)
+    user_prompt = user_prompt.safe_substitute(prompt_context)
+    # print('user_prompt after context:', user_prompt)
+
+    system_prompt = system_prompt.safe_substitute(prompt_context)
+    # print('system_prompt after context:', system_prompt)
+
+    messages = []
+
+    messages.append({
+            # change 'system' to 'developer'?
+            "role": "system",
+            "content": system_prompt
+        })
+    
+    # get all messages from the user from this month
+    db_messages = Message.objects.filter(user=request.user, month=client_data["month"]).order_by('id')
+    prev_messages = [
+        {
+            "role": "user" if m.from_participant else "assistant",
+            "content": json.dumps({
+                "text": m.text,
+                "portfolio": m.portfolio_name if m.portfolio_name else None,
+                "amount": m.portfolio_amount if m.portfolio_amount else None,
+            })
+        } for m in db_messages
+    ]
+
+    messages += prev_messages
+
+    messages.append({
+            "role": "user",
+            "content": user_prompt
+        })
+            
+
+    try:
+        gpt_response = CLIENT.chat.completions.create(
+            model=GPT_DEPLOYMENT_NAME,
+            # temperature=0.7,
+            messages=messages
+        )
+        extracted_data = gpt_response.choices[0].message.content
+
+        # TODO: save the bot message as well
+        if not periodic_advice:
+            user = User.objects.get(username=client_data["sender"])
+            month = client_data["month"]
+            # from_notification = client_data["from_notification"]
+            from_button = client_data["from_button"]
+
+            message = Message(user=user, month=month, from_participant=False, from_button=from_button, text=extracted_data)
+            message.save()
+
+        # TODO: get the portfolio and amount and execute the action
+
+        # return handle_chatgpt_result(request, extracted_data)
+        # response = json.dumps([response])
+        # return HttpResponse(response, content_type='application/json')
+        return JsonResponse([{
+                "text": extracted_data,
+                'system_prompt': system_prompt,
+                'user_prompt': user_prompt,
+                'previous_messages': prev_messages,
+            },], safe=False)
+    except Exception as e:
+        print('error:', e)
+        return HttpResponse(status=500, content='The chatbot is not available. Please try again later.')
+
+
+
+
 
 #@api_view (['GET'])
 #def getButtonClick(request):

@@ -75,27 +75,30 @@ $(document).ready(async function () {
 
   // event when bot utters message
   function process_response(data, periodicAdvice) {
+    console.log("process_response called", data);
     data = data[0];
 
-    console.log(`GOT RESPONSE OF ${data}`);
+    console.log(`GOT RESPONSE OF`, data);
     const delay_per_char = 15;
     var responseDelay = data["text"].length * delay_per_char;
     if (responseDelay < (26 * delay_per_char)) {
       responseDelay = 26 * delay_per_char;
     }
 
+    // TODO: ensure that the bot messsage is saved also with rasa
     setTimeout(function () {
-      $.ajax({
-        type: "POST",
-        url: server_url + "/storebotmessage/",
-        data: { text: data["text"], month: month },
-        success: function () {
-          appendBotMessage(data, periodicAdvice);
-        },
-        error: function (response) {
-          console.log(response);
-        },
-      });
+      // $.ajax({
+      //   type: "POST",
+      //   url: server_url + "/storebotmessage/",
+      //   data: { text: data["text"], month: month },
+      //   success: function () {
+      //     appendBotMessage(data, periodicAdvice);
+      //   },
+      //   error: function (response) {
+      //     console.log(response);
+      //   },
+      // });
+      appendBotMessage(data, periodicAdvice);
 
       $("#portfolios").load(location.href + " #portfolios>*", "", function () {
         if ($("#followed-portfolio-wrapper").length) {
@@ -209,7 +212,9 @@ $(document).ready(async function () {
       console.log(message);
       if (message) {
         // setTimeout(function(){
-        var post_url = server_url + "/chatbotproxy/";
+        // TODO: make this dependent on the experimental condition
+        // var post_url = server_url + "/chatbotproxy/";
+        var post_url = server_url + "/llm_chatbot_proxy/";
         var post_data = {
           message: message,
           sender: username,
@@ -323,8 +328,9 @@ $(document).ready(async function () {
     }
   });
 
+  // TODO: make this dependent on the experimental condition
   sendMessage("What can you do?", true, false, false, false);
   await new Promise(resolve => setTimeout(resolve, 7000));
-  sendMessage("remind me about image tagging", true, false, false, false);
+  sendMessage('Please just reply with the following text: "this is an introductory message about image tagging"', true, false, false, false);
 
 });

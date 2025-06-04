@@ -3,6 +3,7 @@ from import_export import resources, fields
 from import_export.admin import ExportActionModelAdmin
 
 from .models import (
+    StudySettings,
     Profile,
     Portfolio,
     Balance,
@@ -96,7 +97,7 @@ class FallbackCountAdmin(ExportActionModelAdmin):
 class UserActionResource(resources.ModelResource):
     class Meta:
         model = UserAction
-        fields = ['user', 'month', 'available', 'invested',
+        fields = ['id', 'user', 'month', 'available', 'invested',
                     'portfolio', 'chatbot_change', 'newspost_change',
                     'action', 'amount',
                     'user__username', 'user__participant__condition__name']
@@ -214,3 +215,4 @@ admin.site.register(BotButtonClick)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(ChoiceSelection, ChoiceSelectionAdmin)
 
+admin.site.register(StudySettings)
